@@ -1,0 +1,417 @@
+
+/* main 컴포넌트 자체에 먹이는 값 */
+:host {
+	width: 100%;
+	height: 100%;
+}
+
+.container-fluid {
+	background: black;
+	/* color: black(12, 167, 228, 0.45); */
+	font-size: 100%;
+	line-height: 1.25;
+	width: 100%;
+	height: 100%;
+	font-family: 'Lato', Arial, sans-serif;
+    /* animation:myfirst 5s; */
+    /* -moz-animation:myfirst 5s; Firefox */
+    /* -webkit-animation:myfirst 5s; Safari and Chrome */
+    /* -o-animation:myfirst 5s; Opera */
+    box-shadow: 0 4px 2px -2px gray;
+}
+
+/* 자동 배경을 위한 키프레임*/
+    @keyframes myfirst
+    {
+        from {background:black;}
+        to {background:#467EBB;}
+    }
+
+    @-moz-keyframes myfirst /* Firefox */
+    {
+        from {background:black;}
+        to {background:#467EBB;}
+    }
+
+    @-webkit-keyframes myfirst /* Safari and Chrome */
+    {
+        from {background:black;}
+        to {background:#467EBB;}
+	}
+	
+/* 헤더 */
+
+.row.header {
+	display: fixed;
+
+}
+
+.main-search {
+	/* width : 100px; */
+	height: 50px;
+	border: 2px solid #c21c19;
+	border-radius: 80px;
+	margin: 15px auto 0 auto;
+  }
+  
+  /* main-search클래스 안에 인풋을 건드리고 싶으면 셀렉터 경로를 분명히 */
+  .main-search input[type=text] {
+	height: 45px;
+	line-height: 1.1rem;
+	width: 100%;
+	border-radius: 60px;
+	font-size: 1.1rem;
+	text-align: center;
+	border: 0;
+  }
+  
+  .button-search {
+	position: relative;
+	left : 400px;
+	bottom : 46px;
+	height: 48px;
+	width : 80px;
+	border-radius: 80px;
+	border: 2px solid #c21c19;
+	color : white;
+	background-color: #c21c19;
+  
+  }
+  /* 로그인 아이콘 */
+  .Oval {
+	width: 60px;
+	height: 60px;
+	background-color: #d8d8d8;
+	border: solid 1px #979797;
+  }
+  
+  .nav-menus {
+	float: right;
+  }
+  /* > a까지 구체적으로. */
+  .nav-menus > a {
+	display: block;
+	float: left; 
+	margin: 10px 0;
+	width: 150px;
+	line-height: 60px; 
+	color : white;
+	/* background-color: gray; */
+	text-align: center;
+  }
+  
+  .login-icon {
+	height : 60px;
+	width: 60px;
+	line-height: 60px;
+	margin-top: 10px;
+	border-radius: 50px;
+	background-color: transparent;
+  }
+  
+  .login-icon .user .thumb {
+	position: relative;
+	height : 60px;
+	width : 60px;
+	right : 8px;
+	bottom: 1px;
+	margin-right: 10px;
+	background-size: cover;
+	background-image: url('https://secure.gravatar.com/avatar/ed340a9cb8162dfb315d4b9bbbc2334e?s=36&d=https://app.zeplin.io/img/emotars/emotarMonkeyFace.png' );
+	/* background-color: aquamarine; */
+	border-radius: 50px;
+  }
+
+.nav-header {
+	width: 100%;
+	text-align: center;
+	margin: 0 auto;
+	padding-top: 2%;	
+}
+
+/* 단계 nav 중앙 정렬 */
+.step-container {
+	margin-left: 10%;
+}
+
+.col-md-2.step {
+	font-weight: bold;
+	color: white;
+	transition: all 1s ease .1s;
+}
+
+/* 선택값을 단계 밑에 보여줌 */
+.col-md-2.stepVal {
+	text-align: center;
+	color: white;
+}
+
+.step-container > .col-md-1.blank {
+	padding: 0;
+	width: 15px;
+}
+
+/* '단계'에 호버링 시 나타날 효과 */
+.col-md-2.step:hover {
+	/* font-size: 1.5rem; */
+	cursor : pointer;
+}
+
+/* 화살표 */
+.arrow {
+	background: url('../../assets/mainpage/arrow.png') no-repeat;
+	height: 15px;
+	width: 15px; 
+	background-position-x: -10px;
+}
+
+
+/* 메인 페이지 본문 */
+
+.col-md-12.main-first-page {
+	width: 100%;
+	height: 100vh;
+}
+
+/* 첫 화면 */
+.main-first-page {
+		background-image:url('../../assets/mainpage/chef2.png');
+		-moz-background-size:cover;
+		background-size:cover;
+		background-position:center center;
+		background-attachment:fixed;
+		background-repeat:no-repeat;
+		position:relative;
+}
+
+.bg-overlay {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:rgba(44,33,5,0.2);
+    z-index:0;
+}
+
+/* 선택지 shading */
+.shading {
+	background: #000;
+	/* opacity: 0.6; */
+}
+
+/* 현재 단계를 나타내는 클래스 ative */
+
+.col-md-2.step.active {
+	color:red;
+}
+
+/* 음식 카테고리 등 사용자 선택지 들어갈 곳 */
+
+.card.col-md-2 {
+	width: 20%;
+	height: 500px;
+	margin-top: 1.5rem;
+	padding : 0 0.3rem;
+}
+
+
+.card.col-md-2 > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	z-index: 2;
+}
+
+/* 상단에 틈 생겨서 약간 조정*/
+.card.col-md-2.byeolsik {
+	background-position-y: -3%;
+}
+
+.card.col-md-2 > h2 {
+	position: relative;
+	top : -50%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.4rem;
+	color: white;
+	width: 100%;
+	transition : all 1s;
+	z-index: 100;
+}
+/* 클릭 시 체크 애니메이션 */
+@keyframes check {
+	0% {
+			height: 0;
+			width: 0;
+	}
+
+	33.3333% {
+			width: 20px;
+			height: 0;
+	}
+}
+
+/* .card.col-md-2.hansik.han {
+	position: relative;
+	background-color: red;
+	z-index: 300;
+} */
+
+/* 체크 기호 디자인 및 위치 설정 */
+.card.col-md-2.han::before {
+	position : absolute;
+	left : 44%;
+	top : 47%;
+	content:'';
+	display: block;
+	width: 20px;
+	/* 체크 꼬리 길이 */
+	height: 25px;
+	-webkit-animation: check .8s;
+	animation: check .8s;
+	-webkit-transform: scaleX(-1) rotate(135deg);
+	transform: scaleX(-1) rotate(135deg); 
+	-webkit-transform-origin: left top;
+	transform-origin: left top;
+	border-top: 10px solid rgba(252, 218, 30, 0.945);
+	border-right: 10px solid rgba(252, 218, 30, 0.945);
+	z-index : 1;
+}
+
+.card.col-md-2.han {
+	position: relative;
+	left : 0px;
+	top : 0px;
+	background:black;
+	z-index: 200;
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards
+}
+
+.card.col-md-2.han > img {
+	opacity: 0.3;
+}
+
+/* 일식 사진 조정 */
+/* .card-img-top.ilsik {
+	background-position-x: 10px;
+} */
+
+
+.card.col-md-2:after {
+	content: '\A';
+	position: absolute;
+	width: 100%; height:100%;
+	top:0; left:0;
+	background:rgba(0,0,0,0.7);
+	opacity: 0;
+	transition: all 1s;
+	-webkit-transition: all 1s;
+
+}
+
+.card.col-md-2:hover:after {
+	opacity: 1;
+}
+
+
+/* 화면 중앙 텍스트  */
+.center-title {
+	/* 1vh = 뷰포트 전체 높이(여기선 1000px이상)의 1% */
+}
+
+.banner h1 {
+    font-size:100px;
+    color:white;
+    text-transform:uppercase;
+    font-weight:bold;
+	display:inline-block;
+	margin-top: 25%;
+	margin-left: 40%;
+    /* background:#ed0121; */
+    padding:0px 18px;
+}
+
+.subtitle h4 {
+	display:inline-block;
+	margin-left:40%;
+    background:white;
+    /* color:#ed0121; */
+    font-size:38px;
+    padding:0px 15px;
+}
+
+.title-text {
+	font-size: 3vw;
+	color : #fff;
+	font-family: 'Hanna';
+	/* position: relative; */
+	text-align: center;
+	/* top : -100px; */
+	left: 1%;
+}
+
+
+/* 로고 옆 이름  */
+.name {
+	position: absolute;
+	top: 0;
+	left: 33%;
+	margin-left: 2px;
+	width: 100px; 
+	 padding:  0 0 5px; 
+	font-family: 'Hanna';
+	font-size: 2.1rem;
+	color: #ffff;
+  }
+  
+/* .name2 {
+	margin : -80px 0 0 105px;
+	width: 50px;
+	font-family: 'Hanna';
+	font-weight: bold;
+	line-height: 1;
+	font-size: 2rem;
+  } */
+  
+  /* .name2 > p:last-child {
+	margin-left: -2px;
+  } */
+
+.title-wrapper {
+	width: 100%;
+	height: 100%;
+}
+
+.logo-wrapper {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	/* position: relative; */
+}
+  
+.logo {
+	position : relative;
+	left: 12%;
+	width: 75px;
+	height: 75px;
+	background : url('../../assets/mainpage/waiter.png') no-repeat;  
+	background-size: cover;
+	margin-right: 2px;
+  }
+	
+	/* 메인 화면 중간 패딩 값  */
+.main-content-padding {
+	padding: 2% 0;
+}
+
+
+.sign-header {
+	position: relative;
+	left: -25px;
+	/* top : -20px; */
+	text-align: center;
+	font-size : 20px;
+	width: 200px;
+  }

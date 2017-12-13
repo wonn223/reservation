@@ -1,0 +1,22 @@
+{
+  "shopList": [
+    {
+      "id": 1,
+      "name": "abc레스토랑",
+      "countFavorite": 2,
+      "reviewCount" : 3,
+      "storeScore": 4,
+      "introStore": "안녕하세요~~ 여기는 최고의 분위기와 환상적인 맛을 자랑하는 최고의 식당입니다."
+    },
+    {
+      "id": 2,
+      "name": "xyz레스토랑",
+      "countFavorite": 2,
+      "reviewCount": 3,
+      "storeScore": 4,
+      "introStore": "안녕하세요~~ 여기는 최고의 분위기와 환상적인 맛을 자랑하는 최고의 식당입니다."
+    }
+    
+  ]
+}
+// 상세페이지, 댓글

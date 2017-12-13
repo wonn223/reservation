@@ -1,0 +1,120 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row main-page">
+        <div class="col-md-12 main-first-page">
+          <div class="bg-overlay"></div>
+          <div class="center text-center">
+            <div class="banner">
+              <h1 class="">JinJi</h1>
+            </div>
+            <div class="subtitle">
+              <h4>진지한 밥상 소개</h4>
+            </div>
+          </div>
+          <div class="bottom text-center">
+            <a id="scrollDownArrow" href="#">
+              <i class="fa fa-chevron-down"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+     
+      <!-- 단계별로 선택한 값을 헤더 밑에 표시. -->
+      <div class="row nav-header">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <h2 class="col-md-3 step active">1단계</h2>
+          <h2 class="col-md-3 step">2단계</h2>
+          <h2 class="col-md-3 step">3단계</h2>
+          <h2 class="col-md-3 step">4단계</h2>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+      <div class="row nav-header">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <h2 class="col-md-3 step active">{{ headerValue | filter:eventStorage}}</h2>
+          <h2 class="col-md-3 step">{{ "interpolation" }}</h2>
+          <h2 class="col-md-3 step">{{ "interpolation" }}</h2>
+          <h2 class="col-md-3 step">{{ "interpolation" }}</h2>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+      <!-- <div class="row nav-header">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 step-container">
+          <h2 class="col-md-3 step active">1단계</h2>
+          <h2 class="col-md-3 step">2단계</h2>
+          <h2 class="col-md-3 step">3단계</h2>
+          <h2 class="col-md-3 step">4단계</h2>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="row nav-header">
+          <div class="col-md-2"></div>
+          <div class="col-md-8 step-container">
+            <h2 class="col-md-2 stepVal">{{ headerValue | filter:eventStorage}}</h2>
+            <span class="col-md-1 blank"></span>
+            <h2 class="col-md-2 stepVal">{{ "interpolation" }}</h2>
+            <span class="col-md-1 blank"></span>
+            <h2 class="col-md-2 stepVal">{{ "interpolation" }}</h2>
+            <span class="col-md-1 blank"></span>
+            <h2 class="col-md-2 stepVal">{{ "interp" }}</h2>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </div> -->
+      <div class="row main-content-padding">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+          <div #hansik class="card col-md-2 shading hansik" [class.han]="hansik.checkActivated" [id]="0" (click)="check(hansik, $event)"
+            (mouseover)="hover(hansik, $event)" (mouseleave)="hansik.isHover=false">
+            <span></span>
+            <img class="card-span-top" [class.han]="hansik.checkActivated" src="../../assets/mainpage/hansik2.png" alt="Card image cap">
+            <h2 *ngIf="hansik.isHover==true">한식</h2>
+          </div>
+          <div #jungsik class="card col-md-2 shading jungsik" [class.han]="jungsik.checkActivated" [id]="1" (click)="check(jungsik, $event)"
+            (mouseover)="hover(jungsik, $event)" (mouseleave)="jungsik.isHover=false">
+            <img class="card-img-top" [class.han]="jungsik.checkActivated" src="../../assets/mainpage/jungsik2.png" alt="Card image cap">
+            <h2 *ngIf="jungsik.isHover==true">중식</h2>
+          </div>
+          <div #ilsik class="card col-md-2 shading ilsik" [class.han]="ilsik.checkActivated" [id]="2" (click)="check(ilsik, $event)"
+            (mouseover)="hover(ilsik, $event)" (mouseleave)="ilsik.isHover=false">
+            <img class="card-img-top ilsik" [class.han]="ilsik.checkActivated" src="../../assets/mainpage/ilsik2.png" alt="Card image cap">
+            <h2 *ngIf="ilsik.isHover==true">일식</h2>
+          </div>
+          <div #yangsik class="card col-md-2 shading yangsik" [class.han]="yangsik.checkActivated" [id]="3" (click)="check(yangsik, $event)"
+            (mouseover)="hover(yangsik, $event)" (mouseleave)="yangsik.isHover=false">
+            <img class="card-img-top" [class.han]="yangsik.checkActivated" src="../../assets/mainpage/yangsik2.png" alt="Card image cap">
+            <h2 *ngIf="yangsik.isHover==true">양식</h2>
+          </div>
+          <div #byeolsik class="card col-md-2 shading byeolsik" [class.han]="byeolsik.checkActivated" [id]="4" (click)="check(byeolsik, $event)"
+            (mouseover)="hover(byeolsik, $event)" (mouseleave)="byeolsik.isHover=false">
+            <img class="card-img-top" [class.han]="byeolsik.checkActivated" src="../../assets/mainpage/chimaek2.png" alt="Card image cap">
+            <h2 *ngIf="byeolsik.isHover==true">주류/별식</h2>
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+      </div>
+      <div class="row">
+        <!-- 폰트 relative로 화면 센터 -->
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6 center-title">
+          <h2 class="title-text">좋아하는 음식을 선택하세요</h2>
+        </div>
+        <div class="col-md-3">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="listShop">
+  <li></li>
+</div>
+
+<div routerLink="/shop">상세페이지</div>
+

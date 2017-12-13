@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <div class="row">
+  <div class="col-md-2"></div>
+  <section class="review-container col-md-8">
+   <div class="title-filter-wrap">
+    <h2 class="title">{{title}}</h2>
+    <ul class="review_filter">
+     <li class="filter_list">
+      <button>전체({{cntAll}})</button>
+     </li>
+     <li class="filter_list">
+       <!-- | counterFilter:this.rate:btn -->
+      <button #btn [attr.value]="5">맛있다({{ count4 }})</button>
+    </li>
+     <li class="filter_list">
+      <button [id]="4">괜찮다({{ count3 }})</button>
+     </li>
+     <li class="filter_list">
+      <button [id]="3">보통({{count2 }})</button>
+     </li>
+     <li class="filter_list">
+        <button [id]="2">별로({{ count1 }})</button>
+       </li>
+    </ul>
+  </div>
+  <div class="col-md-12">
+    <div class="rating-wrapper">
+      <div class="col-md-7"></div>
+      <div class="star-rating col-md-5" #rating>
+        <rating [max]="5" [(ngModel)]="y" [customTemplate]="tt"></rating>
+        <!-- <b>(<i>Rate:</i>){{ y }}</b> -->
+        <ng-template #tt let-i="index" let-v="value">
+          <button class="btn btn-color" (click)="checkCount(v, $event)" >
+          {{ i < v ? '&#9733;' : '&#9734;'}}  
+          </button>
+        </ng-template>
+      </div>
+   </div> 
+ </div>
+<div class="content-wrapper">
+    <div class="content-input">
+      <div class="photo">
+        <div class="avatar"></div>
+        <figcaption>unknown</figcaption>
+      </div>
+      <div class="comment-block">
+        <form>
+            <textarea #txt name="comment" id="comment" rows="4" (keyup.enter)="postComments(txt.value, rate)" #textarea placeholder="Add a comment.."></textarea>
+        </form>
+      </div>
+  </div>
+  <!-- <div class="upload-wrapper col-md-12"> -->
+      <div class="row col-md-6">
+      </div>
+      <div class="btn-wrapper col-md-6">
+          <!-- <image-upload class="btn-upload" url="https://httpbin.org/status/200" [max]="2" [extensions]="['jpeg','png']"></image-upload> -->
+      </div>
+  <!-- </div> -->
+  </div>
+    <ul class="list-reviews">
+       <li class="default_review" *ngFor="let td of comment">
+        <section class="review-item"> 
+           <div class="review-content">
+             <figure class="user">
+               <div class="thumb">
+                 <img src="https://goo.gl/nywpxw" alt="프로필 이미지">
+               </div>
+               <figcaption>{{ td.author }}</figcaption>
+               <div>{{ td.star_rate }}</div>
+             </figure>
+             <p class="test">
+                {{ td.comment }}
+             </p>
+             <i class="glyphicon glyphicon-pencil pull-right" (click)="patchComm(td.pk, td.comment)"></i>
+             <i class="glyphicon glyphicon-remove-sign pull-right" (click)="removeComm(td.pk)"></i>
+           </div>
+        </section>
+      </li>
+    </ul>
+  </section>
+  <div class="col-md-2"></div>
+</div>
+</div>

@@ -1,0 +1,278 @@
+html {
+    font-size: 10px;
+
+}
+ul{
+   list-style:none;
+   }
+body {
+    /* background: #f0f2fa !important; */
+    color: #555f77;
+}
+
+.review-container {
+    /* width: 55.556%; */
+    height: auto;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.title {
+    color: #ff792a;
+    font-size: 5rem;
+    text-align: left;
+    /* width : auto; */
+}
+
+.title-filter-wrap {
+    margin-bottom: 0.5rem;
+}
+
+/* 맛있다, 괜찮다 필터 ul */
+.review_filter {
+    display: block;
+    position: relative;
+    top: -80px;
+    float: right;
+    list-style: none;
+    width: auto;
+    margin-left: 50px;
+}
+
+/* 맛있다, 괜찮다 필터 li */
+.filter_list {
+    float: left;
+    font-size: 2rem;
+}
+
+.filter_list::after {
+    content : '|';
+    margin : 0 7px;
+    color : #9b9b9b;
+}
+
+.filter_list > button {
+    border: 0px;
+    margin-right: -5px;
+    background-color: transparent;
+}
+
+/* 댓글 감싸는 ul */
+.list-reviews {
+    height: auto;
+    margin-top: 10px;
+}
+
+/* 리뷰 콘텐츠 li */
+.default_review {
+    height: auto;
+    margin : 10px 0 10px 0;
+    border-bottom: 1px solid gray;
+}
+
+
+/* 아이콘, 댓글 내용, 평점 감싼 section클래스 */
+.review-item {
+    position: relative;
+    padding : 1rem 20px 1.4rem 90px;
+    /* background-color: teal; */
+    min-height: 25vh;
+}
+
+
+.review-content  p {
+    display: block;
+    width: 100%;
+    /* height: 100%; */
+    word-wrap: break-word;
+}
+
+.review-item .review-content > p {
+    height: auto;
+}
+
+
+/* 댓글 프로필이미지 */
+.user {
+    position: absolute;
+    left : 10px;
+    /* height: auto; */
+    min-height: auto;
+    text-align: center;
+}
+
+.rating-icon {
+    background-image: url('https://image.flaticon.com/icons/svg/305/305130.svg');
+    position: relative;
+    left : 20px;
+    width: 20px;
+    height: 20px;
+}
+
+
+/* 뷰에 표시된 댓글 텍스트 */
+.review_text {
+    font-size: 13px;
+    line-height: 1.6rem;
+}
+
+/* 댓글 입력란 wrapper */
+.content-wrapper {
+    /* position: relative; */
+    margin-top: 4rem;
+}
+
+.content-input {
+    display: table;
+    width: 100%;
+    margin: 0 auto; 
+    padding: 0 1.3rem 3rem 0;
+    border-bottom: 1px solid gray;
+}
+
+.rating-wrapper {
+    position: relative;
+}
+
+.star-rating.col-md-5 {
+    position: absolute;
+    top: -9vh;
+    right: 0;
+    text-align: right;
+    padding-right: 0.3rem;
+    z-index: 2;
+}
+
+.review-content > figure {
+    margin : 0
+}
+
+.photo {
+    display: table-cell;
+    /* background: #ff6666; */
+    width : 5.8rem;
+    text-align: center;
+}
+
+.photo .avatar {
+    height: 2.25rem;
+    width: 2.25rem;
+    background: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg');
+    border-radius: 50%;
+    background-size: contain;
+    margin: 0.925rem auto 0 auto;
+}
+
+.photo > figcaption {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.glyphicon.glyphicon-pencil {
+    display: inline-block;
+    text-align: right;
+    cursor: pointer;
+}
+
+.glyphicon.glyphicon-remove-sign {
+    cursor: pointer;
+}
+
+.btn.btn-color {
+    border: 1px solid rgb(233, 70, 70); 
+    color: rgb(233, 70, 70);
+}
+
+.comment-block {
+    display: table-cell;
+    background-color: #fff;
+    vertical-align: top;
+    margin : 0;
+    padding : 1.5rem 0.5rem 2rem 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+}
+
+#comment {
+    width: 100%;
+    height: 4.5rem;
+    resize: none;
+    /* width: 80%; */
+    /* border : 1px solid black;  */
+    border-radius: 0.2rem;
+}
+
+textarea {
+    /* block? */
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    color: #555f77;
+}
+
+.test {
+    background-color: rgb(251, 203, 98);
+}
+
+.upload-wrapper {
+    position: relative;
+}
+
+.btn-wrapper {
+    position: absolute;
+    top: -10vh;
+    right: 0;
+    z-index: 2;
+    width: 25rem;
+}
+
+.row.uploadImg {
+    position: relative;
+    top : -14vh;
+    left: 12vh;
+}
+
+.btn-upload .img-ul {
+    background-color: transparent!important;
+    border : none;
+    color: black;
+}
+
+.btn-upload .img-ul-drag-box-msg {
+    display: none!important;
+    color : purple!important;
+}
+
+@media screen and (max-width: 991px) {
+    /* 댓글 입력란 wrapper */
+    .content-wrapper {
+        margin-top: 3rem;
+    }
+}
+
+@media screen and (max-width:893px) {
+
+    .star-rating.col-md-5 
+    {
+    
+        position: absolute;
+        top: -1vh;
+        right: 0;
+        text-align: right;
+        padding-right: 0.3rem;
+        z-index: 2;
+    }
+}
+
+@media screen and (max-width:599px) {
+    .review_filter {
+        display: none;
+    }
+
+    
+}
+
+    /* 컨텐츠 박스 속성. 코멘트 창에 패딩을 적용하면 입력 칸 내부에 패딩이 적용됨. */
+    /* padding : 0 50px; */
+    /* 부모 요소에 명시적인 요소가 없으면 자식의 값을 따르는데 이 때 자식의 값도 %와 같은 추상적인 값으로 설정되어 있으면 원하는 결과가 나오지 않을 수 있다 */

@@ -1,0 +1,75 @@
+.sign-form-wrapper,
+.notice-wrapper,
+.welcome-wrapper,
+.success-wrapper {
+  margin: 0 auto;
+  width: 450px;
+  height: 450px;
+  background: rgb(235, 228, 228);
+  padding-top: 25px;
+  background: transparent;
+  /* border: 2px solid rgb(197, 197, 194); */
+}
+
+.sign-header {
+  text-align: center;
+}
+
+.form-group {
+  font-weight: 200;
+  margin: 0 auto;
+  width: 400px;
+}
+
+.btn {
+  font-weight: 400;
+  display: block;
+  width: 100px;
+  margin: 0 auto;
+  font-size: 20px;
+  background-color: rgb(248, 186, 78);
+  border: 0;
+}
+
+.btn-join {
+  position: relative;
+  top: 20px;
+  margin-bottom: 10px;
+}
+
+.btn-facebook {
+  position: relative;
+  top: 20px;
+  margin-top: 10px;
+}
+
+.alert {
+  color: red;
+}
+
+.email-img {
+  margin-top: 20px;
+}
+
+.email-icon {
+  width: 100px;
+}
+
+.welcome-wrapper {
+  font-family: "Nanum Gothic", sans-serif;
+  background-image: url('../../assets/sign-img/welcome.png');
+}
+
+.welcome-text {
+  position: relative;
+  top: 50px;
+  margin: 25px;
+  width: 400px;
+  color: #ffffff;
+  text-shadow: 0 0 1px #000;
+}
+
+.welcome-corpname {
+  font-size: 100px;
+  font-weight: 400;
+}

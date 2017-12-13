@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.0/dist/bootstrap-float-label.min.css);
+@import "./normalize.css";
+.modal-content {
+  width: 450px;
+  height: 450px;
+  border-radius: 0;
+  border: 0;
+}
+
+body {
+  background: #F7F7F7;
+}

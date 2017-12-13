@@ -1,0 +1,51 @@
+li{
+	font-size: 16px;
+}
+.wrapper{
+	width: 800px;
+	border: solid black;
+	margin: 15px;
+	margin-left: 50px;
+	padding: 10px;
+	padding-top: 30px;
+}
+.page-header{
+	background:#E0DEDE;
+}
+.form-horizontal {
+		width: 100%;
+	}
+
+.panel{
+	width: 100%;
+}
+
+	.panel-heading{
+		background: black;
+	}
+
+	.panel-title{
+		color: white;
+	}
+.successButton{
+	margin-top: 20px;
+}
+.btn-success{
+	width: 100%;
+}
+
+em{
+	color: red;
+}
+input.ng-touched.ng-invalid {
+  background-color: wheat;
+}
+
+
+@media screen and (max-width: 997px) {
+	.wrapper{
+		width: 420px;
+		margin: 5px;
+	}
+
+}

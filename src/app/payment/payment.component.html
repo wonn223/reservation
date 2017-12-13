@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="wrapper reservation col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">예약정보</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <!-- <li>{{this.shopListService.resInfo[0]}}</li>
+            <li>예약인원 : {{this.shopListService.resInfo[1]}} 명</li>
+            <li>예약일시 : {{this.shopListService.resInfo[3] | date: 'y년 MM월 dd일'}} </li>
+            <li>예약금(산정기준) : {{this.shopListService.resInfo[2] * this.shopListService.resInfo[1]}}</li> -->
+            <p>
+              < 취소환불규정>
+                예약일로부터 1일 이내 : 100% 환불 예약당일 no-show : 환불불가
+            </p>
+          </ul>
+        </div>
+      </div>
+    
+      <h1 class="page-header">예약정보입력</h1>
+      <form class="form-horizontal" #userForm="ngForm">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">예약자</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" name="userName" ngModel #userName="ngModel" required placeholder="예약자의 성함을 입력해주세요" [(ngModel)]="name">
+            <em *ngIf="userName.errors?.required && userName.touched">
+              예약자의 성함은 필수입력사항입니다.
+            </em>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">연락처</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputNumber" name="phone" ngModel #phone="ngModel" pattern="^[0-9]+$" required
+              placeholder="예약자의 연락처를 숫자만 입력해주세요" [(ngModel)]="tel">
+            <em *ngIf="phone.errors?.required && phone.touched">
+              예약자의 연락처는 필수입력사항입니다.
+            </em>
+            <em *ngIf="phone.errors?.pattern && phone.touched" class="alert">연락처는 숫자만 입력해주세요 </em>
+          </div>
+        </div>
+    
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputEmail" name="email" ngModel #email="ngModel" pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$"
+              required placeholder="Email" [(ngModel)]="mail">
+            <em *ngIf="email.errors?.pattern && email.touched">이메일형식이 아닙니다.</em>
+            <em *ngIf="email.errors?.required && email.touched">이메일을 입력하세요! </em>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">요청사항</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="comment" placeholder="요청사항">
+          </div>
+          <div class="col-sm-10 col-sm-offset-2 successButton">
+            <button type="submit" class="btn btn-success" [disabled]="userForm.invalid" (click)="reservationCreat()">결제하기</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+</div>
+

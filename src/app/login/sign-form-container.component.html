@@ -1,0 +1,78 @@
+<button type="button" class="btn btn-primary" (click)="openModal(template)">Sign Up</button>
+
+<ng-template #template>
+  <div class="sign-form-wrapper">
+    <div class="title-wrapper">
+      <div class="logo-wrapper">
+        <div class="base"></div>
+        <div class="logo"></div>
+      </div>
+       <h2 class="sign-header"></h2>
+       <h3 class="name">진지한</h3>
+       <h3 class="name2"><p>밥</p><p>상</p></h3>
+    </div>
+    <form class="sign-form sign-input-list">
+      <div class="form-group">
+          <label for="signform-InputEmail"></label>
+          <input type="email" placeholder="이메일 주소" name="userid" class="form-control" [(ngModel)]="user.userid" #userid="ngModel" pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$" required>
+          <em *ngIf="userid.errors?.pattern && userid.touched" class="alert">User id는 email 형식으로 입력하세요!</em>
+          <em *ngIf="userid.errors?.required && userid.touched" class="alert">User id로 사용할 email을 입력하세요!</em>
+      </div>  
+      <div class="form-group">
+          <a (click)="openModal(auth)">forgot?</a>
+          <label for="signform-InputPassword"></label>
+          <input type="password" name="password" class="form-control" [(ngModel)]="user.password" #password="ngModel" pattern="[a-zA-Z0-9]{4,10}" placeholder="패스워드" required>
+          <em *ngIf="password.errors?.pattern && password.touched" class="alert">
+          영문 또는 숫자로 4자리 이상 10이하로 입력하세요!
+        </em>
+          <em *ngIf="password.errors?.required && password.touched" class="alert">
+          Password를 입력하세요!
+        </em>
+        </div>
+      <button type="button" class="btn-primary btn-join" (click)="openModal2(templateNested)">Join</button>
+      <div class="row-sns auth-sns">
+          <div class="col-xs-4">
+            <a href="#">
+                <div class="btn-block btn-twitter">twitter</div>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <a href="#">
+                <div class="btn-block btn-facebook">facebook</div>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <a href="#">
+                <div class="btn-block btn-gmail">gmail</div>
+            </a>
+          </div>
+        </div>
+    </form>
+    <div class="bottom-wrapper">
+      <a href="#">
+        진지한 밥상이 처음이신가요?
+        <span class="icon-arrow-right"></span>
+      </a>
+    </div>
+    <div class="cc">Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+  </div>
+</ng-template>
+
+<!-- forgot 클릭 시 나타날 모달 -->
+<ng-template #auth>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">비밀번호를 잊어버리셨나요?</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef2.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This is nested modal.<br>
+        <button *ngIf="modalRef" type="button" class="btn btn-danger" (click)="closeFirstModal()">Close first modal</button>
+    </div>
+</ng-template>
+
+<!-- join 클릭 시 나타날 모달 -->
+<ng-template #nested>
+
+</ng-template>

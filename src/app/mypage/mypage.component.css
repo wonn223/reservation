@@ -1,0 +1,22 @@
+li{
+   list-style:none;
+}
+.jumbotron{
+  margin: 15px;
+  height: 230px;
+}
+.blank {
+  height: 30px;
+}
+
+.myphoto{
+  height: 30px;
+  width: 30px;
+}
+.img-circle{
+  height: 80px;
+}
+
+.contentBox-top{
+  margin-top: 20px;
+}

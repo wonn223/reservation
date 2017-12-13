@@ -1,0 +1,184 @@
+<!-- 플로팅 메뉴 -->
+<!-- <div id="floatdiv">
+  <ul>
+    예약하기로 이동
+  </ul>
+</div> -->
+
+<div class="container-fluid shop-wrrapper">
+   
+  <!-- 최상단 사진 (식당타입에 따른 사진) -->
+  <div class="row contentphoto">
+    <div class="col-md-12  hidden-sm hidden-xs">
+      <img src="../../../assets/contentphoto.png">
+    </div>
+  </div>
+
+  <!-- 레스토랑의 제목 -->
+  <div class="row">
+    <div class="col-md-10 col-md-offset-2 shopName">
+      <h1> {{ shopName }}</h1>
+      <a href="shop/#review">리뷰 : {{ shopListService.shopTest.reviewCount }}건 | 평점 : {{ starRate }}점</a>
+      <span class="favorite">
+      <img class="heart" src="../../../assets/heart.png" (click)="shopListService.addFavorite()"> ({{ shopListService.shopTest.countFavorite }}) </span>
+    </div>
+  </div>
+
+  <!-- 인원/예약일을 선택하고 가능한 시간대를 가져와서 예약페이지로 이동하는 네비게이션 -->
+  <div class="row nav-form">
+    <div class="col-md-2 col-md-offset-2 check-people">
+      <em>예약인원</em>
+      
+      <!-- max값이 number로 들어오는데 array로 바꿔야 함. ex 6이면 [1,2,3,4,5,6] -->
+      <select [(ngModel)]="willVisitPeople" class="form-control"  (click)="collapseTrue()">
+        <option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]" >{{ i }} </option>
+      </select>
+      <p> 예약인원 : {{ willVisitPeople }}명</p>
+    </div>
+    <div class="col-md-2 check-date">
+      <em>예약일자</em>
+      <div class="date-selector">
+        <input type="text" class="form-control" [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" (click)="collapseTrue()" 
+         [bsConfig]="bsConfig">
+      </div>
+      <p>{{bsValue | date: 'y년 MM월 dd일'}}</p>
+    </div>
+    <div class="col-md-3 col-xs-3 check-time">
+      <em class="line">-------------------------------</em>
+      <button type="button" class="btn btn-primary" (click)="collapseAlert()" (click)="getAvailableTime()"> 조회하기
+      </button>
+      <!-- 예약시간 선택화면 -->
+      <div (collapsed)="collapsed($event)" (expanded)="expanded($event)" [collapse]="isCollapsed" class="card card-block card-header">
+        <div class="well well-lg time-selecter-box" >
+          <div *ngFor="let i of this.times" class="radio" >
+            <label>
+              <input [(ngModel)]="willVisitTime" type="radio" name="optionsRadios" [value]="i" > {{ i.time | slice:0:5}}
+            </label>
+          </div>
+          <button type="button" class="btn btn-primary btn-lg res-btn" (click)="openModal(template)" [disabled]="!willVisitTime">예약하기</button>
+          <br>
+          <em *ngIf="!willVisitTime">예약시간을 선택해주세요</em>
+        </div>
+
+        <!-- 예약확인 모달창 -->
+        <ng-template #template>
+          <div class="modal-header">
+            <h4 class="modal-title pull-left">예약확인</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide(); collapseTrue()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h2>예약내역 확인</h2>
+            <ul>
+              <li> 예익일자 : {{bsValue | date: 'y년 MM월 dd일'}} </li>
+              <li> 방문시간 : {{ willVisitTime.time }}시 </li>
+              <li> 방문인원 : {{ willVisitPeople }}명 </li>
+              <li> 예약금액 : {{ reservationPrice * willVisitPeople }} </li>
+            </ul>
+            <p>
+             예약내용을 확인하여주시고 확인버튼을 클릭해주세요~!<br>
+             예약금 결제시 예약이 확정이 되며, no-show시 예약금은 환불되지 않습니다.
+            </p>
+          </div>
+          <div>
+            <button type="button" aria-label="OK" class="btn btn-success" (click)="modalRef.hide(); collapseTrue(); pushReservationInfo()" routerLink="/payment"> 확인 </button>
+            <button type="button" aria-label="cancel" class="btn btn-danger" (click)="modalRef.hide(); collapseTrue()"> 취소 </button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <!-- 레스토랑의 간략한 소개 -->
+  <div class="row">
+    <div class="col-md-10 col-md-offset-2 hidden-sm hidden-xs shopIntro">
+      <p>예약금액 : {{ reservationPrice * willVisitPeople }}</p>
+      <em>예약금액은 레스토랑의 평균가격과 인원수로 산정됩니다.</em><br>
+      {{ shopDescription }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="visible-sm visible-xs mobileInfo">
+      <p>예약금액 : {{ reservationPrice * willVisitPeople }}</p>
+      <em>예약금액은 레스토랑의 평균가격과 인원수로 산정됩니다.</em><br>
+      {{ shopDescription }}
+    </div>
+  </div>
+
+  <!-- 이미지 (식당소개 및 메뉴판) -->
+  <div class="row">
+    <div class="col-md-10 col-md-offset-2">
+      <h3 class="title">메뉴판 | 이미지</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-5 shop-image">
+      <carousel class="image-carousel">
+        <slide *ngFor="let i of images" class="slide">
+          <img class="shop-image" [src]="i" alt="First slide" style="display: block; width: 100%;">
+        </slide>
+      </carousel>
+    </div>
+    <div class="col-md-5">
+      <img class="menu-image" src="http://menupankorea.com/images/menu_040516_12.jpg">
+    </div>
+    <div class="col-md-0"></div>
+  </div>
+
+  <!-- 지도와 찾아오는 길 / 추가정보 -->
+  <div class="row">
+    <div class="col-md-10 col-md-offset-2">
+      <h2 class="title">찾아가는 길</h2>
+    </div>
+  </div>
+  <div class="row map-container">
+    <div class="col-md-5 col-md-offset-2 mapBox">
+      
+      <agm-map class="shop-map" [latitude]="this.latitude" [longitude]="this.longitude" [minZoom]="14" [maxZoom]="16">
+        <agm-marker [latitude]="this.latitude" [longitude]="this.longitude"></agm-marker>
+      </agm-map>
+    </div>
+    <div class="col-md-5">
+      <table class="table moreInfo">
+        <colgroup>
+          <col class="title-nav"
+          style="background-color:#E0DEDE">
+        </colgroup>
+        <tr>
+          <td class="tname">주소</td>
+          <td>{{ shopAddress }}</td>
+        </tr>
+        <tr>
+          <td class="tname">전화번호</td>
+          <td>{{ shopTel }}</td>
+        </tr>
+        <tr>
+          <td class="tname">영업시간</td>
+          <td>{{ operationTime }}</td>
+        </tr>
+        <tr>
+          <td class="tname">평균가격대</td>
+          <td>{{ averagePrice }}</td>
+        </tr>
+        <tr>
+          <td class="tname">수용인원</td>
+          <td>{{ maxParty }}</td>
+        </tr>
+        <tr>
+          <td class="tname">길찾기</td>
+          <td>
+            <a target="_blank" [href]="mapLink">click</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+<!-- 평점 및 리뷰 -->
+  <app-reply></app-reply>
+</div>
+

@@ -1,0 +1,200 @@
+em{
+  text-align: center;
+  color: red;
+}
+/* 떠다니는 메뉴 (Floating Menu) */
+ /* #floatdiv { 
+    position:fixed; _position:absolute; _z-index:-1;
+    width:170px;
+    overflow:hidden;
+    left:0px;
+    top:60px;
+    background-color: transparent;
+    margin:0;
+    padding:0;
+}
+
+#floatdiv ul  { list-style: none; }
+#floatdiv li  { margin-bottom: 2px; text-align: center; }
+#floatdiv a   { color: #5D5D5D; border: 0; text-decoration: none; display: block; }
+#floatdiv a:hover, #floatdiv .menu  { background-color: #5D5D5D; color: #fff; }
+#floatdiv .menu, #floatdiv .last    { margin-bottom: 0px; } */
+.title{
+   color: #ff792a;
+    font-size: 5rem;
+    text-align: left;
+}
+
+.contentphoto{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: black;
+
+}
+
+.shopName{
+  background: #E0DEDE;
+  height:130px;
+  width: 1000px;
+  text-align: center;
+  position: relative;
+  bottom: 50px;
+}
+
+.favorite{
+  float: right;
+}
+.heart{
+  height: 30px;
+  width: 30px; 
+}
+
+.nav-form{ 
+  height: 100px;
+}
+
+.check-people{
+  width: 190px;
+}
+.check-date{
+  width: 200px;
+}
+.check-time{
+  width: 200px;
+}
+.btn-default{
+  background: red;
+  position: relative;
+  top: 18px;
+}
+
+
+
+.slide {
+  height:450px;
+}
+  
+.carousel-inner {
+  width: 80%;
+  margin: 0 auto;}
+
+.shop-image{
+  width:500px;
+  height:450px;
+}
+.menu-image{
+  width:500px;
+  height:450px;
+}
+
+.map-container{
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
+
+.mapBox{
+  border: 2px solid;
+  width: 500px;
+  padding: 0px;
+}
+.shop-map{
+  width:100%; 
+  height:300px;
+}
+.moreInfo{
+  font-size: 15px;
+  width: 500px;
+  height:300px;
+}
+
+.tname{
+  font-weight: bold;
+  text-align: center;
+}
+
+
+.shopIntro{
+  background: #FAF6F6;
+  min-height: 50px;
+  width: 1000px;
+}
+.mobileInfo{
+  background: #FAF6F6;
+  padding: 20px;
+
+}
+
+.well {
+  width: 200px;
+}
+.well ul{
+  list-style:none;
+   padding-left:0px;
+}
+.well li{
+  color: red;
+  font-size: 40px;
+}
+
+.detail-list {
+  font-size: 20px;
+  margin: 10px 0 10px 0;
+}
+.detail-list li {
+  padding: 5px;
+}
+
+
+@media screen and (min-width: 997px) {
+  .time-selecter-box{
+  position: relative;
+  left: 100px;
+  bottom: 35px;
+  padding-top: 0;
+  width: 500px;
+}
+ div .radio{
+   font-size: 20px;
+   background: #E0DEDE;
+   width: 90px;
+   border: 1px solid;
+   padding: 5px;
+   margin: 5px;
+   border-radius: 30px;
+   display: inline-block !important;
+ }
+.res-btn{
+  display: block;
+}
+div .time-selecter-box :hover{
+   background: gray;
+ }
+
+
+ .line{
+   visibility:hidden
+ }
+}
+
+
+@media screen and (max-width: 996px) {
+
+  .shop-wrrapper{
+    width:100%;
+  }
+  img{
+    width: 80%;
+  }
+  .shopName{
+    width:100%;
+  }
+  .shop-image {
+    width:100%;
+    height:450px;
+  }
+  .menu-image {
+    width:100%;
+    height:450px;
+  }
+}
