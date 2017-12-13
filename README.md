@@ -8,7 +8,7 @@
  * HTML5 / CSS3
  * Angular5
  * bootstrap(ngx-bootstrap)
- * iamport (결제라이브러리)
+ * iamport (결제 라이브러리)
 
 # 기능
  * 이메일 회원가입
