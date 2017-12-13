@@ -23,10 +23,10 @@ import { Component } from '@angular/core';
         <div class="col-md-5">
           <nav class="nav-menus">
             <a class="login-button">
-              <app-login></app-login>
+             
             </a>
             <a>
-              <app-signFrom></app-signFrom>
+            
             </a>
             <button class="login-icon">
               <figure class="user">

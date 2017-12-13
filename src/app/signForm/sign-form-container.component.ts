@@ -3,52 +3,56 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 
 class User {
   constructor(
-    public userid: string,
-    public username: string,
-    public password: string,
+    public name: string,
+    public email: string,
+    public password1: string,
     public password2: string
  
   ) { }
 }
+class Profile{
+  constructor(
+    public nickname: string
+    ){}
+}
 
-// interface User {
-//   userid: string,
-//   username: string,
-//   password: string,
-//   password2: string,
-// }
 @Component({
-  selector: 'app-signFrom',
+  selector: 'app-sign-form-container',
   templateUrl: './sign-form-container.component.html',
   styleUrls: ['./sign-form-container.component.css']
 })
-export class SignFormComponent implements OnInit {
-  places = [
-    { id: 1, name: "강남구" },
-    { id: 2, name: "서초구" },
-    { id: 3, name: "용산구" },
-    { id: 4, name: "마포구" },
-    { id: 5, name: "성북구" }
-  ];
+export class SignFormContainerComponent implements OnInit {
+
   selectedValue = null;
   user: User;
+  userProfile: Profile;
   modalRef: BsModalRef;
   modalRef2: BsModalRef;
   modalRef3: BsModalRef;
   modalRef4: BsModalRef;
   template: TemplateRef<any>;
-  url = 'http://localhost:3000/user';
- 
+  appUrl: string = environment.apiUrl;
+
+  // name: string;
+  // email: string;
+  // password1: string;
+  // password2: string;
 
 
 // 모달 메소드
   constructor(private modalService: BsModalService, public http: HttpClient) { }
 
   openModal(template: TemplateRef<any>) {
+    // console.log(this.modalRef);
+    // console.log(this.modalService);
+    // console.log(this.template);
+    // console.log(BsModalRef);
+
     this.modalRef = this.modalService.show(template);
   }
   openModal2(template: TemplateRef<any>) {
@@ -66,24 +70,31 @@ export class SignFormComponent implements OnInit {
     this.modalRef3.hide();
     this.modalRef3 = null;
   }
-  // add(templateNested) {
-  //   console.log(templateNested);
-  //   const payload = { userid: this.user.userid, username: this.user.username, password: this.user.password, password2: this.user.password2 }
-  //   this.http.post(this.url, payload)
-  //     .subscribe(() => this.openModal2(this.template));
-  // }
-  onSubmit(signForm) {
-    console.log('Send user to server: ', this.user);
+
+  // 회원가입 데이터 전달
+  onSubmit(signform) {
+    console.log('Send user to server: ', signform);
+    const payload = { name: signform.value.name, email: signform.value.email, password1: signform.value.password1, password2: signform.value.password2 };
+    this.http.post(`${this.appUrl}/accounts/signup/`, payload)
     
+      .subscribe((res) => console.log(res));
+  
     this.initUser();
     // userForm.reset();
   }
 
   ngOnInit() {
     this.initUser();
+    this.initProfile();
+    console.log(this.user);
+    console.log('[appUrl]', this.appUrl);
   }
+
   initUser() {
-    this.user = new User('', '','','');
+    this.user = new User('', '', '', '');
+  }
+  initProfile() {
+    this.userProfile = new Profile('');
   }
 
 }

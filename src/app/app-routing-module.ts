@@ -7,15 +7,19 @@ import {
   ShopComponent,
   NotFoundComponent,
   PaymentComponent,
-  MypageComponent
+  MypageComponent,
+  MainResultComponent
 } from './routing-forRouting';
+
+
 
 // 라우트 구성
 const routes: Routes = [
   { path: '', component: MainComponent },
-  { path: 'shop', component: ShopComponent },   
+  { path: 'shop', component: ShopComponent },
   { path: 'payment', component: PaymentComponent },
   { path: 'mypage', component: MypageComponent },
+  { path: 'mainresult', component: MainResultComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

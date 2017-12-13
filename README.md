@@ -1,27 +1,24 @@
-# Reservation
+# 프로젝트 소개
+* 레스토랑의 예약 및 결제를 위한 어플리케이션
+* 와이어프레임 : https://drive.google.com/open?id=1sGTe_dM2s2xcbKoAUFuQy1PmjOkxbHx3
+* 스크럼보드 : https://docs.google.com/spreadsheets/d/11_Eaf7BvM23yRg8N8akdSnpa7FYvva1jCiWQxZCVf50/edit#gid=669673461
+* API : https://isaccchoi.gitbooks.io/zinzi/content/
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
+# 사용기술
+ * HTML5 / CSS3
+ * Angular5
+ * bootstrap(ngx-bootstrap)
+ * iamport (결제라이브러리)
 
-## Development server
+# 기능
+ * 이메일 회원가입
+ * 로그인
+ * 레스토랑 검색 및 추천
+ * 레스토랑 정보제공 및 댓글/평점/즐겨찾기
+ * 레스토랑 예약 및 예약금 결제
+ * 예약내역 관리
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# 진행중
+ * 회원가입 / 로그인 (JWT)
+ * 예약관리페이지 (고객/점주)
+ * 선호도에 따른 식당리스트 제공

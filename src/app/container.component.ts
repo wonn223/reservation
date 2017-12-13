@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ShopListService } from './shop-service.service';
+import { ShopListService } from './services/shop-service.service';
 
 @Component({
   selector: 'app-container',

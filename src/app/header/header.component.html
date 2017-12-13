@@ -1,0 +1,148 @@
+<div class="row header">
+    <div class="col-xs-4 col-md-4">
+        <nav>
+            <input type="checkbox" class="nav-toggle" id="nav-toggle">
+            <label for="nav-toggle" class="navicon">
+                <span class="nav-bar"></span>
+            </label>
+            <ul class="nav-items">
+                <li>로그인(비회원)/로그아웃(로그인 시)</li>
+                <li>회원가입</li>
+                <li>마이페이지</li>
+                <li>예약확인</li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-xs-4 col-md-4">
+        <fieldset class="main-search">
+            <input type="text" id="mainsearch" placeholder="지역, 가게명 검색">
+            <input type="button" class="button-search" value="검색">
+        </fieldset>
+    </div>
+    <div class="col-xs-4 col-md-4 navs">
+        <nav class="nav-menus">
+                <a href="#">
+                  <button type="button" class="login-button" (click)="openModal(template)">로그인</button>
+                </a>
+                <a href="#">회원가입</a>
+            <button class="login-icon">
+                <figure class="user">
+                    <span class="badge"></span>
+                    <div class="thumb"></div>
+                </figure>
+            </button>
+        </nav>
+    </div>
+</div>
+
+<ng-template #template>
+    <div class="sign-form-wrapper">
+      <div class="title-wrapper">
+        <div class="logo-wrapper">
+          <div class="base"></div>
+          <div class="logo"></div>
+        </div>
+         <h2 class="sign-header"></h2>
+         <h3 class="name">진지한</h3>
+         <h3 class="name2"><p>밥</p><p>상</p></h3>
+      </div>
+      <form class="sign-form sign-input-list">
+        <div class="form-group">
+            <label for="signform-InputEmail"></label>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16"><path fill-rule="evenodd" d="M0 4v8c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1H1c-.55 0-1 .45-1 1zm13 0L7 9 1 4h12zM1 5.5l4 3-4 3v-6zM2 12l3.5-3L7 10.5 8.5 9l3.5 3H2zm11-.5l-4-3 4-3v6z"/></svg>            
+            <input type="email" placeholder="이메일 주소" name="userid" class="form-control" [(ngModel)]="user.userid" #userid="ngModel" pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$" required>
+            <em *ngIf="userid.errors?.pattern && userid.touched" class="alert">User id는 email 형식으로 입력하세요!</em>
+            <em *ngIf="userid.errors?.required && userid.touched" class="alert">User id로 사용할 email을 입력하세요!</em>
+        </div>  
+
+            <div class="form-group">
+                <label for="signform-InputPassword"></label>
+                <div class="forIcon">
+                    <svg class="octicon-lock" xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M4 13H3v-1h1v1zm8-6v7c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V7c0-.55.45-1 1-1h1V4c0-2.2 1.8-4 4-4s4 1.8 4 4v2h1c.55 0 1 .45 1 1zM3.8 6h4.41V4c0-1.22-.98-2.2-2.2-2.2-1.22 0-2.2.98-2.2 2.2v2H3.8zM11 7H2v7h9V7zM4 8H3v1h1V8zm0 2H3v1h1v-1z"/></svg>                                                      
+                    <a class="forgot" [class.position-fixed]="password.errors?.pattern && password.touched || password.errors?.required && password.touched" (click)="openModal(auth)">forgot?</a> 
+                    <input type="password" name="password" class="form-control" [(ngModel)]="user.password" #password="ngModel" pattern="[a-zA-Z0-9]{4,10}" placeholder="패스워드" required>
+                            <em *ngIf="password.errors?.pattern && password.touched" class="alert">
+                            영문 또는 숫자로 4자리 이상 10이하로 입력하세요!
+                            </em>
+                            <em *ngIf="password.errors?.required && password.touched" class="alert">
+                            Password를 입력하세요!
+                            </em>
+                </div>
+            </div>
+        <button type="button" class="btn-primary btn-join" (click)="openModal2(templateNested)">Join</button>
+        <div class="row-sns auth-sns">
+            <div class="col-xs-4">
+              <a href="#">
+                  <div class="btn-block btn-twitter">twitter</div>
+              </a>
+            </div>
+            <div class="col-xs-4">
+              <a href="#">
+                  <div class="btn-block btn-facebook">facebook</div>
+              </a>
+            </div>
+            <div class="col-xs-4">
+              <a href="#">
+                  <div class="btn-block btn-gmail">gmail</div>
+              </a>
+            </div>
+          </div>
+      </form>
+      <div class="bottom-wrapper">
+          <!-- 새로 만들어서 넣기 -->
+        <a (click)="openModal2()">
+          진지한 밥상이 처음이신가요?
+          <span class="icon-arrow-right"></span>
+        </a>
+      </div>
+      <div class="cc">Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+    </div>
+  </ng-template>
+ 
+  <!-- join 클릭 후 -->
+  <ng-template #templateNested>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">좋아하는 음식을 고르세요</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="openModal3(signinStep2)">
+            다음 단계
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 modal-body join-modal">
+                <div class="col-xs-12 content_wrap">
+                     <div class="col-xs-2 foodCategory">  
+                         <!-- <a href="#" class="category1"></a> -->
+                     </div>
+                     <div class="col-xs-4 foodCategory">
+                         <a href="#" class="category1"></a>
+                     </div>
+                     <div class="col-xs-4 foodCategory">
+                         <a href="#" class="category1"></a>
+                     </div>
+                     <div class="col-xs-2 foodCategory">
+                         <!-- <a href="#" class="category1"></a> -->
+                     </div>
+                    </div>
+                  This is nested modal.<br>
+        </div>
+    </div>
+    <button *ngIf="modalRef" type="button" class="btn btn-danger" (click)="closeModal()">Close first modal</button>
+  </ng-template>
+
+  <ng-template #signinStep2>
+        <div class="modal-header join-modal">
+            <h4 class="modal-title pull-left">방문하는 지역을 선택해주세요</h4>
+            <button type="button" class="close pull-right" aria-laxbel="Close" (click)="modalRef2.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body join-modal">
+                This is nested modal.<br>
+            <button *ngIf="modalRef" type="button" class="btn btn-danger" (click)="closeModal()">Close first modal</button>
+        </div>
+  </ng-template>
+
+  
+
+

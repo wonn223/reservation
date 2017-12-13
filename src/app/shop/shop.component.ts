@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef} from '@angular/core';
-import { ShopListService } from '../shop-service.service';
+import { ShopListService } from '../services/shop-service.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 
-interface resList {
+interface ResList {
   id: number;
   time: number;
 }

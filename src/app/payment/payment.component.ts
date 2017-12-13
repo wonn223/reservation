@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ShopListService } from '../shop-service.service';
+import { ShopListService } from '../services/shop-service.service';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, RequestOptions } from '@angular/http';
@@ -17,10 +17,10 @@ export class PaymentComponent implements OnInit {
 
 
   amount = this.shopListService.resInfo.people * this.shopListService.resInfo.price;
-  name: string   //예약자이름
-  tel: string // 예약자전화번호
-  mail: string // 예약자 이메일
-  reservationPk: number
+  name: string;   // 예약자이름
+  tel: string; // 예약자전화번호
+  mail: string; // 예약자 이메일
+  reservationPk: number;
 
   // 예약관련 함수와 결제.
   reservationCreat() {

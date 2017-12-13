@@ -1,0 +1,8 @@
+@import url('../main.component.css');
+
+
+* {
+    position: relative;
+    z-index: 4;
+    background-color: black;
+}

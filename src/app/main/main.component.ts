@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
 
@@ -14,6 +15,13 @@ export class MainComponent implements OnInit {
   eventStorage = [];
   stepVal = [];
   state = 'inactive';
+  pageScr;
+  // 내장 객체 Window
+  public _window: Window;
+
+
+  constructor(public router: Router) {
+  }
 
   check(fd, event) {
     // 이전에 다른 곳에서 체크 표시가 있을 경우
@@ -33,7 +41,7 @@ export class MainComponent implements OnInit {
     console.log(this.isHover);
 
   }
-  constructor() { }
+
 
   ngOnInit() {
 
