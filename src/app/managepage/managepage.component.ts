@@ -2,12 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-managepage',
-  template: `
-    <p>
-      managepage works!
-    </p>
-  `,
-  styles: []
+  templateUrl: './managepage.component.html',
+  styleUrls: ['./managepage.component.css']
 })
 export class ManagepageComponent implements OnInit {
 
