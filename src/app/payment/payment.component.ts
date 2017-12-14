@@ -15,6 +15,7 @@ declare var IMP: any;
 })
 export class PaymentComponent implements OnInit {
 
+  appUrl = environment.apiUrl;
 
   amount = this.shopListService.resInfo.people * this.shopListService.resInfo.price;
   name: string;   // 예약자이름
@@ -31,18 +32,14 @@ export class PaymentComponent implements OnInit {
       "phone_number": this.tel,
       "email": this.mail
     };
-    console.log(payload)
+    //해더의 생성
+    const headers = new HttpHeaders()
+      .set('Authorization', 'my-auth-token');
+
+    this.http.post(`${this.appUrl}/reservations/${this.shopListService.resInfo.timePk}/reservation/`, payload, { headers })
+      .subscribe(info => console.log(info))   //info => this.reservationPk = inof.id 로 변경함.
+    console.log(payload, headers)
     this.payMode()
-    // const headers = {
-    //   'Content-Type': 'application/json',
-    //   'Accept': 'application/json',
-    //   'Access-Control-Allow-Headers': 'Content-Type',
-    //   'token': '8e4c0b883c763e0cf5e7573ae20276c062f05f46'
-    // };
-    // this.http.post(this.appUrl, payload, header)
-        // .subscribe(res => {
-        //   console.log(res)
-        // res.id})
   }
 
 
@@ -66,7 +63,7 @@ export class PaymentComponent implements OnInit {
       if (rsp.success) {
 
         jquery.ajax({
-          url: `/reservations/${this.reservationPk}/payment`, //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+          url: `${this.appUrl}/reservations/${this.reservationPk}/payment`, //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
           // /reservations/${this.reservationPk}/payment/
           type: 'POST',
           dataType: 'json',
@@ -92,9 +89,10 @@ export class PaymentComponent implements OnInit {
 
 
   //서버로 전달하기
-  constructor(public shopListService: ShopListService) { }
+  constructor(public shopListService: ShopListService, public http: HttpClient) { }
 
   ngOnInit() {
+    console.log(this.shopListService.resInfo)
 
   }
 
