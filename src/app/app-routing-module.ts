@@ -8,7 +8,8 @@ import {
   NotFoundComponent,
   PaymentComponent,
   MypageComponent,
-  MainResultComponent
+  MainResultComponent,
+  ManagepageComponent
 } from './routing-forRouting';
 
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'payment', component: PaymentComponent },
   { path: 'mypage', component: MypageComponent },
   { path: 'mainresult', component: MainResultComponent },
+  { path: 'managepage', component: ManagepageComponent },
   { path: '**', component: NotFoundComponent },
 ];
 
