@@ -38,6 +38,8 @@ import { ReplyRoutingModule } from './reply.routes';
 import { SteponeComponent } from './main/stepone/stepone.component';
 import { SteptwoComponent } from './main/steptwo/steptwo.component';
 import { StepthreeComponent } from './main/stepthree/stepthree.component';
+import { ManagepageComponent } from './managepage/managepage.component';
+
 
 @NgModule({
   declarations: [
@@ -58,7 +60,8 @@ import { StepthreeComponent } from './main/stepthree/stepthree.component';
     DashboardComponent,
     SteponeComponent,
     SteptwoComponent,
-    StepthreeComponent
+    StepthreeComponent,
+    ManagepageComponent
   ],
   imports: [
     BrowserModule, FormsModule, ButtonsModule.forRoot(),
