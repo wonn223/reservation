@@ -50,7 +50,6 @@ export class MypageComponent implements OnInit {
   constructor(public http: HttpClient) { }
 
   ngOnInit() {
-
     this.myReservation()
   }
 

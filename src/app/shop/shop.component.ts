@@ -149,7 +149,7 @@ export class ShopComponent implements OnInit {
 
   ngOnInit() {
     this.getShop(this.shopPk);
-    this.shopListService.getShop(this.shopPk)
+    this.shopListService.getShop(this.shopPk);
     this.bsConfig = Object.assign({}, { containerClass: 'theme-red' });
   }
 
