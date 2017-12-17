@@ -23,74 +23,26 @@
 
   <tabset>
     <tab heading='예약확인'>
-      <table class="table">
+      <table class="table" >
           <tr>
             <td class="info">No</td>
             <td class="info">레스토랑 이름</td>
             <td class="info">예약인원</td>
             <td class="info">예약일자</td>
-            <td class="info">위치</td>
-            <td class="info">연락처</td>
+            <td class="info">예약시간</td>
+            <td class="info">주소</td>
             <td class="info">링크</td>
             <td class="info">취소요청</td>
           </tr>
-          <tr>
-            <td class="active">1</td>
-            <td>ABC레스토랑</td>
-            <td>2명</td>
-            <td>2017년 12월 25일</td>
-            <td>서울시 강남구 신사동</td>
-            <td>02-1234-5678</td>
+          <tr *ngFor="let item of resList; let i =index">
+            <td class="active">{{ i+1 }}</td>
+            <td>{{ item.shopName}}</td>
+            <td>{{ item.party }}</td>
+            <td>{{ item.resDate }}</td>
+            <td>{{ item.resTime }}</td>
+            <td>{{ item.shopAddress }}</td>
             <td>바로가기</td>
             <td> <button>취소요청</button></td>
-          </tr>
-          <tr>
-            <td class="active">1</td>
-            <td>ABC레스토랑</td>
-            <td>2명</td>
-            <td>2017년 12월 25일</td>
-            <td>서울시 강남구 신사동</td>
-            <td>02-1234-5678</td>
-            <td>바로가기</td>
-            <td>
-              <button>취소요청</button>
-            </td>
-          </tr>
-          <tr>
-            <td class="active">1</td>
-            <td>ABC레스토랑</td>
-            <td>2명</td>
-            <td>2017년 12월 25일</td>
-            <td>서울시 강남구 신사동</td>
-            <td>02-1234-5678</td>
-            <td>바로가기</td>
-            <td>
-              <button>취소요청</button>
-            </td>
-          </tr>
-          <tr>
-            <td class="active">1</td>
-            <td>ABC레스토랑</td>
-            <td>2명</td>
-            <td>2017년 12월 25일</td>
-            <td>서울시 강남구 신사동</td>
-            <td>02-1234-5678</td>
-            <td>바로가기</td>
-            <td>
-              <button>취소요청</button>
-            </td>
-          </tr>
-          <tr>
-            <td class="active">1</td>
-            <td>ABC레스토랑</td>
-            <td>2명</td>
-            <td>2017년 12월 25일</td>
-            <td>서울시 강남구 신사동</td>
-            <td>02-1234-5678</td>
-            <td>바로가기</td>
-            <td>
-              <button>취소요청</button>
-            </td>
           </tr>
       </table>
     </tab>
