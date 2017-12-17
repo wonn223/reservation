@@ -64,7 +64,8 @@ em{
   width: 200px;
 }
 .btn-default{
-  background: red;
+  background: #E0DEDE;
+  border: none;
   position: relative;
   top: 18px;
 }
