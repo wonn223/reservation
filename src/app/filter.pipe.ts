@@ -12,3 +12,17 @@ export class FilterPipe implements PipeTransform {
     return values[id];
   }
 }
+
+@Pipe({
+  name: 'changePrice'
+})
+export class PricePipe implements PipeTransform {
+  //문자열의 값을 숫자형태로 표기
+  transform(values: string, price: string): any {
+    if (values == "c") { return "10,000원" }
+    else if (values == "n") { return "15,000원" }
+    else if (values == "e") { return "20,000원" }
+    else { return "30,000원" }
+  }
+}
+ 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ShopListService } from '../services/shop-service.service';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, RequestOptions } from '@angular/http';
+import { HttpHandler } from '@angular/common/http/src/backend';
 declare var jquery: any;
 declare var $: any;
 declare var IMP: any;
@@ -26,17 +26,27 @@ export class PaymentComponent implements OnInit {
   // 예약관련 함수와 결제.
   reservationCreat() {
     const payload = {
-      "name": "userid",
-      "party": this.name,
-      "price": this.shopListService.resInfo.price * this.shopListService.resInfo.people,
+      "name": this.name,
+      "party": this.shopListService.resInfo.people,
+      "price": this.amount,
       "phone_number": this.tel,
       "email": this.mail
     };
     //해더의 생성
-    const headers = new HttpHeaders()
-      .set('Authorization', 'my-auth-token');
+    // const headers = new HttpHeaders()
+    //   .set('Authorization', 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d');
 
-    this.http.post(`${this.appUrl}/reservations/${this.shopListService.resInfo.timePk}/reservation/`, payload, { headers })
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+    }
+    const options = {
+      headers : new HttpHeaders(headers)
+    }
+
+    console.log(headers, options)
+    
+    this.http.post(`${this.appUrl}/reservations/${this.shopListService.resInfo.timePk}/reservation/`, payload, options)
       .subscribe(info => console.log(info))   //info => this.reservationPk = inof.id 로 변경함.
     console.log(payload, headers)
     this.payMode()

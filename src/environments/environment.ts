@@ -8,5 +8,5 @@ export const environment = {
   googleMapApiKey: 'AIzaSyAmwNlFF61nFgPMCvuT1r_NDogsyVQQmJI',
   iamportCode: 'imp56421298',
   iamportRestApi: 6343293486082258,
-  apiUrl: 'http://zinzi.booki.kr/'
+  apiUrl: 'http://api.booki.kr'
 };

@@ -10,7 +10,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { AppRoutingModule } from './app-routing-module';
 import { environment } from '../environments/environment';
 import { ShopListService } from './services/shop-service.service';
-import { FilterPipe } from './filter.pipe' ;
+import { FilterPipe, PricePipe  } from './filter.pipe' ;
 
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
@@ -54,6 +54,7 @@ import { ManagepageComponent } from './managepage/managepage.component';
     LoginComponent,
     SignFormContainerComponent,
     FilterPipe,
+    PricePipe,
     MypageComponent,
     ReplyComponent,
     MainResultComponent,

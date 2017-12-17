@@ -5,9 +5,9 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 import { shopInfo, timeList } from '../models/shopInfo';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-
+import { HttpHandler } from '@angular/common/http/src/backend';
 
 interface ResList {
   id: number;
@@ -58,6 +58,8 @@ export class ShopComponent implements OnInit {
     // console.log(event);
   }
 
+  toggleStatus: string = "btn btn-lg btn-danger"
+
   // 확인 모달
 
   modalRef: BsModalRef;
@@ -106,6 +108,27 @@ export class ShopComponent implements OnInit {
        }
       );
   }
+
+  // 즐겨찾기 버튼 
+
+  favoriteToggle(){
+    const payload = {}
+
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+    }
+    const options = {
+      headers: new HttpHeaders(headers)
+    }
+
+    this.http.post(`${this.appUrl}/reservations/${this.shopPk}/favorite-toggle/`, payload, options)
+      .subscribe(toggleStatus => {
+        if(toggleStatus.result === true){
+          this.toggleStatus = "btn btn-lg btn-danger"
+        } else { this.toggleStatus = "btn btn-lg btn-default"}
+      }) 
+  }
    
   // 예약가능시간 조회
   times: any;
@@ -117,7 +140,7 @@ export class ShopComponent implements OnInit {
       date: this.bsValue.getDate()
     }
 
-    this.http.get<timeList[]>(`http://zinzi.booki.kr/restaurants/${this.shopPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${selectedOption.month}-${selectedOption.date}`)
+    this.http.get<timeList[]>(`http://api.booki.kr/restaurants/${this.shopPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${selectedOption.month}-${selectedOption.date}`)
       .subscribe(getTime => {
         this.times = getTime.map(list => Object.assign({}, {time: list.time, timePk: list.pk}))
         console.log(this.times)        
@@ -126,7 +149,7 @@ export class ShopComponent implements OnInit {
 
   ngOnInit() {
     this.getShop(this.shopPk);
-    this.shopListService.getShop(this.shopPk)
+    this.shopListService.getShop(this.shopPk);
     this.bsConfig = Object.assign({}, { containerClass: 'theme-red' });
   }
 

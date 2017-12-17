@@ -20,7 +20,8 @@
       <h1> {{ shopName }}</h1>
       <a href="shop/#review">리뷰 : {{ shopListService.shopTest.reviewCount }}건 | 평점 : {{ starRate }}점</a>
       <span class="favorite">
-      <img class="heart" src="../../../assets/heart.png" (click)="shopListService.addFavorite()"> ({{ shopListService.shopTest.countFavorite }}) </span>
+      <a (click)="favoriteToggle()" [class]="toggleStatus"> 
+        <span class="glyphicon glyphicon-heart-empty"></span> favorite</a></span>
     </div>
   </div>
 
@@ -161,11 +162,11 @@
         </tr>
         <tr>
           <td class="tname">평균가격대</td>
-          <td>{{ averagePrice }}</td>
+          <td>{{ averagePrice | changePrice }}</td>
         </tr>
         <tr>
           <td class="tname">수용인원</td>
-          <td>{{ maxParty }}</td>
+          <td>{{ maxParty }}명</td>
         </tr>
         <tr>
           <td class="tname">길찾기</td>
