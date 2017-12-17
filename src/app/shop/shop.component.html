@@ -20,7 +20,7 @@
       <h1> {{ shopName }}</h1>
       <a href="shop/#review">리뷰 : {{ shopListService.shopTest.reviewCount }}건 | 평점 : {{ starRate }}점</a>
       <span class="favorite">
-      <a href="#" class="btn btn-lg btn-danger"> 
+      <a (click)="favoriteToggle()" [class]="toggleStatus"> 
         <span class="glyphicon glyphicon-heart-empty"></span> favorite</a></span>
     </div>
   </div>

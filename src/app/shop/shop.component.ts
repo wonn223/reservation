@@ -5,9 +5,9 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 import { shopInfo, timeList } from '../models/shopInfo';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-
+import { HttpHandler } from '@angular/common/http/src/backend';
 
 interface ResList {
   id: number;
@@ -58,6 +58,8 @@ export class ShopComponent implements OnInit {
     // console.log(event);
   }
 
+  toggleStatus: string = "btn btn-lg btn-danger"
+
   // 확인 모달
 
   modalRef: BsModalRef;
@@ -105,6 +107,27 @@ export class ShopComponent implements OnInit {
         else {this.reservationPrice = 30000} 
        }
       );
+  }
+
+  // 즐겨찾기 버튼 
+
+  favoriteToggle(){
+    const payload = {}
+
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+    }
+    const options = {
+      headers: new HttpHeaders(headers)
+    }
+
+    this.http.post(`${this.appUrl}/reservations/${this.shopPk}/favorite-toggle/`, payload, options)
+      .subscribe(toggleStatus => {
+        if(toggleStatus.result === true){
+          this.toggleStatus = "btn btn-lg btn-danger"
+        } else { this.toggleStatus = "btn btn-lg btn-default"}
+      })   //info => this.reservationPk = inof.id 로 변경함.
   }
    
   // 예약가능시간 조회
