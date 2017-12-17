@@ -127,7 +127,7 @@ export class ShopComponent implements OnInit {
         if(toggleStatus.result === true){
           this.toggleStatus = "btn btn-lg btn-danger"
         } else { this.toggleStatus = "btn btn-lg btn-default"}
-      })   //info => this.reservationPk = inof.id 로 변경함.
+      }) 
   }
    
   // 예약가능시간 조회
