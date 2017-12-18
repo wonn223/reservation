@@ -24,6 +24,7 @@ export class PaymentComponent implements OnInit {
   reservationPk: number;
 
   // 예약관련 함수와 결제.
+
   reservationCreat() {
     const payload = {
       "name": this.name,
@@ -53,7 +54,7 @@ export class PaymentComponent implements OnInit {
   }
 
 
-
+  // imp UID와 예약정보의 연결방법
 
   // 결제창을 띄우는 함수
   payMode = function () {
