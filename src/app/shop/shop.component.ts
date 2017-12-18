@@ -76,7 +76,7 @@ export class ShopComponent implements OnInit {
   
 
   // shop view에 필요한 내용들 직접가져오기 (pk는 메인페이지 클릭할 때 전달받아야함)
-  shopPk = 1
+  // shopPk = this.resPk
   shopName: string
   shopDescription: string
   shopAddress: string
@@ -128,8 +128,9 @@ export class ShopComponent implements OnInit {
       headers: new HttpHeaders(headers)
     }
 
-    this.http.post(`${this.appUrl}/reservations/${this.shopPk}/favorite-toggle/`, payload, options)
+    this.http.post(`${this.appUrl}/reservations/${this.resPk}/favorite-toggle/`, payload, options)
       .subscribe((toggleStatus:any) => {
+        console.log(toggleStatus)
         if(toggleStatus.result === true){
           this.toggleStatus = "btn btn-lg btn-danger"
         } else { this.toggleStatus = "btn btn-lg btn-default"}
@@ -146,7 +147,7 @@ export class ShopComponent implements OnInit {
       date: this.bsValue.getDate()
     }
 
-    this.http.get<timeList[]>(`http://api.booki.kr/restaurants/${this.shopPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${selectedOption.month}-${selectedOption.date}`)
+    this.http.get<timeList[]>(`http://api.booki.kr/restaurants/${this.resPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${selectedOption.month}-${selectedOption.date}`)
       .subscribe(getTime => {
         this.times = getTime.map(list => Object.assign({}, {time: list.time, timePk: list.pk}))
         console.log(this.times)        
@@ -155,8 +156,7 @@ export class ShopComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => { this.resPk = +params['resPk'] })
-    this.getShop(this.shopPk);
-    this.shopListService.getShop(this.shopPk);
+    this.getShop(this.resPk);
     this.bsConfig = Object.assign({}, { containerClass: 'theme-red' });
   }
 
