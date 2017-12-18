@@ -29,9 +29,9 @@
       <div class="star-rating col-md-5" #rating>
         <rating [max]="5" [(ngModel)]="y" [customTemplate]="tt"></rating>
         <!-- <b>(<i>Rate:</i>){{ y }}</b> -->
-        <ng-template #tt let-i="index" let-v="value">
-          <button class="btn btn-color" (click)="checkCount(v, $event)" >
-          {{ i < v ? '&#9733;' : '&#9734;'}}  
+        <ng-template #tt let-i="index" let-starVal="value">
+          <button class="btn btn-color" (click)="checkCount(starVal)">
+          {{ i < starVal ? '&#9733;' : '&#9734;'}}  
           </button>
         </ng-template>
       </div>
@@ -44,9 +44,13 @@
         <figcaption>unknown</figcaption>
       </div>
       <div class="comment-block">
-        <form>
-            <textarea #txt name="comment" id="comment" rows="4" (keyup.enter)="postComments(txt.value, rate)" #textarea placeholder="Add a comment.."></textarea>
-        </form>
+        <form #com="ngForm">
+          <textarea ngModel #txt="ngModel" name="comment" id="comment" rows="4" minlength="1" maxlength="110" placeholder="Add a comment.." (click)="dd(txt, com)" (keyup.enter)="postComments(txt, txt.value, rate)" required></textarea>
+          <!-- <p *ngIf="txt.invalid && txt.touched" placeholder="내용을 입력해주세요"></p> -->
+          <button type="button" class="btn btn-primary comment-btn">
+          POST
+          </button>
+      </form>
       </div>
   </div>
   <!-- <div class="upload-wrapper col-md-12"> -->
@@ -60,24 +64,45 @@
     <ul class="list-reviews">
        <li class="default_review" *ngFor="let td of comment">
         <section class="review-item"> 
-           <div class="review-content">
+           <div class="review-content" [class.editMode]="isActivated">
              <figure class="user">
                <div class="thumb">
                  <img src="https://goo.gl/nywpxw" alt="프로필 이미지">
                </div>
-               <figcaption>{{ td.author }}</figcaption>
-               <div>{{ td.star_rate }}</div>
+               <figcaption>{{ this.profile2 | json }}</figcaption>
+               <div class="star_rate" [class.editMode]="isActivated">{{ td.star_rate }}</div>
+               <div class="btn-group" [class.editMode]="isActivated" dropdown>
+                <button type="button" class="btn btn-danger">별점</button>
+                <button type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split">
+                  <span class="caret"></span>
+                  <span class="sr-only">Split button!</span>
+                </button>
+                <ul [formGroup]="patchedRate" *dropdownMenu class="dropdown-menu" role="menu">
+                  <li role="menuitem"><a class="dropdown-item" id="1" (click)="getPatchedrate($event)">1(별로)</a></li>
+                  <li role="menuitem" ><a class="dropdown-item" id="2" (click)="getPatchedrate($event)">2(별로)</a></li>
+                  <li role="menuitem" ><a class="dropdown-item" id="3" (click)="getPatchedrate($event)">3(보통)</a></li>
+                  <li role="menuitem" ><a class="dropdown-item" id="4"(click)="getPatchedrate($event)">4(괜찮다)</a></li>
+                  <li role="menuitem"><a class="dropdown-item" id="5" (click)="getPatchedrate($event)">5(맛있다)</a></li>
+                </ul>
+              </div>
              </figure>
-             <p class="test">
-                {{ td.comment }}
-             </p>
-             <i class="glyphicon glyphicon-pencil pull-right" (click)="patchComm(td.pk, td.comment)"></i>
-             <i class="glyphicon glyphicon-remove-sign pull-right" (click)="removeComm(td.pk)"></i>
+             <div class="patch-comment-block">
+              <input class="patchInput" #patchInput type="text" multiline="true" value="{{ td.comment }}">
+                <label class="test">
+                  {{ td.comment }}
+                </label>
+            </div>
+             <div class="icon-wrapper">
+              <i class="glyphicon glyphicon-pencil pull-right" [class.editMode]="isActivated" (click)="changeAct(remove)"></i>
+              <i class="glyphicon glyphicon-ok" [class.editMode]="isActivated" (click)="patchComm(td.pk, patchInput)"></i>
+              <i #remove class="glyphicon glyphicon-remove-sign pull-right" [class.editMode]="isActivated"  (click)="removeComm(td.pk)"></i>
+             </div>
            </div>
         </section>
       </li>
     </ul>
   </section>
   <div class="col-md-2"></div>
+  <pre>{{ this.patchedRate.controls[1] | json}}</pre>
 </div>
 </div>

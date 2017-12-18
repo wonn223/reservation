@@ -10,6 +10,10 @@ body {
     color: #555f77;
 }
 
+label {
+    margin : 0;
+}
+
 .review-container {
     /* width: 55.556%; */
     height: auto;
@@ -70,27 +74,121 @@ body {
     border-bottom: 1px solid gray;
 }
 
-
 /* 아이콘, 댓글 내용, 평점 감싼 section클래스 */
 .review-item {
     position: relative;
     padding : 1rem 20px 1.4rem 90px;
     /* background-color: teal; */
-    min-height: 25vh;
+    min-height: 23vh;
 }
 
 
-.review-content  p {
+.review-content  label {
     display: block;
-    width: 100%;
-    /* height: 100%; */
+    width: 90%;
     word-wrap: break-word;
 }
 
-.review-item .review-content > p {
-    height: auto;
+/* 수정 시에 사라질 별표 평점 */
+.star_rate.editMode {
+    display: none;
 }
 
+.btn-group {
+    display: none;
+}
+
+/* patch 시에 나올 드롭다운 버튼 */
+.btn-group.editMode {
+    display: block;
+    position: absolute;
+    width: 100%;
+    margin : 5px 0px 0px 5px;
+ }
+
+.dropdown-menu {
+    top: 0;
+    left: 4vw;
+    height: 32px;
+    min-width: 430px;
+    padding: 3px;
+    margin: 0;
+}
+
+.dropdown-menu > li {
+    float: left;
+    width: auto;
+}
+
+.dropdown-menu>li>a {
+    padding:  2px 20px;
+}
+
+/* 선택값이 나오는 버튼 */
+.btn.btn-danger {
+     padding : 5px
+ }
+
+
+/* 클래스 바인딩 시에 라벨 제거 */
+.review-item .review-content.editMode label {
+    display: none;
+}
+
+
+.review-content .patch-comment-block > input[type=text] {
+    display: none;
+}
+
+/* 클래스 바인딩 시 인풋창 추가 */
+.review-content.editMode .patch-comment-block > input[type=text] {
+    display: block;
+    height: 20vh;
+    width: 90%;
+    padding: 15px 35px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+    border: 0;
+    word-wrap: break-word;
+}
+
+.patch-comment-block > input[type=text]
+{
+
+}
+
+
+.patch-comment-block .patch-input {
+    display: none;
+}
+
+/* 수정 버툰 클릭 후 untouched일 때 */
+input[type="text"] {
+    color: #888;
+}
+
+/* 수정 버튼 후 포커스가 창에 있을 때 */
+input[type="text"]:focus {
+    color: black;
+}
+
+/* 댓글 수정 시 아이콘 */
+.glyphicon.glyphicon-remove-sign.editMode,
+.glyphicon.glyphicon-pencil.editMode {
+    display: none;
+}
+
+.glyphicon.glyphicon-ok {
+    display: none;
+}
+
+.glyphicon.glyphicon-ok.editMode {
+    display: block;
+    top: 15px;
+    left: -15px;
+    font-size: 20px;
+    color: green;
+    cursor: pointer;
+}
 
 /* 댓글 프로필이미지 */
 .user {
@@ -118,6 +216,7 @@ body {
 
 /* 댓글 입력란 wrapper */
 .content-wrapper {
+    padding-left: 40px;
     /* position: relative; */
     margin-top: 4rem;
 }
@@ -126,7 +225,7 @@ body {
     display: table;
     width: 100%;
     margin: 0 auto; 
-    padding: 0 1.3rem 3rem 0;
+    padding: 0 0 3rem 0;
     border-bottom: 1px solid gray;
 }
 
@@ -136,8 +235,8 @@ body {
 
 .star-rating.col-md-5 {
     position: absolute;
-    top: -9vh;
-    right: 0;
+    top: -5vh;
+    right: -19px;
     text-align: right;
     padding-right: 0.3rem;
     z-index: 2;
@@ -168,6 +267,13 @@ body {
     margin-top: 0.5rem;
 }
 
+/* DEL/PATCH icon wrapper */
+.icon-wrapper {
+    position: absolute;
+    top: 15px;
+    right: 1.9vw;
+}
+
 .glyphicon.glyphicon-pencil {
     display: inline-block;
     text-align: right;
@@ -186,14 +292,15 @@ body {
 .comment-block {
     display: table-cell;
     background-color: #fff;
+    width: 90%;
+    text-align: right;
     vertical-align: top;
-    margin : 0;
-    padding : 1.5rem 0.5rem 2rem 0.5rem;
+    padding : 2.5rem 2.5rem 2rem 2.5rem;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
-}
+}    
 
 #comment {
-    width: 100%;
+    width: 85%;
     height: 4.5rem;
     resize: none;
     /* width: 80%; */
@@ -211,12 +318,8 @@ textarea {
     color: #555f77;
 }
 
-.test {
-    background-color: rgb(251, 203, 98);
-}
-
-.upload-wrapper {
-    position: relative;
+.comment-btn {
+    text-align:right;
 }
 
 .btn-wrapper {
@@ -255,7 +358,6 @@ textarea {
 
     .star-rating.col-md-5 
     {
-    
         position: absolute;
         top: -1vh;
         right: 0;

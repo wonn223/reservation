@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { JwtHelper } from 'angular2-jwt';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
@@ -17,13 +16,13 @@ export class AuthService {
     appUrl = environment.apiUrl;
     TOKEN_NAME = 'jwt_token';
 
-    constructor(private http: HttpClient, private jwtHelper: JwtHelper) {
+    constructor(private http: HttpClient) {
         console.log('[appUrl] ', this.appUrl);
     }
 
     signin(credential: User): Observable<Token> {
         return this.http.post<Token>(`${this.appUrl}/accounts/signin/`, credential)
-            .do(res => this.setToken(res.token,))
+            .do(res => this.setToken(res.token))
             .shareReplay();
     }
 
@@ -34,7 +33,7 @@ export class AuthService {
     // 토큰 유효성 검증
     isAuthenticated(): boolean {
         const token = this.getToken();
-        return token ? !this.isTokenExpired(token) : false;
+        return token ? true : false;
     }
 
     getToken(): string {
@@ -53,20 +52,12 @@ export class AuthService {
     /*
       token 유효 기간 체크
       The JwtHelper class has several useful methods that can be utilized in your components:
-  
+
       decodeToken
       getTokenExpirationDate
       isTokenExpired
-  
+
       npm install angular2-jwt
       https://github.com/auth0/angular2-jwt
     */
-    isTokenExpired(token: string) {
-        return this.jwtHelper.isTokenExpired(token);
-    }
-
-    getUserid(): string {
-        return this.jwtHelper.decodeToken(this.getToken()).email;
-        // return this.jwtHelper.decodeToken(this.getToken()).userid;
-    }
 }
