@@ -17,7 +17,7 @@ export class UserService {
         const headers = new HttpHeaders()
             .set('Authorization', this.auth.getToken());
 
-        return this.http.get<User[]>(`${this.appUrl}/accounts/signup/`, { headers })
+        return this.http.get<User[]>(`${this.appUrl}/accounts/signin/`, { headers })
             .shareReplay();
     }
 }

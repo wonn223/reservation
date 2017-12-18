@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { JwtHelper } from 'angular2-jwt';
+
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
@@ -11,24 +12,39 @@ import { environment } from '../../environments/environment';
 
 import { User } from '../models/user';
 import { Token } from '../models/token';
+import { shareReplay } from 'rxjs/operator/shareReplay';
 
 @Injectable()
 export class AuthService {
     appUrl = environment.apiUrl;
     TOKEN_NAME = 'jwt_token';
-
+    token: string = this.getToken();
+    
     constructor(private http: HttpClient, private jwtHelper: JwtHelper) {
         console.log('[appUrl] ', this.appUrl);
     }
-
     signin(credential: User): Observable<Token> {
         return this.http.post<Token>(`${this.appUrl}/accounts/signin/`, credential)
             .do(res => this.setToken(res.token,))
             .shareReplay();
     }
+    
+    signout(){
+        // const headers = {
+        //     'Authorization':`Token ${this.token}`
+        // };
+        // const options = {
+        //         headers: new HttpHeaders(headers)
+        //     };
+        //     console.log(options);
+          let headers = new HttpHeaders();
+          headers = headers.set('Authorization', `Token ${this.token}`);
+          console.log(headers);
+        return this.http.post(`${this.appUrl}/accounts/signout/`,null, { headers})
+            
+            .do(() => this.removeToken())
+            .shareReplay();
 
-    signout(): void {
-        this.removeToken();
     }
 
     // 토큰 유효성 검증
@@ -43,6 +59,7 @@ export class AuthService {
 
     setToken(token: string): void {
         localStorage.setItem(this.TOKEN_NAME, token);
+        console.log(shareReplay);
         console.log(this.TOKEN_NAME, token);
     }
 
