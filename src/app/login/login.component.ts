@@ -12,7 +12,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-signForm: FormGroup;
+loginForm: FormGroup;
 message: string;
 
   constructor(
@@ -21,19 +21,19 @@ message: string;
 
 
   ngOnInit() {
-    this.signForm = new FormGroup({
+    this.loginForm = new FormGroup({
       email: new FormControl('',[
         Validators.required,
         Validators.pattern('^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$')
       ]),
       password: new FormControl('',[ Validators.required, Validators.minLength(4)])
      });
-    console.log(this.signForm);
+    console.log(this.loginForm);
   }
 
   signin(){
-    console.log('[payload]', this.signForm.value);
-    this.auth.signin(this.signForm.value)
+    console.log('[payload]', this.loginForm.value);
+    this.auth.signin(this.loginForm.value)
       .subscribe(
       () => this.router.navigate(['dashboard']),
       ({ error }) => {
@@ -43,12 +43,22 @@ message: string;
       );
 
   }
+  signout(){
+    return this.auth.signout()
+    .subscribe(
+      () => this.router.navigate(['signin']),
+      ({ error }) => {
+        console.log(error.message);
+        this.message = error.message;
+      }
+    );
+  }
 
   get email() {
-    return this.signForm.get('email');
+    return this.loginForm.get('email');
   }
   get password() {
-    return this.signForm.get('password');
+    return this.loginForm.get('password');
   }
 
 }
