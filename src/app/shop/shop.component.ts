@@ -70,7 +70,7 @@ export class ShopComponent implements OnInit {
   
 
   // shop view에 필요한 내용들 직접가져오기 (pk는 메인페이지 클릭할 때 전달받아야함)
-  shopPk = 1
+  shopPk = 4
   shopName: string
   shopDescription: string
   shopAddress: string
@@ -123,7 +123,7 @@ export class ShopComponent implements OnInit {
     }
 
     this.http.post(`${this.appUrl}/reservations/${this.shopPk}/favorite-toggle/`, payload, options)
-      .subscribe(toggleStatus => {
+      .subscribe((toggleStatus:any) => {
         if(toggleStatus.result === true){
           this.toggleStatus = "btn btn-lg btn-danger"
         } else { this.toggleStatus = "btn btn-lg btn-default"}

@@ -49,90 +49,22 @@
     <tab>
       <ng-template tabHeading>즐겨찾기</ng-template>
       <div class="row contentBox-top">
-        <div class="col-sm-4 col-md-4 contentBox">
+        <div class="col-sm-4 col-md-4 contentBox" *ngFor="let item of favoriteList">
           <div class="thumbnail">
-            <img src="..." alt="...">
+            <img src="{{item.thumbnail}}" alt="...">
             <div class="caption">
-              <h3>ABC레스토랑</h3>
+              <h3> {{ item.name }} </h3>
               <p>...</p>
               <p>
-                <a href="#" class="btn btn-primary" role="button">방문하기</a>
-                <a href="#" class="btn btn-default" role="button">좋아요취소</a>
+                <a (click)="removeFavorite(item.pk)" class="btn btn-default" role="button">좋아요취소</a>
               </p>
             </div>
           </div>
         </div>
-          <div class="col-sm-4 col-md-4 contentBox">
-            <div class="thumbnail">
-              <img src="..." alt="...">
-              <div class="caption">
-                <h3>ABC레스토랑</h3>
-                <p>...</p>
-                <p>
-                  <a href="#" class="btn btn-primary" role="button">방문하기</a>
-                  <a href="#" class="btn btn-default" role="button">좋아요취소</a>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-4 col-md-4 contentBox">
-            <div class="thumbnail">
-              <img src="..." alt="...">
-              <div class="caption">
-                <h3>ABC레스토랑</h3>
-                <p>...</p>
-                <p>
-                  <a href="#" class="btn btn-primary" role="button">방문하기</a>
-                  <a href="#" class="btn btn-default" role="button">좋아요취소</a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row contentBox">
-          <div class="col-sm-4 col-md-4 contentBox">
-            <div class="thumbnail">
-              <img src="..." alt="...">
-              <div class="caption">
-                <h3>ABC레스토랑</h3>
-                <p>...</p>
-                <p>
-                  <a href="#" class="btn btn-primary" role="button">방문하기</a>
-                  <a href="#" class="btn btn-default" role="button">좋아요취소</a>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-4 col-md-4 contentBox">
-            <div class="thumbnail">
-              <img src="..." alt="...">
-              <div class="caption">
-                <h3>ABC레스토랑</h3>
-                <p>...</p>
-                <p>
-                  <a href="#" class="btn btn-primary" role="button">방문하기</a>
-                  <a href="#" class="btn btn-default" role="button">좋아요취소</a>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-4 col-md-4 contentBox">
-            <div class="thumbnail">
-              <img src="..." alt="...">
-              <div class="caption">
-                <h3>ABC레스토랑</h3>
-                <p>...</p>
-                <p>
-                  <a href="#" class="btn btn-primary" role="button">방문하기</a>
-                  <a href="#" class="btn btn-default" role="button">좋아요취소</a>
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
         
       
+
     </tab>
   </tabset>
 
