@@ -18,7 +18,7 @@ import {
 // 라우트 구성
 const routes: Routes = [
   { path: '', component: MainComponent },
-  { path: 'shop', component: ShopComponent },
+  { path: 'shop/:resPk', component: ShopComponent },
   { path: 'payment', component: PaymentComponent },
   { path: 'mypage', component: MypageComponent },
   { path: 'mainresult', component: MainResultComponent },
