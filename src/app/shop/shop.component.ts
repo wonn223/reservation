@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef} from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ShopListService } from '../services/shop-service.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -8,26 +8,31 @@ import { shopInfo, timeList } from '../models/shopInfo';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
+import { ActivatedRoute } from '@angular/router';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
-interface ResList {
-  id: number;
-  time: number;
-}
+// interface ResList {
+//   id: number;
+//   time: number;
+// }
 
 @Component({
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.css']
 })
-export class ShopComponent implements OnInit {
-  // 예약네비 정보를 받고 결제창 이동시 정보를 담을 변수를 정의함
-  willVisitPeople:number;
-  willVisitTime:any;
-  reservationPrice:number;
 
+export class ShopComponent implements OnInit, OnDestroy {
+  // 예약네비 정보를 받고 결제창 이동시 정보를 담을 변수를 정의함
+  willVisitPeople: number;
+  willVisitTime: any;
+  reservationPrice: number;
   // data picker
   minDate = new Date();
   maxDate = new Date(2018, 9, 15);
+
+  private resPk;
+  private sub: any;
 
   // data picker 설정을 위한 타입
   bsConfig: Partial<BsDatepickerConfig>;
@@ -35,15 +40,15 @@ export class ShopComponent implements OnInit {
   // 인원의 최대값이 number로 들어오면 *ngFor로 리스트를 출력하기 위해서는 arry로 변환이 필요함.
   // ex) for(i = 1; i<number+1; i++) { arry.push(i); };
 
-  //test 이미지 url
-  images = ["http://img.insight.co.kr/upload/2014/12/19/ART141219075215.jpg",
-    "http://cfile27.uf.tistory.com/image/20055D4D4D94104230AA52",
-    "http://cfile24.uf.tistory.com/image/11110B424F92C0E11A97CA"]
+  // test 이미지 url
+  images = ['http://img.insight.co.kr/upload/2014/12/19/ART141219075215.jpg',
+    'http://cfile27.uf.tistory.com/image/20055D4D4D94104230AA52',
+    'http://cfile24.uf.tistory.com/image/11110B424F92C0E11A97CA']
 
-  bsValue: Date = new Date();  //선택한 날짜가 담겨있는 변수
+  bsValue: Date = new Date();  // 선택한 날짜가 담겨있는 변수
   bsRangeValue: any = [new Date(2017, 7, 4), new Date(2017, 7, 20)];
 
-  
+
   appUrl = environment.apiUrl;
   shop: shopInfo;
 
@@ -62,10 +67,12 @@ export class ShopComponent implements OnInit {
 
   modalRef: BsModalRef;
 
-  constructor(public shopListService: ShopListService, 
+  constructor(public shopListService: ShopListService,
     public modalService: BsModalService,
-    public http: HttpClient) { }
-  
+    public http: HttpClient,
+    public route: ActivatedRoute
+    ) { }
+
 
   // shop view에 필요한 내용들 직접가져오기 (pk는 메인페이지 클릭할 때 전달받아야함)
   shopPk = 1
@@ -106,10 +113,10 @@ export class ShopComponent implements OnInit {
        }
       );
   }
-   
   // 예약가능시간 조회
   times: any;
-  getAvailableTime(){
+
+  getAvailableTime() {
     let selectedOption = {
       party: this.willVisitPeople,
       year: this.bsValue.getFullYear(),
@@ -120,14 +127,16 @@ export class ShopComponent implements OnInit {
     this.http.get<timeList[]>(`http://zinzi.booki.kr/restaurants/${this.shopPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${selectedOption.month}-${selectedOption.date}`)
       .subscribe(getTime => {
         this.times = getTime.map(list => Object.assign({}, {time: list.time, timePk: list.pk}))
-        console.log(this.times)        
+        console.log(this.times);
       })
   }
 
   ngOnInit() {
+    this.sub = this.route.params.subscribe(params => { this.resPk = +params['resPk']})
     this.getShop(this.shopPk);
     this.shopListService.getShop(this.shopPk)
     this.bsConfig = Object.assign({}, { containerClass: 'theme-red' });
+    
   }
 
   openModal(template: TemplateRef<any>) {
@@ -135,6 +144,7 @@ export class ShopComponent implements OnInit {
   }
   collapseTrue() {
     this.isCollapsed = true;
+    
   }
   collapseAlert(){
     if (this.willVisitPeople) { this.isCollapsed = !this.isCollapsed}
@@ -145,5 +155,9 @@ export class ShopComponent implements OnInit {
   pushReservationInfo() {
     this.shopListService.resInfo =
       {timePk: this.willVisitTime.timePk, shopName: this.shopName, people: this.willVisitPeople, price: this.reservationPrice, date: this.bsValue}
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

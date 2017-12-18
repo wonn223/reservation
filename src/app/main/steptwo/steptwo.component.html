@@ -4,20 +4,20 @@
       <div class="row nav-header">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-          <h2 class="col-md-3 step active">1단계</h2>
-          <h2 class="col-md-3 step">2단계</h2>
-          <h2 class="col-md-3 step">3단계</h2>
-          <h2 class="col-md-3 step">4단계</h2>
+          <h4 class="col-md-3 step active">1단계</h4>
+          <h4 class="col-md-3 step">2단계</h4>
+          <h4 class="col-md-3 step">3단계</h4>
+          <h4 class="col-md-3 step">4단계</h4>
         </div>
         <div class="col-md-2"></div>
       </div>
       <div class="row nav-header">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-          <h2 class="col-md-3 step active">{{ headerValue | filter:eventStorage}}</h2>
-          <h2 class="col-md-3 step">{{ "interpolation" }}</h2>
-          <h2 class="col-md-3 step">{{ "interpolation" }}</h2>
-          <h2 class="col-md-3 step">{{ "interpolation" }}</h2>
+          <h3 class="col-md-3 step active">{{ headerValue }}</h3>
+          <h3 class="col-md-3 step">{{ "interpolation" }}</h3>
+          <h3 class="col-md-3 step">{{ "interpolation" }}</h3>
+          <h3 class="col-md-3 step">{{ "interpolation" }}</h3>
         </div>
         <div class="col-md-2"></div>
       </div>
@@ -25,30 +25,30 @@
         <div class="col-md-1">
         </div>
         <div class="col-md-10">
-          <div routerLink="/step3" routerLinkActive="active" #hansik class="card col-md-2 shading hansik" [class.han]="hansik.checkActivated" [id]="0" (click)="check(hansik, $event)"
+          <div routerLink="/step1/step2/step3" routerLinkActive="active" #hansik class="card col-md-2 shading hansik" [class.han]="hansik.checkActivated" [id]="0" (click)="check(hansik, $event)"
             (mouseover)="hover(hansik, $event)" (mouseleave)="hansik.isHover=false">
             <span></span>
-            <img class="card-span-top" [class.han]="hansik.checkActivated" src="../../assets/hansik2.png" alt="Card image cap">
+            <img class="card-span-top" [class.han]="hansik.checkActivated" src="../../assets/mainpage/hansik2.png" alt="Card image cap">
             <h2 *ngIf="hansik.isHover==true">￦</h2>
           </div>
           <div #jungsik class="card col-md-2 shading jungsik" [class.han]="jungsik.checkActivated" [id]="1" (click)="check(jungsik, $event)"
             (mouseover)="hover(jungsik, $event)" (mouseleave)="jungsik.isHover=false">
-            <img class="card-img-top" [class.han]="jungsik.checkActivated" src="../../assets/jungsik2.png" alt="Card image cap">
+            <img class="card-img-top" [class.han]="jungsik.checkActivated" src="../../assets/mainpage/jungsik2.png" alt="Card image cap">
             <h2 *ngIf="jungsik.isHover==true">￦￦</h2>
           </div>
           <div #ilsik class="card col-md-2 shading ilsik" [class.han]="ilsik.checkActivated" [id]="2" (click)="check(ilsik, $event)"
             (mouseover)="hover(ilsik, $event)" (mouseleave)="ilsik.isHover=false">
-            <img class="card-img-top ilsik" [class.han]="ilsik.checkActivated" src="../../assets/ilsik2.png" alt="Card image cap">
+            <img class="card-img-top ilsik" [class.han]="ilsik.checkActivated" src="../../assets/mainpage/ilsik2.png" alt="Card image cap">
             <h2 *ngIf="ilsik.isHover==true">￦￦￦</h2>
           </div>
           <div #yangsik class="card col-md-2 shading yangsik" [class.han]="yangsik.checkActivated" [id]="3" (click)="check(yangsik, $event)"
             (mouseover)="hover(yangsik, $event)" (mouseleave)="yangsik.isHover=false">
-            <img class="card-img-top" [class.han]="yangsik.checkActivated" src="../../assets/yangsik2.png" alt="Card image cap">
+            <img class="card-img-top" [class.han]="yangsik.checkActivated" src="../../assets/mainpage/yangsik2.png" alt="Card image cap">
             <h2 *ngIf="yangsik.isHover==true">￦￦￦￦</h2>
           </div>
           <div #byeolsik class="card col-md-2 shading byeolsik" [class.han]="byeolsik.checkActivated" [id]="4" (click)="check(byeolsik, $event)"
             (mouseover)="hover(byeolsik, $event)" (mouseleave)="byeolsik.isHover=false">
-            <img class="card-img-top" [class.han]="byeolsik.checkActivated" src="../../assets/chimaek2.png" alt="Card image cap">
+            <img class="card-img-top" [class.han]="byeolsik.checkActivated" src="../../assets/mainpage/chimaek2.png" alt="Card image cap">
             <h2 *ngIf="byeolsik.isHover==true">￦￦￦￦￦</h2>
           </div>
         </div>
@@ -67,6 +67,5 @@
     </div>
   </div>
 </div>
-
 <!-- <div routerLink="/shop">상세페이지</div> -->
 

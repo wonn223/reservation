@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-footer',
   template: `
-    <div class="footer">주소 문의사항 등등</div>
+    <div class="footer col-md-12">주소 문의사항 등등</div>
   `,
   styles: [`
   .footer{
