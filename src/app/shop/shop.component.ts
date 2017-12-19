@@ -41,11 +41,6 @@ export class ShopComponent implements OnInit, OnDestroy {
   // 인원의 최대값이 number로 들어오면 *ngFor로 리스트를 출력하기 위해서는 arry로 변환이 필요함.
   // ex) for(i = 1; i<number+1; i++) { arry.push(i); };
 
-  // test 이미지 url
-  images = ['http://img.insight.co.kr/upload/2014/12/19/ART141219075215.jpg',
-    'http://cfile27.uf.tistory.com/image/20055D4D4D94104230AA52',
-    'http://cfile24.uf.tistory.com/image/11110B424F92C0E11A97CA']
-
   bsValue: Date = new Date();  // 선택한 날짜가 담겨있는 변수
   bsRangeValue: any = [new Date(2017, 7, 4), new Date(2017, 7, 20)];
 
@@ -76,7 +71,9 @@ export class ShopComponent implements OnInit, OnDestroy {
   maxParty: number;
   starRate: number;
   AvailableTime: any;
-  
+  images: any;
+  menu: string;
+
 
   constructor(public shopListService: ShopListService,
     public modalService: BsModalService,
@@ -84,9 +81,11 @@ export class ShopComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute
     ) { }
 
+
   collapsed(event: any): void {
       // console.log(event);
     }
+
 
   expanded(event: any): void {
       // console.log(event);
@@ -109,6 +108,12 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.averagePrice = shopInfo.average_price;
         this.maxParty = shopInfo.maximum_party;
         this.starRate = shopInfo.star_rate;
+        this.images = shopInfo.images.map((image:any)=>image.image)
+        this.menu = shopInfo.menu;
+        if(shopInfo.average_price == "c"){this.reservationPrice = 10000} 
+        else if(shopInfo.average_price == "n"){this.reservationPrice = 15000}
+        else if (shopInfo.average_price == "e"){this.reservationPrice = 20000}
+        else {this.reservationPrice = 30000} 
         if ( shopInfo.average_price === 'c') {this.reservationPrice = 10000; } else if
         ( shopInfo.average_price === 'n') {this.reservationPrice = 15000; } else if
         ( shopInfo.average_price === 'e') {this.reservationPrice = 20000; } else {
@@ -139,7 +144,25 @@ export class ShopComponent implements OnInit, OnDestroy {
         } else { this.toggleStatus = 'btn btn-lg btn-default'}
       });
   }
+  favoriteStatus() {
+    const payload = {}
 
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+    }
+    const options = {
+      headers: new HttpHeaders(headers)
+    }
+
+    this.http.get(`${this.appUrl}/reservations/${this.resPk}/favorite-toggle/`, options)
+      .subscribe((toggleStatus: any) => {
+        console.log(toggleStatus)
+        if (toggleStatus.result === true) {
+          this.toggleStatus = "btn btn-lg btn-danger"
+        } else { this.toggleStatus = "btn btn-lg btn-default" }
+      })
+  }
   // 예약가능시간 조회
 
   getAvailableTime() {
@@ -160,6 +183,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => { this.resPk = +params['resPk'] })
     this.getShop(this.resPk);
+    this.favoriteStatus();
     this.bsConfig = Object.assign({}, { containerClass: 'theme-red' });
 
   }

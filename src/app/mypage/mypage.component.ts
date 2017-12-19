@@ -21,6 +21,8 @@ interface FavoriteLists {
 }
 
 
+
+
 @Component({
   selector: 'app-mypage',
   templateUrl: './mypage.component.html',
@@ -98,11 +100,53 @@ export class MypageComponent implements OnInit {
       .subscribe(() => this.setFavorite())
   }
 
+
+  
+  mypageObj: any;
+
+
+  //회원정보 가져오기
+  // setMyInfo(){
+  //   const headers = {
+  //     // 'WWW-Authenticate' : 'Token',
+  //     'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+  //   }
+  //   const options = {
+  //     headers: new HttpHeaders(headers)
+  //   }
+  //   //6에 로그인한 유저의 pk의값을 할당
+  //   this.http.get(`${this.appUrl}/accounts/6/profile/`, options)
+  //     .subscribe( (value:Profile) => {
+  //       this.userInfo = value.user;
+  //       console.log(this.userInfo);
+  //       this.profile_image = value.profile_image;
+  //       this.nickname = value.nickname;
+  //       console.log(this.profile_image)
+        
+  //       })
+  // }
+
+  setMyInfo(){
+    // XMLHttpRequest 객체의 생성
+    var req = new XMLHttpRequest();
+    // 동기식 처리
+    req.open('GET', `${this.appUrl}/accounts/6/profile/`, false);
+    req.setRequestHeader('Authorization', 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d');
+    req.setRequestHeader('Content-type', 'application/json');
+    // Request를 전송한다
+    req.send();
+    var obj = JSON.parse(req.response)
+    this.mypageObj = obj
+    console.log(this.mypageObj)
+  }
+
+
   constructor(public http: HttpClient) { }
 
   ngOnInit() {
     this.myReservation()
     this.setFavorite()
+    this.setMyInfo()
   }
 
 }
