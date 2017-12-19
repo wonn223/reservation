@@ -79,6 +79,7 @@ export class ReplyComponent implements OnInit {
   // }
 
   countRating() {
+    // nothing
     this.count1 = this.comment.filter(comm => comm.star_rate <= 2).length;
     this.count2 = this.comment.filter(comm => comm.star_rate > 2 && comm.star_rate <= 3).length;
     this.count3 = this.comment.filter(comm => comm.star_rate > 3 && comm.star_rate <= 4).length;
