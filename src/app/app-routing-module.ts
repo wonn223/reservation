@@ -18,10 +18,10 @@ import { AuthGuard } from './guards/auth.guard';
 // 라우트 구성
 const routes: Routes = [
   { path: 'main', component: MainComponent, children : [
-    // {
-      //  path: 'signin',
-      //  loadChildren : 'app/login/login.module#LoginModule'
-    // }
+    {
+       path: 'signin',
+       loadChildren : 'app/login/login.module#LoginModule'
+    }
   ] },
   { path: 'step1',
     loadChildren : 'app/main/main.module#MainModule'

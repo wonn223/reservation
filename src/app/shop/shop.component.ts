@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
 import { ShopListService } from '../services/shop-service.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -9,7 +9,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 import { ActivatedRoute } from '@angular/router';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 // interface ResList {
 //   id: number;
@@ -55,17 +54,27 @@ export class ShopComponent implements OnInit, OnDestroy {
   // collapsed (예약 가능시간 조회화면)
 
   isCollapsed: boolean = true;
-  collapsed(event: any): void {
-    // console.log(event);
-  }
-
-  expanded(event: any): void {
-    // console.log(event);
-  }
 
   // 확인 모달
 
   modalRef: BsModalRef;
+
+  // shop view에 필요한 내용들 직접가져오기 (pk는 메인페이지 클릭할 때 전달받아야함)
+  shopPk = 1;
+  shopName: string;
+  shopDescription: string;
+  shopAddress: string;
+  shopTel: number;
+  latitude: number;
+  longitude: number;
+  mapLink: any;
+  operationTime: any;
+  averagePrice: string;
+  maxParty: number;
+  starRate: number;
+  AvailableTime: any;
+  // 예약가능시간 조회
+  times: any;
 
   constructor(public shopListService: ShopListService,
     public modalService: BsModalService,
@@ -73,70 +82,61 @@ export class ShopComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute
     ) { }
 
+  collapsed(event: any): void {
+      // console.log(event);
+    }
 
-  // shop view에 필요한 내용들 직접가져오기 (pk는 메인페이지 클릭할 때 전달받아야함)
-  shopPk = 1
-  shopName: string
-  shopDescription: string
-  shopAddress: string
-  shopTel:number
-  latitude:number
-  longitude:number
-  mapLink: any 
-  operationTime: any
-  averagePrice: string
-  maxParty: number
-  starRate: number
-  AvailableTime: any;
+  expanded(event: any): void {
+      // console.log(event);
+    }
 
 
-  getShop(shopPk:number) {
-    console.log(this.appUrl)
+  getShop(shopPk: number) {
+    console.log(this.appUrl);
     this.http.get<shopInfo>(`${this.appUrl}/restaurants/${shopPk}`)
-      .subscribe(shopInfo => { 
-        this.shop = shopInfo;
-        this.shopName = shopInfo.name;
-        this.shopDescription = shopInfo.description;
-        this.shopAddress = shopInfo.address;
-        this.latitude = parseInt(shopInfo.geolocation.split(",")[0]);
-        this.longitude = parseInt(shopInfo.geolocation.split(",")[1]);
-        this.shopTel = shopInfo.contact_number;
-        this.operationTime = shopInfo.business_hours;
+      .subscribe( ( shopinfo ) => {
+        this.shop = shopinfo;
+        this.shopName = shopinfo.name;
+        this.shopDescription = shopinfo.description;
+        this.shopAddress = shopinfo.address;
+        this.latitude = parseInt(shopinfo.geolocation.split(",")[0]);
+        this.longitude = parseInt(shopinfo.geolocation.split(",")[1]);
+        this.shopTel = shopinfo.contact_number;
+        this.operationTime = shopinfo.business_hours;
         this.mapLink = `http://maps.google.com/maps?f=d&daddr=${this.latitude},${this.longitude}&sspn=0.2,0.1&nav=1`
-        this.averagePrice = shopInfo.average_price
-        this.maxParty = shopInfo.maximum_party
-        this.starRate = shopInfo.star_rate;
-        if(shopInfo.average_price == "c"){this.reservationPrice = 10000} 
-        else if(shopInfo.average_price == "n"){this.reservationPrice = 15000}
-        else if (shopInfo.average_price == "e"){this.reservationPrice = 20000}
-        else {this.reservationPrice = 30000} 
+        this.averagePrice = shopinfo.average_price;
+        this.maxParty = shopinfo.maximum_party;
+        this.starRate = shopinfo.star_rate;
+        if ( shopinfo.average_price === 'c') {this.reservationPrice = 10000; } else if
+        ( shopinfo.average_price === 'n') {this.reservationPrice = 15000; } else if
+        ( shopinfo.average_price === 'e') {this.reservationPrice = 20000; } else {
+          this.reservationPrice = 30000; }
        }
       );
   }
-  // 예약가능시간 조회
-  times: any;
+
 
   getAvailableTime() {
-    let selectedOption = {
+    const selectedOption = {
       party: this.willVisitPeople,
       year: this.bsValue.getFullYear(),
       month: this.bsValue.getMonth() + 1,
       date: this.bsValue.getDate()
-    }
+    };
 
     this.http.get<timeList[]>(`http://zinzi.booki.kr/restaurants/${this.shopPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${selectedOption.month}-${selectedOption.date}`)
       .subscribe(getTime => {
         this.times = getTime.map(list => Object.assign({}, {time: list.time, timePk: list.pk}))
         console.log(this.times);
-      })
+      });
   }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => { this.resPk = +params['resPk']})
     this.getShop(this.shopPk);
-    this.shopListService.getShop(this.shopPk)
+    this.shopListService.getShop(this.shopPk);
     this.bsConfig = Object.assign({}, { containerClass: 'theme-red' });
-    
+
   }
 
   openModal(template: TemplateRef<any>) {
@@ -144,11 +144,12 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
   collapseTrue() {
     this.isCollapsed = true;
-    
+
   }
-  collapseAlert(){
-    if (this.willVisitPeople) { this.isCollapsed = !this.isCollapsed}
-    else{alert("예약인원을 선택해주세요")}
+  collapseAlert() {
+    if (this.willVisitPeople) { this.isCollapsed = !this.isCollapsed; } else {
+      alert('예약인원을 선택해주세요');
+    }
   }
 
 // 서버로 예약정보를 전송하는 함수

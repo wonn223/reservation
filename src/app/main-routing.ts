@@ -9,8 +9,6 @@ import { MainComponent } from './main/main.component';
 import { MainResultComponent } from './main/main-result/main-result.component';
 
 
-
-
 // 라우트 구성
 const mainCompRoutes: Routes = [
     { path: '', component: SteponeComponent },
