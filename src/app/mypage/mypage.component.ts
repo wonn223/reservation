@@ -98,11 +98,40 @@ export class MypageComponent implements OnInit {
       .subscribe(() => this.setFavorite())
   }
 
+
+  userInfo: any;
+  profile_image: string;
+  nickname: string;
+  
+
+
+  //회원정보 가져오기
+  setMyInfo(){
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+    }
+    const options = {
+      headers: new HttpHeaders(headers)
+    }
+    //6에 로그인한 유저의 pk의값을 할당
+    this.http.get(`${this.appUrl}/accounts/6/profile/`, options)
+      .subscribe( (value) => {
+        this.userInfo = value.user;
+        this.profile_image = value.profile_image;
+        this.nickname = value.nickname;
+        console.log(this.profile_image)
+        
+        })
+  }
+
+
   constructor(public http: HttpClient) { }
 
   ngOnInit() {
     this.myReservation()
     this.setFavorite()
+    this.setMyInfo()
   }
 
 }
