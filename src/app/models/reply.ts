@@ -15,7 +15,11 @@ export interface Result {
 
 export interface Author {
     pk: number;
-    name: string;
-    email: string;
+    profile: Profile[];
+}
+
+export interface Profile {
+    nickname: string;
+    profile_image: string;
 }
 

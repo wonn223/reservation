@@ -14,10 +14,6 @@ import { ShopListService } from './services/shop-service.service';
 export class ContainerComponent {
 
   constructor(public shopListService: ShopListService) { }
-  ngOnInit() {
-    
-  }
-
 
 
 }

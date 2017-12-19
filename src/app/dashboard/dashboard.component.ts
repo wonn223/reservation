@@ -9,15 +9,15 @@ interface Header {
     title: string;
     subtitle: string;
 }
-
 @Component({
     selector: 'app-dashboard',
     template: `
     <div class="jumbotron">
+    
       <div class="container">
         <h1>{{ header.title }}</h1>
         <p>{{ header.subtitle }}</p>
-        <p>{{ userid }}</p>
+        <p>{{ email }}</p>
         <a class="btn btn-default" (click)="signout()">Signout</a>
       </div>
     </div>
@@ -28,13 +28,13 @@ interface Header {
           <table class="table table-bordred table-hover">
             <thead>
               <th>#</th>
-              <th>ID</th>
+              <th>email</th>
               <th>Admin</th>
             </thead>
             <tbody>
               <tr *ngFor="let user of users; let i = index">
                 <td>{{ i }}</td>
-                <td>{{ user.userid }}</td>
+                <td>{{ user.email }}</td>
                 <td>{{ user.admin }}</td>
               </tr>
             </tbody>
@@ -57,10 +57,12 @@ export class DashboardComponent implements OnInit {
         private userService: UserService) { }
 
     ngOnInit() {
+      console.log('hello');
         // static data 취득
         this.header = this.route.snapshot.data as Header;
         // 토큰에서 사용자 아이디 취득
-        this.email = this.authService.getUserid();
+        // this.email = this.authService.getUserid();
+        console.log(this.email);
 
         // 사용자 정보 취득
         this.userService.getUsers()

@@ -10,7 +10,7 @@ export class SteptwoComponent implements OnInit {
   isHover = false;
   checkActivated = false;
   foodCategory = ['hansik', 'jungsik', 'ilsik', 'yangsik', 'byeolsik'];
-  headerValue = ['한식', '중식', '일식', '양식', '주류/별식'];
+  headerValue = ['한식'];
   eventStorage = [];
   stepVal = [];
   state = 'inactive';

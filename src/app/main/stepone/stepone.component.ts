@@ -12,7 +12,7 @@ export class SteponeComponent implements OnInit {
   isHover = false;
   checkActivated = false;
   foodCategory = ['hansik', 'jungsik', 'ilsik', 'yangsik', 'byeolsik'];
-  headerValue = ['한식', '중식', '일식', '양식', '주류/별식'];
+  headerValue = '';
   eventStorage = [];
   stepVal = [];
   state = 'inactive';
@@ -22,7 +22,8 @@ export class SteponeComponent implements OnInit {
 
   check(fd) {
     // 이전에 다른 곳에서 체크 표시가 있을 경우
-    console.log(event);
+    console.log(fd);
+    this.headerValue = fd.classList[3];
     fd.checkActivated = !this.checkActivated;
   }
 
