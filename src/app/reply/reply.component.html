@@ -87,7 +87,7 @@
               </div>
              </figure>
              <div class="patch-comment-block">
-              <input class="patchInput" #patchInput type="text" multiline="true" value="{{ td.comment }}">
+              <input class="patchInput" #patchInput onblur type="text" multiline="true" value="{{ td.comment }}">
                 <label class="test">
                   {{ td.comment }}
                 </label>
@@ -102,7 +102,9 @@
       </li>
     </ul>
   </section>
-  <div class="col-md-2"></div>
+  <div class="col-xs-12 col-12" style="text-align: center;">
+    <pagination #page (click)="checkPage(page)" [boundaryLinks]="true" [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [(ngModel)]="currentPage" class="pagination-sm"  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+  </div>
   <pre>{{ this.patchedRate.controls[1] | json}}</pre>
 </div>
 </div>

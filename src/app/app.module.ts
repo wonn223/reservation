@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ButtonsModule, BsDatepickerModule, CarouselModule, CollapseModule, ModalModule, TabsModule, RatingModule } from 'ngx-bootstrap';
 import {BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PaginationModule } from 'ngx-bootstrap/pagination/';
 
 import { AgmCoreModule } from '@agm/core';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -54,6 +55,7 @@ import { MainComponent } from './main/main.component';
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     RatingModule.forRoot(),
+    PaginationModule.forRoot(),
     BsDropdownModule.forRoot(),
     HttpClientModule,
     ReactiveFormsModule,

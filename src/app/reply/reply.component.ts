@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Reply, Result, Author, Profile } from '../models/reply';
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Component({
@@ -16,10 +17,9 @@ export class ReplyComponent implements OnInit {
    profile2: string;
    patchUrl = 'http://api.booki.kr/restaurants/comments';
    removeUrl = 'http://api.booki.kr/restaurants/comments';
-   //  3번 레스토랑의 댓글 조회
-   getUrl = 'http://api.booki.kr/restaurants/2/comments/';
+   getUrl = 'http://api.booki.kr/restaurants/1/comments/';
    appUrl = 'http://api.booki.kr/accounts/signup/';
-   title = '리뷰';
+   title = 'Review';
    rate = 0;
    // rating 애니메이션
    y: number;
@@ -32,6 +32,12 @@ export class ReplyComponent implements OnInit {
    inputText = '';
    patchRate: number;
    patchedRate: FormGroup;
+   startingIndex = 0;
+   endIndex = 3;
+   itemsPerPage = 3;
+   totalItems = 12;
+   currentPage = 1;
+
 
   constructor(public http: HttpClient, public fb: FormBuilder) {
     this.getcomments();
@@ -43,25 +49,44 @@ export class ReplyComponent implements OnInit {
 
   getcomments() {
     this.http.get(this.getUrl)
-    .subscribe( ( comm: any )  =>  {
+    .subscribe( ( comm: Reply )  =>  {
       this.comment = comm.results;
-      console.log(this.comment);
-      this.countAll();
+      // this.sliceTotalComments();
+      this.countAll(comm);
       this.countRating();
       console.log(this.count2);
     });
   }
 
-
-  countRating() {
-    this.count1 = this.comment.filter(comm => comm.star_rate <= 1).length;
-    this.count2 = this.comment.filter(comm => comm.star_rate > 1 && comm.star_rate <= 2).length;
-    this.count3 = this.comment.filter(comm => comm.star_rate > 2 && comm.star_rate <= 3).length;
-    this.count4 = this.comment.filter(comm => comm.star_rate > 3 && comm.star_rate <= 4).length;
+  checkPage(pg: any) {
+    console.log('[page number]', pg.page);
+    this.http.get(`${this.getUrl}?page=${pg.page}`)
+    .subscribe( (comm: Reply) => {
+      this.comment = comm.results;
+    });
   }
 
-  countAll() {
-    this.cntAll = this.comment ? this.comment.length : 0;
+  // sliceTotalComments() {
+  //   배열 slice
+  //   this.comment = this.comment.slice(this.startingIndex, this.itemsPerPage);
+  //   console.log('[slice result]', this.comment);
+  //   this.startingIndex = this.itemsPerPage;
+  //   this.endIndex = this.endIndex + 3;
+  //   console.log('[starting index change check]', this.startingIndex);
+  //   console.log('[end index change check]', this.itemsPerPage);
+  //   return this.comment;
+  //   1페이지 인덱스 : 0,3 2페이지 : 3, 6, 3페이지 : 6, 10
+  // }
+
+  countRating() {
+    this.count1 = this.comment.filter(comm => comm.star_rate <= 2).length;
+    this.count2 = this.comment.filter(comm => comm.star_rate > 2 && comm.star_rate <= 3).length;
+    this.count3 = this.comment.filter(comm => comm.star_rate > 3 && comm.star_rate <= 4).length;
+    this.count4 = this.comment.filter(comm => comm.star_rate > 4 && comm.star_rate <= 5).length;
+  }
+
+  countAll(com: Reply) {
+    this.cntAll = com ? com.count : 0;
   }
 
   getPatchedrate(evt) {
@@ -83,7 +108,7 @@ export class ReplyComponent implements OnInit {
       // 코멘트, 별점 미입력 방지
       // '별점을 등록해주세요!' 애니메이션
       // 엔터키 누르는 이벤트 확인
-      if(rate === 0) {
+      if (rate === 0) {
         console.log('plz add a star rate');
         return '';
       }
@@ -172,7 +197,6 @@ export class ReplyComponent implements OnInit {
     .subscribe(( res ) => {
       console.log('patch result', res);
       this.getcomments();
-      
     });
   }
 
