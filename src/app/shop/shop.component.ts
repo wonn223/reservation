@@ -1,12 +1,14 @@
-import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef} from '@angular/core';
 import { ShopListService } from '../services/shop-service.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 import { shopInfo, timeList } from '../models/shopInfo';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { HttpHandler } from '@angular/common/http/src/backend';
+import { ActivatedRoute } from '@angular/router';
 
 import { ActivatedRoute } from '@angular/router';
 
@@ -55,23 +57,31 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   isCollapsed: boolean = true;
 
+  toggleStatus: string = "btn btn-lg btn-danger"
+
   // 확인 모달
 
   modalRef: BsModalRef;
 
+  constructor(public shopListService: ShopListService, 
+    public modalService: BsModalService,
+    public http: HttpClient,
+    public route: ActivatedRoute) { }
+  
+
   // shop view에 필요한 내용들 직접가져오기 (pk는 메인페이지 클릭할 때 전달받아야함)
-  shopPk = 1;
-  shopName: string;
-  shopDescription: string;
-  shopAddress: string;
-  shopTel: number;
-  latitude: number;
-  longitude: number;
-  mapLink: any;
-  operationTime: any;
-  averagePrice: string;
-  maxParty: number;
-  starRate: number;
+  // shopPk = this.resPk
+  shopName: string
+  shopDescription: string
+  shopAddress: string
+  shopTel:number
+  latitude:number
+  longitude:number
+  mapLink: any 
+  operationTime: any
+  averagePrice: string
+  maxParty: number
+  starRate: number
   AvailableTime: any;
   // 예약가능시간 조회
   times: any;
@@ -91,18 +101,18 @@ export class ShopComponent implements OnInit, OnDestroy {
     }
 
 
-  getShop(shopPk: number) {
-    console.log(this.appUrl);
-    this.http.get<shopInfo>(`${this.appUrl}/restaurants/${shopPk}`)
-      .subscribe( ( shopinfo ) => {
-        this.shop = shopinfo;
-        this.shopName = shopinfo.name;
-        this.shopDescription = shopinfo.description;
-        this.shopAddress = shopinfo.address;
-        this.latitude = parseInt(shopinfo.geolocation.split(",")[0]);
-        this.longitude = parseInt(shopinfo.geolocation.split(",")[1]);
-        this.shopTel = shopinfo.contact_number;
-        this.operationTime = shopinfo.business_hours;
+  getShop(shopPk:number) {
+    console.log(this.appUrl)
+    this.http.get<shopInfo>(`${this.appUrl}/restaurants/${this.resPk}`)
+      .subscribe(shopInfo => { 
+        this.shop = shopInfo;
+        this.shopName = shopInfo.name;
+        this.shopDescription = shopInfo.description;
+        this.shopAddress = shopInfo.address;
+        this.latitude = parseInt(shopInfo.geolocation.split(",")[0]);
+        this.longitude = parseInt(shopInfo.geolocation.split(",")[1]);
+        this.shopTel = shopInfo.contact_number;
+        this.operationTime = shopInfo.business_hours;
         this.mapLink = `http://maps.google.com/maps?f=d&daddr=${this.latitude},${this.longitude}&sspn=0.2,0.1&nav=1`
         this.averagePrice = shopinfo.average_price;
         this.maxParty = shopinfo.maximum_party;
@@ -115,16 +125,39 @@ export class ShopComponent implements OnInit, OnDestroy {
       );
   }
 
+  // 즐겨찾기 버튼 
 
-  getAvailableTime() {
-    const selectedOption = {
+  favoriteToggle(){
+    const payload = {}
+
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+    }
+    const options = {
+      headers: new HttpHeaders(headers)
+    }
+
+    this.http.post(`${this.appUrl}/reservations/${this.resPk}/favorite-toggle/`, payload, options)
+      .subscribe((toggleStatus:any) => {
+        console.log(toggleStatus)
+        if(toggleStatus.result === true){
+          this.toggleStatus = "btn btn-lg btn-danger"
+        } else { this.toggleStatus = "btn btn-lg btn-default"}
+      }) 
+  }
+   
+  // 예약가능시간 조회
+  times: any;
+  getAvailableTime(){
+    let selectedOption = {
       party: this.willVisitPeople,
       year: this.bsValue.getFullYear(),
       month: this.bsValue.getMonth() + 1,
       date: this.bsValue.getDate()
     };
 
-    this.http.get<timeList[]>(`http://zinzi.booki.kr/restaurants/${this.shopPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${selectedOption.month}-${selectedOption.date}`)
+    this.http.get<timeList[]>(`http://api.booki.kr/restaurants/${this.resPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${selectedOption.month}-${selectedOption.date}`)
       .subscribe(getTime => {
         this.times = getTime.map(list => Object.assign({}, {time: list.time, timePk: list.pk}))
         console.log(this.times);
@@ -132,9 +165,8 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => { this.resPk = +params['resPk']})
-    this.getShop(this.shopPk);
-    this.shopListService.getShop(this.shopPk);
+    this.sub = this.route.params.subscribe(params => { this.resPk = +params['resPk'] })
+    this.getShop(this.resPk);
     this.bsConfig = Object.assign({}, { containerClass: 'theme-red' });
 
   }

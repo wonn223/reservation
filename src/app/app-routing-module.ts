@@ -11,6 +11,9 @@ import {
   MypageComponent,
   MainComponent,
   // SteponeComponent,
+  MainResultComponent,
+  ManagepageComponent,
+  SteponeComponent
 } from './routing-forRouting';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -30,6 +33,13 @@ const routes: Routes = [
   { path: 'payment', component: PaymentComponent },
   { path: 'mypage', component: MypageComponent },
   { path: '', redirectTo: 'main', pathMatch: 'full'},
+  { path: '', component: MainComponent },
+  { path: 'shop/:resPk', component: ShopComponent },
+  { path: 'payment', component: PaymentComponent },
+  { path: 'mypage', component: MypageComponent },
+  { path: 'mainresult', component: MainResultComponent },
+  { path: 'managepage', component: ManagepageComponent },
+  { path: 'step1', component: SteponeComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

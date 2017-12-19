@@ -13,6 +13,8 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { appRouting } from './app-routing-module';
 import { environment } from '../environments/environment';
 import { ShopListService } from './services/shop-service.service';
+import { FilterPipe, PricePipe  } from './filter.pipe' ;
+
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 
@@ -29,6 +31,15 @@ import { MypageComponent } from './mypage/mypage.component';
 import { ReplyComponent } from './reply/reply.component';
 import { MainComponent } from './main/main.component';
 // import { SteponeComponent } from './routing-forRouting';
+import { LoginRoutingModule } from './login-routing.module';
+import { MainResultComponent } from '../app/main/main-result/main-result.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ReplyRoutingModule } from './reply.routes';
+import { SteponeComponent } from './main/stepone/stepone.component';
+import { SteptwoComponent } from './main/steptwo/steptwo.component';
+import { StepthreeComponent } from './main/stepthree/stepthree.component';
+import { ManagepageComponent } from './managepage/managepage.component';
+
 
 @NgModule({
   declarations: [
@@ -39,11 +50,20 @@ import { MainComponent } from './main/main.component';
     LoginComponent,
     ShopComponent,
     PaymentComponent,
+    SignFormContainerComponent,
+    FilterPipe,
+    PricePipe,
     MypageComponent,
     NotFoundComponent,
     FooterComponent,
     ReplyComponent,
     // SteponeComponent
+    MainResultComponent,
+    DashboardComponent,
+    SteponeComponent,
+    SteptwoComponent,
+    StepthreeComponent,
+    ManagepageComponent
   ],
   imports: [
     BrowserModule, FormsModule, ButtonsModule.forRoot(),

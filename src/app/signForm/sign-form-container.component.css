@@ -154,3 +154,7 @@ input.upload {
   color: #fff;
   cursor: pointer;
 } */
+
+.btn-file input[type="file"] {
+  /* display: none; */
+}
