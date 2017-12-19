@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
         // static data 취득
         this.header = this.route.snapshot.data as Header;
         // 토큰에서 사용자 아이디 취득
-        this.email = this.authService.getUserid();
+        // this.email = this.authService.getUserid();
         console.log(this.email);
 
         // 사용자 정보 취득

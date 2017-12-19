@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { SearchedResDetailService } from '../services/searched-res-detail.service';
 
-import { MainComponent } from './main.component';
 import { SteponeComponent } from '../main/stepone/stepone.component';
 import { SteptwoComponent } from '../main/steptwo/steptwo.component';
 import { StepthreeComponent } from '../main/stepthree/stepthree.component';
 import { MainResultComponent } from '../main/main-result/main-result.component';
-import { MainRoutingModule } from '../main-routing';
+import { MainRoutingModule } from '../main-routing.module';
 
 @NgModule({
   imports: [

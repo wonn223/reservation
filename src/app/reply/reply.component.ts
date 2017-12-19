@@ -59,6 +59,7 @@ export class ReplyComponent implements OnInit {
   }
 
   checkPage(pg: any) {
+    console.log(pg);
     console.log('[page number]', pg.page);
     this.http.get(`${this.getUrl}?page=${pg.page}`)
     .subscribe( (comm: Reply) => {

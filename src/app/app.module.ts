@@ -23,7 +23,6 @@ import { ContainerComponent } from './container.component';
 import { HeaderComponent } from '../app/header/header.component';
 import { FooterComponent } from './footer.component';
 import { LoginComponent } from './login/login.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { ShopComponent } from './shop/shop.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { PaymentComponent } from './payment/payment.component';
@@ -32,12 +31,7 @@ import { ReplyComponent } from './reply/reply.component';
 import { MainComponent } from './main/main.component';
 // import { SteponeComponent } from './routing-forRouting';
 import { LoginRoutingModule } from './login-routing.module';
-import { MainResultComponent } from '../app/main/main-result/main-result.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReplyRoutingModule } from './reply.routes';
-import { SteponeComponent } from './main/stepone/stepone.component';
-import { SteptwoComponent } from './main/steptwo/steptwo.component';
-import { StepthreeComponent } from './main/stepthree/stepthree.component';
 import { ManagepageComponent } from './managepage/managepage.component';
 
 
@@ -46,11 +40,9 @@ import { ManagepageComponent } from './managepage/managepage.component';
     AppComponent,
     ContainerComponent,
     HeaderComponent,
-    MainComponent,
     LoginComponent,
     ShopComponent,
     PaymentComponent,
-    SignFormContainerComponent,
     FilterPipe,
     PricePipe,
     MypageComponent,
@@ -58,11 +50,7 @@ import { ManagepageComponent } from './managepage/managepage.component';
     FooterComponent,
     ReplyComponent,
     // SteponeComponent
-    MainResultComponent,
-    DashboardComponent,
-    SteponeComponent,
-    SteptwoComponent,
-    StepthreeComponent,
+    MainComponent,
     ManagepageComponent
   ],
   imports: [

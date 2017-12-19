@@ -32,14 +32,8 @@ const routes: Routes = [
   { path: 'shop/:resPk', component: ShopComponent },
   { path: 'payment', component: PaymentComponent },
   { path: 'mypage', component: MypageComponent },
-  { path: '', redirectTo: 'main', pathMatch: 'full'},
-  { path: '', component: MainComponent },
-  { path: 'shop/:resPk', component: ShopComponent },
-  { path: 'payment', component: PaymentComponent },
-  { path: 'mypage', component: MypageComponent },
-  { path: 'mainresult', component: MainResultComponent },
   { path: 'managepage', component: ManagepageComponent },
-  { path: 'step1', component: SteponeComponent },
+  { path: '', redirectTo: 'main', pathMatch: 'full'},
   { path: '**', component: NotFoundComponent },
 ];
 

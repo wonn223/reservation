@@ -18,8 +18,8 @@ export class AuthService {
     appUrl = environment.apiUrl;
     TOKEN_NAME = 'jwt_token';
     token: string = this.getToken();
-    
-    constructor(private http: HttpClient, private jwtHelper: JwtHelper) {
+
+    constructor(private http: HttpClient ) {
         console.log('[appUrl] ', this.appUrl);
     }
     signin(credential: User): Observable<Token> {
@@ -40,7 +40,7 @@ export class AuthService {
           headers = headers.set('Authorization', `Token ${this.token}`);
           console.log(headers);
         return this.http.post(`${this.appUrl}/accounts/signout/`,null, { headers})
-            
+
             .do(() => this.removeToken())
             .shareReplay();
 
