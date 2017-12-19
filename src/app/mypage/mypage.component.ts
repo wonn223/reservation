@@ -5,12 +5,12 @@ import { HttpHandler } from '@angular/common/http/src/backend';
 
 
 interface ReservationLists {
-  shopName: string
-  party: number
-  resDate: string
-  resTime: string
-  shopAddress: string
-  shopTel: string
+  shopName: string;
+  party: number;
+  resDate: string;
+  resTime: string;
+  shopAddress: string;
+  shopTel: string;
  
 }
 
