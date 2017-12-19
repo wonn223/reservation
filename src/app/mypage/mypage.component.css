@@ -3,7 +3,7 @@ li{
 }
 .jumbotron{
   margin: 15px;
-  height: 230px;
+  height: 200px;
 }
 .blank {
   height: 30px;
@@ -23,4 +23,7 @@ li{
 
 .myInfo{
   font-size: 20px;
+}
+.table-nav{
+  background:rgb(223, 213, 213);
 }
