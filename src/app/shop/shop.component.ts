@@ -41,9 +41,9 @@ export class ShopComponent implements OnInit {
   // ex) for(i = 1; i<number+1; i++) { arry.push(i); };
 
   //test 이미지 url
-  images = ["http://img.insight.co.kr/upload/2014/12/19/ART141219075215.jpg",
-    "http://cfile27.uf.tistory.com/image/20055D4D4D94104230AA52",
-    "http://cfile24.uf.tistory.com/image/11110B424F92C0E11A97CA"]
+  // images = ["http://img.insight.co.kr/upload/2014/12/19/ART141219075215.jpg",
+  //   "http://cfile27.uf.tistory.com/image/20055D4D4D94104230AA52",
+  //   "http://cfile24.uf.tistory.com/image/11110B424F92C0E11A97CA"]
 
   bsValue: Date = new Date();  //선택한 날짜가 담겨있는 변수
   bsRangeValue: any = [new Date(2017, 7, 4), new Date(2017, 7, 20)];
@@ -77,24 +77,28 @@ export class ShopComponent implements OnInit {
 
   // shop view에 필요한 내용들 직접가져오기 (pk는 메인페이지 클릭할 때 전달받아야함)
   // shopPk = this.resPk
-  shopName: string
-  shopDescription: string
-  shopAddress: string
-  shopTel:number
-  latitude:number
-  longitude:number
-  mapLink: any 
-  operationTime: any
-  averagePrice: string
-  maxParty: number
-  starRate: number
+  shopName: string;
+  shopDescription: string;
+  shopAddress: string;
+  shopTel:number;
+  latitude:number;
+  longitude:number;
+  mapLink: any;
+  operationTime: any;
+  averagePrice: string;
+  maxParty: number;
+  starRate: number;
   AvailableTime: any;
+  images: any;
+  menu: string;
+
 
 
   getShop(shopPk:number) {
     console.log(this.appUrl)
     this.http.get<shopInfo>(`${this.appUrl}/restaurants/${this.resPk}`)
       .subscribe(shopInfo => { 
+        console.log(shopInfo)
         this.shop = shopInfo;
         this.shopName = shopInfo.name;
         this.shopDescription = shopInfo.description;
@@ -107,6 +111,9 @@ export class ShopComponent implements OnInit {
         this.averagePrice = shopInfo.average_price
         this.maxParty = shopInfo.maximum_party
         this.starRate = shopInfo.star_rate;
+        // eservationList.map((list: any) => Object.assign({}
+        this.images = shopInfo.images.map((image:any)=>image.image)
+        this.menu = shopInfo.menu;
         if(shopInfo.average_price == "c"){this.reservationPrice = 10000} 
         else if(shopInfo.average_price == "n"){this.reservationPrice = 15000}
         else if (shopInfo.average_price == "e"){this.reservationPrice = 20000}
