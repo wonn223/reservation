@@ -7,17 +7,39 @@
 
   <div class="row jumbotron">
     <div class="col-md-2">
-      <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" alt="..." class="img-circle">
+      <img src="{{mypageObj.profile_image}}" alt="..." class="img-circle">
     </div>
     <div class="col-md-8">
-     <ul>
-       <li> ID </li>
-      <li> 이메일 </li>
-      <li> 선호도 </li>
-     </ul>
-    </div>
-    <div class="col-md-2">
-      <a class="btn btn-primary btn-lg" href="#" role="button">정보수정</a>
+      <table class="table table-condensed myInfo">
+        <tr>
+          <td class="table-nav">
+            아이디(이메일)
+          </td>
+          <td>
+             {{mypageObj.user.email }}
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="table-nav">
+             이름
+          </td>
+          <td>
+             {{mypageObj.user.name }}
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="table-nav">
+            선호도
+          </td>
+          <td>
+            {{mypageObj.prfeeernces}}
+          </td>
+          <td><button class="btn btn-primary btn-sm">수정하기</button>
+          <button class="btn btn-primary btn-sm">회원탈퇴</button></td>
+        </tr>
+      </table>
     </div>
   </div>
 

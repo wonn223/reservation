@@ -158,7 +158,9 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => { this.resPk = +params['resPk']; });
+    this.sub = this.route.params.subscribe(params => {
+      this.resPk = +params['resPk']; 
+    });
     this.getShop(this.resPk);
     this.bsConfig = Object.assign({}, { containerClass: 'theme-red' });
   }
