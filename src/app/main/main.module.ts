@@ -10,10 +10,12 @@ import { MainRoutingModule } from '../main-routing.module';
     CommonModule,
     MainRoutingModule
   ],
+
   exports : [
   ],
   declarations: [
   ],
+
   providers : [ SearchedResDetailService ]
 })
 export class MainModule { }
