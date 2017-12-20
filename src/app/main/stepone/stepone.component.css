@@ -7,15 +7,4 @@
 .row .nav-header {
 	width: 100%;
 	color: white;
-	padding-top: 2%;	
-}
-
-/* 단계 텍스트 */
-.step-text {
-    text-align: center;
-}
-
-/* 유저 선택 표시해주는 텍스트 */
-.user-choice {
-    text-align: center; 
-}
+}   

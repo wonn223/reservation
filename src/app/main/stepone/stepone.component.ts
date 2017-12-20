@@ -1,5 +1,6 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -15,10 +16,10 @@ export class SteponeComponent implements OnInit {
   headerValue = '';
   eventStorage = [];
   stepVal = [];
+  price = ['c', 'n', 'e', 'v'];
   state = 'inactive';
 
-  constructor(public router: Router) {
-  }
+  constructor(public router: Router, public http: HttpClient) { }
 
   check(fd) {
     // 이전에 다른 곳에서 체크 표시가 있을 경우
@@ -41,6 +42,7 @@ export class SteponeComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
 }

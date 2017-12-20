@@ -22,37 +22,41 @@
   <div id="thisPart" class="row main-content-padding">
     <div class="col-md-1">
     </div>
-    <div class="col-md-10">
-      <div routerLink="/step1/step2"
+    <div class="col-md-10 card-wrapper">
+      <div [routerLink]="['/step1', this.price[0]]"
           #hansik class="card col-md-2 shading hansik" 
           [class.han]="hansik.checkActivated" 
           id="0" (click)="check(hansik, $event)">
-          <h2 *ngIf="hansik.isHover==true">한식</h2>
           <img class="card-span-top" 
             [class.han]="hansik.checkActivated" 
             src="../../assets/mainpage/hansik2.png" alt="Card image cap">
+          <h2>한식</h2>  
       </div>
-      <div #jungsik class="card col-md-2 shading jungsik" 
-        [class.han]="jungsik.checkActivated" [id]="1" (click)="check(jungsik, $event)">
-        <!-- <a routerLink="/step2"></a> -->
+      <div routerLink="/step1/step2" 
+        #jungsik class="card col-md-2 shading jungsik" 
+        [class.han]="jungsik.checkActivated" 
+        id="1" (click)="check(jungsik, $event)">
         <img class="card-img-top" [class.han]="jungsik.checkActivated" 
           src="../../assets/mainpage/jungsik2.png" alt="Card image cap">
-        <h2 *ngIf="jungsik.isHover === true">중식</h2>
+        <h2>중식</h2>
       </div>
-      <div #ilsik class="card col-md-2 shading ilsik" [class.han]="ilsik.checkActivated" [id]="2" (click)="check(ilsik, $event)">
-        <!-- <a routerLink="/step2"></a> -->
+      <div routerLink="/step1/step2"
+      #ilsik class="card col-md-2 shading ilsik" [class.han]="ilsik.checkActivated"
+      id="2" (click)="check(ilsik, $event)">
         <img class="card-img-top ilsik" [class.han]="ilsik.checkActivated" src="../../assets/mainpage/ilsik2.png" alt="Card image cap">
-        <h2 *ngIf="ilsik.isHover==true">일식</h2>
+        <h2>일식</h2>
       </div>
-      <div #yangsik class="card col-md-2 shading yangsik" [class.han]="yangsik.checkActivated" [id]="3" (click)="check(yangsik, $event)">
-        <!-- <a routerLink="/step2"></a> -->
+      <div routerLink="/step1/step2" 
+      #yangsik class="card col-md-2 shading yangsik" [class.han]="yangsik.checkActivated" 
+      id="3" (click)="check(yangsik, $event)">
         <img class="card-img-top" [class.han]="yangsik.checkActivated" src="../../assets/mainpage/yangsik2.png" alt="Card image cap">
-        <h2 *ngIf="yangsik.isHover==true">양식</h2>
+        <h2>양식</h2>
       </div>
-      <div #byeolsik class="card col-md-2 shading byeolsik" [class.han]="byeolsik.checkActivated" [id]="4" (click)="check(byeolsik, $event)">
-        <!-- <a routerLink="/step2"></a> -->
+      <div routerLink="/step1/step2"
+       #byeolsik class="card col-md-2 shading byeolsik" [class.han]="byeolsik.checkActivated" 
+       id="4" (click)="check(byeolsik, $event)">
          <img class="card-img-top" [class.han]="byeolsik.checkActivated" src="../../assets/mainpage/chimaek2.png" alt="Card image cap">
-         <h2 *ngIf="byeolsik.isHover==true">주류/별식</h2>
+         <h2>주류/별식</h2>
       </div>
     </div>
     <div class="col-md-1">
