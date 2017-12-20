@@ -28,11 +28,11 @@ export class ShopComponent implements OnInit, OnDestroy {
   // data picker
   minDate = new Date();
   maxDate = new Date(2018, 9, 15);
-  
+
   // 예약가능시간 조회
   times: any;
 
-  private resPk;
+  public resPk: number;
   private sub: any;
 
   // data picker 설정을 위한 타입
@@ -44,7 +44,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   // test 이미지 url
   images = ['http://img.insight.co.kr/upload/2014/12/19/ART141219075215.jpg',
     'http://cfile27.uf.tistory.com/image/20055D4D4D94104230AA52',
-    'http://cfile24.uf.tistory.com/image/11110B424F92C0E11A97CA']
+    'http://cfile24.uf.tistory.com/image/11110B424F92C0E11A97CA'];
 
   bsValue: Date = new Date();  // 선택한 날짜가 담겨있는 변수
   bsRangeValue: any = [new Date(2017, 7, 4), new Date(2017, 7, 20)];
@@ -76,13 +76,12 @@ export class ShopComponent implements OnInit, OnDestroy {
   maxParty: number;
   starRate: number;
   AvailableTime: any;
-  
 
   constructor(public shopListService: ShopListService,
     public modalService: BsModalService,
     public http: HttpClient,
     public route: ActivatedRoute
-    ) { }
+    ) { this.shopListService.resPK = this.resPk; }
 
   collapsed(event: any): void {
       // console.log(event);
@@ -94,6 +93,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
 
   getShop(shopPk: number) {
+
     console.log(this.appUrl);
     this.http.get<ShopInfo>(`${this.appUrl}/restaurants/${this.resPk}`)
       .subscribe((shopInfo: ShopInfo) => {
@@ -105,7 +105,7 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.longitude = parseInt(shopInfo.geolocation.split(',')[1]);
         this.shopTel = shopInfo.contact_number;
         this.operationTime = shopInfo.business_hours;
-        this.mapLink = `http://maps.google.com/maps?f=d&daddr=${this.latitude},${this.longitude}&sspn=0.2,0.1&nav=1`
+        this.mapLink = `http://maps.google.com/maps?f=d&daddr=${this.latitude},${this.longitude}&sspn=0.2,0.1&nav=1`;
         this.averagePrice = shopInfo.average_price;
         this.maxParty = shopInfo.maximum_party;
         this.starRate = shopInfo.star_rate;
@@ -133,10 +133,10 @@ export class ShopComponent implements OnInit, OnDestroy {
 
     this.http.post(`${this.appUrl}/reservations/${this.resPk}/favorite-toggle/`, payload, options)
       .subscribe((toggleStatus: any) => {
-        console.log(toggleStatus ) 
-        if (toggleStatus.result === true){
+        console.log(toggleStatus);
+        if (toggleStatus.result === true) {
           this.toggleStatus = 'btn btn-lg btn-danger';
-        } else { this.toggleStatus = 'btn btn-lg btn-default'}
+        } else { this.toggleStatus = 'btn btn-lg btn-default'; }
       });
   }
 
@@ -152,16 +152,15 @@ export class ShopComponent implements OnInit, OnDestroy {
 
     this.http.get<TimeList[]>(`http://api.booki.kr/restaurants/${this.resPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${selectedOption.month}-${selectedOption.date}`)
       .subscribe(getTime => {
-        this.times = getTime.map(list => Object.assign({}, {time: list.time, timePk: list.pk}))
+        this.times = getTime.map(list => Object.assign({}, {time: list.time, timePk: list.pk}));
         console.log(this.times);
       });
   }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => { this.resPk = +params['resPk'] })
+    this.sub = this.route.params.subscribe(params => { this.resPk = +params['resPk']; });
     this.getShop(this.resPk);
     this.bsConfig = Object.assign({}, { containerClass: 'theme-red' });
-
   }
 
   openModal(template: TemplateRef<any>) {
@@ -179,8 +178,9 @@ export class ShopComponent implements OnInit, OnDestroy {
 
 // 서버로 예약정보를 전송하는 함수
   pushReservationInfo() {
-    this.shopListService.resInfo =
-      {timePk: this.willVisitTime.timePk, shopName: this.shopName, people: this.willVisitPeople, price: this.reservationPrice, date: this.bsValue}
+    this.shopListService.resInfo = {
+      timePk: this.willVisitTime.timePk, shopName: this.shopName, people: this.willVisitPeople, price: this.reservationPrice, date: this.bsValue
+    };
   }
 
   ngOnDestroy() {
