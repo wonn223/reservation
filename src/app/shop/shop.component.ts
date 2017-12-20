@@ -76,7 +76,7 @@ export class ShopComponent implements OnInit {
   
 
   // shop view에 필요한 내용들 직접가져오기 (pk는 메인페이지 클릭할 때 전달받아야함)
-  // shopPk = this.resPk
+  shopPk = this.resPk;
   shopName: string;
   shopDescription: string;
   shopAddress: string;
@@ -111,7 +111,6 @@ export class ShopComponent implements OnInit {
         this.averagePrice = shopInfo.average_price
         this.maxParty = shopInfo.maximum_party
         this.starRate = shopInfo.star_rate;
-        // eservationList.map((list: any) => Object.assign({}
         this.images = shopInfo.images.map((image:any)=>image.image)
         this.menu = shopInfo.menu;
         if(shopInfo.average_price == "c"){this.reservationPrice = 10000} 

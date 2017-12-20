@@ -48,7 +48,7 @@ export class PaymentComponent implements OnInit {
     console.log(headers, options)
     
     this.http.post(`${this.appUrl}/reservations/${this.shopListService.resInfo.timePk}/reservation/`, payload, options)
-      .subscribe(info => console.log(info))   //info => this.reservationPk = inof.id 로 변경함.
+      .subscribe( (info : any) => this.reservationPk = info.pk)  //info => this.reservationPk = inof.id 로 변경함.
     console.log(payload, headers)
     this.payMode()
   }
@@ -58,7 +58,7 @@ export class PaymentComponent implements OnInit {
 
   // 결제창을 띄우는 함수
   payMode = function () {
-    IMP.init('iamport'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+    IMP.init('imp56421298'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 
     IMP.request_pay({
       pg: "inicis", // version 1.1.0부터 지원.
@@ -66,10 +66,10 @@ export class PaymentComponent implements OnInit {
       merchant_uid: 'merchant_' + new Date().getTime(),
       name: '예약금결제',
       amount: this.amount,
-      buyer_email: this.email,
+      buyer_email: this.mail,
       buyer_name: this.name,
       buyer_tel: this.tel,
-      m_redirect_url: 'https://www.yourdomain.com/payments/complete'
+      m_redirect_url: 'http://localhost:4200/shop/1'
     }, function (rsp) {
       if (rsp.success) {
 
