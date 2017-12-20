@@ -7,7 +7,7 @@
           <h3>{{ res.name }}</h3>
           <p>{{ res.address }}</p>
           <p class="buttons">
-            <a [routerLink]="['/shop', res.pk]" class="btn btn-primary" role="button">방문하기</a>
+            <a [routerLink]="['/shop', res.pk]" (click)="this.shop.shopParmsPk = res.pk" class="btn btn-primary" role="button">방문하기</a>
           </p>
         </div>
       </div>

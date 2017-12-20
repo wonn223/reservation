@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 // import { FormsModule } from '@angular/forms';
 import { SearchedVal, Restaurant } from '../../models/searchedRes';
 import { SearchedResDetailService } from '../../services/searched-res-detail.service';
+import { ShopListService } from '../../services/shop-service.service';
 
 @Component({
   selector: 'app-main-result',
@@ -16,7 +17,7 @@ export class MainResultComponent implements OnInit {
   thumbnail: string;
   appUrl = 'http://api.booki.kr/restaurants/';
 
-  constructor(public http: HttpClient, public resDetail: SearchedResDetailService) {
+  constructor(public http: HttpClient, public resDetail: SearchedResDetailService, public shop: ShopListService ) {
     this.getRes();
   }
 

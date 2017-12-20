@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ShopInfo } from '../models/shopInfo';
+import { Restaurant } from '../models/searchedRes';
 
 
 
@@ -18,6 +19,9 @@ export class ShopListService implements OnInit {
   appUrl = environment.apiUrl;
 
   shopPk = 1;
+  // shop.component
+  resPK: number;
+  shopParmsPk: number;
   shopName: string;
   shopDescription: string;
   shopAddress: string;
@@ -49,23 +53,22 @@ export class ShopListService implements OnInit {
         this.shopName = shopInfo.name;
         this.shopDescription = shopInfo.description;
         this.shopAddress = shopInfo.address;
-        this.latitude = parseInt(shopInfo.geolocation.split(",")[0]);
-        this.longitude = parseInt(shopInfo.geolocation.split(",")[1]);
+        this.latitude = parseInt(shopInfo.geolocation.split(',')[0]);
+        this.longitude = parseInt(shopInfo.geolocation.split(',')[1]);
         this.shopTel = shopInfo.contact_number;
         this.operationTime = shopInfo.business_hours;
-        this.mapLink = `http://maps.google.com/maps?f=d&daddr=${this.latitude},${this.longitude}&sspn=0.2,0.1&nav=1`
+        this.mapLink = `http://maps.google.com/maps?f=d&daddr=${this.latitude},${this.longitude}&sspn=0.2,0.1&nav=1`;
         this.averagePrice = shopInfo.average_price;
         this.maxParty = shopInfo.maximum_party;
         this.starRate = shopInfo.star_rate;
-        if (shopInfo.average_price == "c") { this.reservationPrice = 10000 }
-        else if (shopInfo.average_price == "n") { this.reservationPrice = 15000 }
-        else if (shopInfo.average_price == "e") { this.reservationPrice = 20000 }
-        else { this.reservationPrice = 30000 }
+        if (shopInfo.average_price === 'c') { this.reservationPrice = 10000; } else if (
+          shopInfo.average_price === 'n') { this.reservationPrice = 15000; } else if (
+          shopInfo.average_price === 'e') { this.reservationPrice = 20000; } else { this.reservationPrice = 30000; }
       }
       );
   }
 
- 
+
 
   addFavorite() {
     this.shopTest.countFavorite += 1;

@@ -300,10 +300,9 @@ body{
          url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.ttf) format('truetype');
   }
   
-  .modal-dialog.modal-con {
-    width: 500px;
-  }
-  
+
+
+
   .name {
     left : 4%;
     top : -40%; 
@@ -329,13 +328,9 @@ body{
   
   /* 모달 최상위 */
   .sign-form-wrapper {
-    position: relative;
     margin: 0 auto;
-    width: 500px;
+    width: 400px;
     left: 25px;
-    /* height: 600px; */
-    /* background: rgb(235, 228, 228); */
-    /* border: 2px solid rgb(197, 197, 194); */
   }
   
   .title-wrapper {
@@ -382,35 +377,18 @@ body{
     background: url('../../assets/man.png') no-repeat;
   }
   
-  /* .icon-jinji-pw {
-    position: relative;
-    top: 70px;
-    left: 10px;
-    width: 35px;
-    height: 50px;
-    color: red;
-    background: url('../../assets/man.png') no-repeat;
-  } */
-  
-  .sign-form-wrapper > .sign-input-list {
-    /* position: absolute; */
-    /* top: -150px; */
-    /* left: 10%; */
-    max-width: 380px;
-    margin-top: 0px;
-    margin-left: 50px;
-    /* height: 300px; */
-  }
+
   
   .row-sns {
-    width : 400px;
+    /* width : 400px; */
     height: 60px;
     margin-top: 30px;
     border-bottom: 2px solid rgb(197, 197, 194); 
   }
-  
+
+  /* sns 로그인 아이콘 */
   .auth-sns {
-    width: 380px;
+    width: 100%;
   
   }
   
@@ -447,7 +425,7 @@ body{
     position: relative;
     top: 20px;
     margin : 0 auto 10px auto;
-    width: 380px;
+    width: 100%;
     height: 34px;
     background-color: orange;
     border: 0;
@@ -620,6 +598,7 @@ body{
 .toggle-menu > li {
   margin: 15px;
 }
+
 
 @media screen and (min-width: 901px) and ( max-width: 1080px) {
   .nav-menus > a {

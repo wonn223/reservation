@@ -16,20 +16,16 @@ import {
   SteponeComponent
 } from './routing-forRouting';
 import { AuthGuard } from './guards/auth.guard';
+// import { ParamsauthGuard} from './guards/paramsauth.guard';
 
 
 // 라우트 구성
 const routes: Routes = [
-  { path: 'main', component: MainComponent, children : [
-    {
-       path: 'signin',
-       loadChildren : 'app/login/login.module#LoginModule'
-    }
-  ] },
+  { path: 'main', component: MainComponent },
   { path: 'step1',
     loadChildren : 'app/main/main.module#MainModule'
   },
-  { path: 'shop/:resPk', component: ShopComponent },
+  { path: 'shop/:resPk', component: ShopComponent, data: { pk : ':id'} },
   { path: 'payment', component: PaymentComponent },
   { path: 'mypage', component: MypageComponent },
   { path: 'managepage', component: ManagepageComponent },

@@ -22,16 +22,18 @@ import { AppComponent } from './app.component';
 import { ContainerComponent } from './container.component';
 import { HeaderComponent } from '../app/header/header.component';
 import { FooterComponent } from './footer.component';
-import { LoginComponent } from './login/login.component';
 import { ShopComponent } from './shop/shop.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { PaymentComponent } from './payment/payment.component';
 import { MypageComponent } from './mypage/mypage.component';
 import { ReplyComponent } from './reply/reply.component';
 import { MainComponent } from './main/main.component';
-// import { SteponeComponent } from './routing-forRouting';
+
 import { LoginRoutingModule } from './login-routing.module';
+
 import { ManagepageComponent } from './managepage/managepage.component';
+import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -40,14 +42,15 @@ import { ManagepageComponent } from './managepage/managepage.component';
     ContainerComponent,
     HeaderComponent,
     LoginComponent,
+    DashboardComponent,
     ShopComponent,
+    ReplyComponent,
     PaymentComponent,
     FilterPipe,
     PricePipe,
     MypageComponent,
     NotFoundComponent,
     FooterComponent,
-    ReplyComponent,
     // SteponeComponent
     MainComponent,
     ManagepageComponent
