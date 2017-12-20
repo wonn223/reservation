@@ -42,9 +42,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   // ex) for(i = 1; i<number+1; i++) { arry.push(i); };
 
   // test 이미지 url
-  images = ['http://img.insight.co.kr/upload/2014/12/19/ART141219075215.jpg',
-    'http://cfile27.uf.tistory.com/image/20055D4D4D94104230AA52',
-    'http://cfile24.uf.tistory.com/image/11110B424F92C0E11A97CA'];
+
 
   bsValue: Date = new Date();  // 선택한 날짜가 담겨있는 변수
   bsRangeValue: any = [new Date(2017, 7, 4), new Date(2017, 7, 20)];
@@ -63,7 +61,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   modalRef: BsModalRef;
   // shop view에 필요한 내용들 직접가져오기 (pk는 메인페이지 클릭할 때 전달받아야함)
-  // shopPk = this.resPk
+  shopPk = this.resPk;
   shopName: string;
   shopDescription: string;
   shopAddress: string;
@@ -76,12 +74,14 @@ export class ShopComponent implements OnInit, OnDestroy {
   maxParty: number;
   starRate: number;
   AvailableTime: any;
+  menu: string;
+  images: any;
 
   constructor(public shopListService: ShopListService,
     public modalService: BsModalService,
     public http: HttpClient,
     public route: ActivatedRoute
-    ) { this.shopListService.resPK = this.resPk; }
+    ) {  }
 
   collapsed(event: any): void {
       // console.log(event);
@@ -109,10 +109,12 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.averagePrice = shopInfo.average_price;
         this.maxParty = shopInfo.maximum_party;
         this.starRate = shopInfo.star_rate;
-        if ( shopInfo.average_price === 'c') {this.reservationPrice = 10000; } else if
-        ( shopInfo.average_price === 'n') {this.reservationPrice = 15000; } else if
-        ( shopInfo.average_price === 'e') {this.reservationPrice = 20000; } else {
-          this.reservationPrice = 30000; }
+        this.images = shopInfo.images.map((image:any)=>image.image)
+        this.menu = shopInfo.menu;
+        if(shopInfo.average_price == "c"){this.reservationPrice = 10000} 
+        else if(shopInfo.average_price == "n"){this.reservationPrice = 15000}
+        else if (shopInfo.average_price == "e"){this.reservationPrice = 20000}
+        else {this.reservationPrice = 30000} 
        }
       );
   }
