@@ -1,29 +1,27 @@
 <button type="button" class="btn btn-primary" (click)="openModal(template)">Sign Up</button>
 <ng-template #template>
   <div class="sign-form-wrapper ">
-    <form #signForm="ngForm" (ngSubmit)="onSubmit(signForm)">
+    <form [formGroup]="signupForm" (ngSubmit)="onSignup()" novalidate>
       <h2 class="sign-header">Welcome</h2>
       <span class="has-float-label">
        <div class="form-group input-group">
-        <input id="name" type=" text " class="form-control" name="name" [(ngModel)]="user.name" #name="ngModel" placeholder="이름" required/>
+        <input id="name" type=" text " class="form-control" name="name" formControlName="name" placeholder="이름">
         <label for="name" class="sign-form-label">Name</label>
         <em *ngIf="name.errors?.required && name.touched " class="alert ">이름을 입력하세요!</em>
        </div>
       </span>
       <span class="has-float-label">
        <div class="form-group input-group">
-        <input id="email" type="text" name="email" class="form-control" placeholder="email" [(ngModel)]="user.email" #email="ngModel" [(ngModel)]="user.email"
-        #email="ngModel"
-        pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$"
-        required>
-        <label for="email" class="sign-form-label">Email</label>
+        <input id="useremail" type="text" name="email" class="form-control" placeholder="email" formControlName="email">
+        <label for="useremail" class="sign-form-label">Email</label>
           <em *ngIf="email.errors?.pattern && email.touched " class="alert ">User id는 email 형식으로 입력하세요!</em>
           <em *ngIf="email.errors?.required && email.touched " class="alert ">User id로 사용할 email을 입력하세요!</em>
        </div>
       </span>
-      <span class="has-float-label">
-      <div class="form-group input-group">
-        <input id="userPassword" type="password" name="password1" class="form-control" placeholder="password" [(ngModel)]="user.password1 " #password1="ngModel" pattern="[a-zA-Z0-9]{4,10}" required>
+      <div formGroupName="passwordGroup">
+        <span class="has-float-label">
+        <div class="form-group input-group">
+        <input id="userPassword" type="password" name="password1" class="form-control" formControlName="password1" placeholder="password">
         <label for="userPassword" class="sign-form-label">Password</label>
         <em *ngIf="password1.errors?.pattern && password1.touched " class="alert ">
           Password는 영문 또는 숫자로 4자리 이상 10이하로 입력하세요!
@@ -35,20 +33,23 @@
     </span>
       <span class="has-float-label">
       <div class="form-group input-group">
-        <input id="confirmPassword" type="password" name="password2" class="form-control" placeholder="confirm password" [(ngModel)]="user.password2 " #password2="ngModel" pattern="[a-zA-Z0-9]" required>
+        <input id="confirmPassword" type="password" name="password2" class="form-control" placeholder="confirm password" formControlName="password2">
         <label for="confirmPassword" class="sign-form-label">
           Confirm Password
         </label>
-        <em *ngIf="password2.value !== password1.value && password2.touched" class="alert ">
-          Password가 일치하지 않습니다.!
+       <em *ngIf="passwordGroup.errors?.match && password2.touched && !password2.errors?.required" class="alert">
+          password가 일치하지 않습니다!
         </em>
-        <em *ngIf="password2.errors?.required && password2.touched " class="alert "> </em>
+        <em *ngIf="password2.errors?.required && password2.touched" class="alert">
+          password를 입력하세요!
+        </em>
       </div>
     </span>
+  </div>
 
-      <button type="submit " class="btn btn-primary btn-join" (click)="openModal2(templateNested)">Join</button>
+      <button type="submit " class="btn btn-primary btn-join" (click)="openModal2(templateNested)" [disabled]="signupForm.invalid">Join</button>
       <button type=" button " class="btn btn-primary btn-facebook ">Facebook으로 로그인하기</button>
-      <pre>signForm.value: {{ signForm.value | json }}</pre>
+      <pre>signupForm.value: {{ signupForm.value | json }}</pre>
     </form>
   </div>
 </ng-template>
@@ -110,13 +111,17 @@
   </div>
 </ng-template>
 
-<div class="login-porfile-set text-center">
+<!-- <div class="login-porfile-set text-center">
   <form #pofileSet="ngForm" class="login-profile-set">
     <h3>프로필 사진과 닉네임을 설정해주세요</h3>
     <div>
       <i class="icon-photo fa fa-camera-retro hc vc" aria-hidden="true"></i>
-      <input type="file" id="avatar" accept="image/*" #fileInput>
-      <!-- <image-upload url="http://zinzi.booki.kr/accounts/2/profile/" [class]="'customClass'"></image-upload> -->
+      <img src="../../assets/blank-profile.png" alt="">
+      <label class="btn btn-file btn-cancel pull-left">Pick an image
+              <input type="file" accept="image/*"
+                (change)="onFileChange(fileInput.files)" #fileInput>
+            </label>
+      
     </div>
     <div class=" icon-photo form-group has-float-label">
       <input id="nickname " type="text" class="form-control" name="nickname" [(ngModel)]="userProfile.nickname" #nickname="ngModel" placeholder="Nick Name" required>
@@ -124,7 +129,7 @@
     </div>
     <button class="btn btn-primary ">등록</button>
   </form>
-</div>
+</div> -->
 
 
 

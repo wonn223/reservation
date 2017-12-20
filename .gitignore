@@ -1,12 +1,26 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
+<<<<<<< HEAD
 # environments
 /src/environments
+=======
+
+# environments
+/src/environments
+
+>>>>>>> aa8cf292ab0eedcb3d982ef96f8e635062014537
 # compiled output
 /dist
 /tmp
 /out-tsc
+<<<<<<< HEAD
 # dependencies
 /node_modules
+=======
+
+# dependencies
+/node_modules
+
+>>>>>>> aa8cf292ab0eedcb3d982ef96f8e635062014537
 # IDEs and editors
 /.idea
 .project
@@ -15,12 +29,20 @@
 *.launch
 .settings/
 *.sublime-workspace
+<<<<<<< HEAD
+=======
+
+>>>>>>> aa8cf292ab0eedcb3d982ef96f8e635062014537
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+<<<<<<< HEAD
+=======
+
+>>>>>>> aa8cf292ab0eedcb3d982ef96f8e635062014537
 # misc
 /.sass-cache
 /connect.lock
@@ -29,9 +51,20 @@
 npm-debug.log
 testem.log
 /typings
+<<<<<<< HEAD
 # e2e
 /e2e/*.js
 /e2e/*.map
 # System Files
 .DS_Store
 Thumbs.db
+=======
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db
+>>>>>>> aa8cf292ab0eedcb3d982ef96f8e635062014537

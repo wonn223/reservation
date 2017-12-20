@@ -11,7 +11,6 @@ interface ReservationLists {
   resTime: string;
   shopAddress: string;
   shopTel: string;
- 
 }
 
 interface FavoriteLists {
@@ -30,47 +29,45 @@ interface FavoriteLists {
 })
 export class MypageComponent implements OnInit {
   appUrl = environment.apiUrl;
-  resList: any
+  resList: any;
   favoriteList: FavoriteLists[];
 
   // 회원의 예약리스트가져오기
-  myReservation(){
+  myReservation() {
     const headers = {
       // 'WWW-Authenticate' : 'Token',
       'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
-    }
+    };
     const options = {
       headers: new HttpHeaders(headers)
-    }
+    };
     this.http.get(`${this.appUrl}/reservations/customer/`, options)
       .subscribe((reservationList: ReservationLists[]) => {
-        console.log(reservationList)
-        this.resList = reservationList.map((list:any) => Object.assign({},
+        console.log(reservationList);
+        this.resList = reservationList.map((list: any) => Object.assign({},
           {
             shopName: list.restaurant.name,
             party: list.party,
             resDate: list.information.date,
             resTime: list.information.time,
             shopAddress: list.restaurant.address
-          }))
-          console.log(this.resList)
-      })  
+          }));
+          console.log(this.resList);
+      });
   }
-  
 
-  //즐겨찾기 리스트 가져오기
-  setFavorite(){
+  // 즐겨찾기 리스트 가져오기
+  setFavorite() {
     const headers = {
       // 'WWW-Authenticate' : 'Token',
       'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
-    }
+    };
     const options = {
       headers: new HttpHeaders(headers)
-    }
+    };
     this.http.get(`${this.appUrl}/reservations/favorite-toggle/`, options)
       .subscribe((favorite) => {
         this.favoriteList = favorite[0].favorites;
-      
         // favoritelist에 index가 잡혀있음
         // console.log(favorite.favorites)
         // this.favoriteList = favorite.map((list: any) => Object.assign({},
@@ -78,26 +75,26 @@ export class MypageComponent implements OnInit {
         //     // shopPk: favorite.favorites.pk
         //     // shopName: string
         //     // shopImage: string
-            
+
         //   }))
 
-        console.log(this.favoriteList)
-      })
+        console.log(this.favoriteList);
+      });
   }
   removeFavorite(itemPk) {
-    console.log(itemPk)
-    const payload = {}
+    console.log(itemPk);
+    const payload = { };
 
     const headers = {
       // 'WWW-Authenticate' : 'Token',
       'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
-    }
+    };
     const options = {
       headers: new HttpHeaders(headers)
-    }
+    };
 
     this.http.post(`${this.appUrl}/reservations/${itemPk}/favorite-toggle/`, payload, options)
-      .subscribe(() => this.setFavorite())
+      .subscribe(() => this.setFavorite());
   }
 
 
@@ -122,7 +119,6 @@ export class MypageComponent implements OnInit {
   //       this.profile_image = value.profile_image;
   //       this.nickname = value.nickname;
   //       console.log(this.profile_image)
-        
   //       })
   // }
 

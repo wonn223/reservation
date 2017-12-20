@@ -36,7 +36,7 @@
       <p>상</p>
     </h3>
   </div>
-  <form [formGroup]="signForm" (ngSubmit)="signin()" novalidate>
+  <form [formGroup]="loginForm" (ngSubmit)="signin()" novalidate>
     <span class="has-float-label">
     <div class="form-group input-group">
       <input id="email" type="email" formControlName="email" name='email' class="form-control" placeholder="email">
@@ -57,7 +57,8 @@
       </div>
     </span>
 
-    <button [disabled]="signForm.invalid" type="submit" class="btn btn-lg btn-success btn-block">Sign In</button>
+    <button [disabled]="loginForm.invalid" type="submit" class="btn btn-lg btn-success btn-block">Sign In</button>
+    <a class="btn btn-default" (click)="signout()">Signout</a>
     <div class="row-sns auth-sns">
       <div class="col-xs-4">
         <a href="#">
@@ -86,5 +87,4 @@
       title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 </div>
 <div *ngIf="message" class="alert alert-danger">{{ message }}</div>
-<pre>{{ signForm.status }}</pre>
 <!-- </ng-template> -->
