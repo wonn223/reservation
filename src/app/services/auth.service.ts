@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, TemplateRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -9,12 +9,15 @@ import 'rxjs/add/operator/shareReplay';
 
 import { environment } from '../../environments/environment';
 
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { User } from '../models/user';
 import { Token } from '../models/token';
 import { shareReplay } from 'rxjs/operator/shareReplay';
 
 @Injectable()
 export class AuthService {
+    templateRef: TemplateRef<any>;
+    headerModalRef: BsModalRef;
     appUrl = environment.apiUrl;
     TOKEN_NAME = 'jwt_token';
     token: string = this.getToken();
@@ -24,11 +27,14 @@ export class AuthService {
     }
     signin(credential: User): Observable<Token> {
         return this.http.post<Token>(`${this.appUrl}/accounts/signin/`, credential)
-            .do(res => this.setToken(res.token))
+            .do(res => {
+                this.setToken(res.token);
+                console.log(res);
+            })
             .shareReplay();
     }
-    
-    signout(){
+
+    signout() {
         // const headers = {
         //     'Authorization':`Token ${this.token}`
         // };

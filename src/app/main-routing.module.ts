@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 // 컴포넌트 임포트
@@ -23,7 +24,7 @@ const mainCompRoutes: Routes = [
         StepthreeComponent,
         MainResultComponent
     ],
-    imports: [RouterModule.forChild(mainCompRoutes)],
+    imports: [CommonModule, RouterModule.forChild(mainCompRoutes)],
     exports: [RouterModule]
 })
 
