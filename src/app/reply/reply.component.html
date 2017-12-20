@@ -87,15 +87,17 @@
               </div>
              </figure>
              <div class="patch-comment-block">
-              <input class="patchInput" #patchInput onblur type="text" multiline="true" value="{{ td.comment }}">
+              <input class="patchInput" #patchInput (blur)="removeEditMode()" type="text" multiline="true" value="{{ td.comment }}">
                 <label class="test">
                   {{ td.comment }}
                 </label>
             </div>
              <div class="icon-wrapper">
-              <i class="glyphicon glyphicon-pencil pull-right" [class.editMode]="isActivated" (click)="changeAct(remove)"></i>
+              <i class="glyphicon glyphicon-edit" [class.editMode]="isActivated" (click)="changeAct(remove)"></i>
               <i class="glyphicon glyphicon-ok" [class.editMode]="isActivated" (click)="patchComm(td.pk, patchInput)"></i>
-              <i #remove class="glyphicon glyphicon-remove-sign pull-right" [class.editMode]="isActivated"  (click)="removeComm(td.pk)"></i>
+              <i class="glyphicon glyphicon-remove" [class.editMode]="isActivated" (click)="changeAct(remove)"></i>
+              <i #remove class="glyphicon glyphicon-remove-sign" [class.editMode]="isActivated"  (click)="removeComm(td.pk)"></i>
+              
              </div>
            </div>
         </section>

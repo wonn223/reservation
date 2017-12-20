@@ -34,8 +34,8 @@ export class ReplyComponent implements OnInit {
    patchedRate: FormGroup;
    startingIndex = 0;
    endIndex = 3;
-   itemsPerPage = 3;
-   totalItems = 12;
+   itemsPerPage = 5;
+   totalItems = 20;
    currentPage = 1;
 
 
@@ -206,6 +206,11 @@ export class ReplyComponent implements OnInit {
     console.dir(event);
   }
 
+  // css용 editMode 클래스 제거
+  removeEditMode() {
+    console.log('edited');
+    this.isActivated = !(this.isActivated);
+  }
 
   onBoundsChanged(event) {
       console.log(event);

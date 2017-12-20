@@ -151,11 +151,6 @@ label {
     word-wrap: break-word;
 }
 
-.patch-comment-block > input[type=text]
-{
-
-}
-
 
 .patch-comment-block .patch-input {
     display: none;
@@ -173,14 +168,15 @@ input[type="text"]:focus {
 
 /* 댓글 수정 시 아이콘 */
 .glyphicon.glyphicon-remove-sign.editMode,
-.glyphicon.glyphicon-pencil.editMode {
+.glyphicon.glyphicon-edit.editMode {
     display: none;
 }
-
+.glyphicon.glyphicon-remove,
 .glyphicon.glyphicon-ok {
     display: none;
 }
 
+.glyphicon.glyphicon-remove.editMode,
 .glyphicon.glyphicon-ok.editMode {
     display: block;
     top: 15px;
