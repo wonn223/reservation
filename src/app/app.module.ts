@@ -31,7 +31,7 @@ import { MainComponent } from './main/main.component';
 // import { LoginRoutingModule } from './login-routing.module';
 import { ManagepageComponent } from './managepage/managepage.component';
 import { LoginComponent } from './login/login.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+// import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -40,7 +40,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ContainerComponent,
     HeaderComponent,
     LoginComponent,
-    DashboardComponent,
+    // DashboardComponent,
     ShopComponent,
     ReplyComponent,
     PaymentComponent,

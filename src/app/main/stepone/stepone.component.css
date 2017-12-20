@@ -1,19 +1,21 @@
 @import url('../main.component.css');
 
 * {
-    z-index: 2;
-    position: relative;
     background-color: black;
-    height: 100%;
-    /* width: 100%; */
 }
 
 .row .nav-header {
 	width: 100%;
 	color: white;
-	text-align: center;
-	margin: 0 auto;
 	padding-top: 2%;	
 }
 
+/* 단계 텍스트 */
+.step-text {
+    text-align: center;
+}
 
+/* 유저 선택 표시해주는 텍스트 */
+.user-choice {
+    text-align: center; 
+}
