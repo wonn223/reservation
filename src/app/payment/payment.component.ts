@@ -22,6 +22,7 @@ export class PaymentComponent implements OnInit {
   tel: string; // 예약자전화번호
   mail: string; // 예약자 이메일
   reservationPk: number;
+  imp_uid: string;
 
   // 예약관련 함수와 결제.
 
@@ -53,11 +54,22 @@ export class PaymentComponent implements OnInit {
     this.payMode()
   }
 
+  payCreat(uid) {
+    const payload = {
+      imp_uid: uid,
+      price: this.amount
+    }
+    console.log("createpay:" + payload)
+
+    this.http.post(`${this.appUrl}/reservations/${this.reservationPk}/payment`, payload)
+      .subscribe(res => console.log(res))
+  }
+
 
   // imp UID와 예약정보의 연결방법
 
   // 결제창을 띄우는 함수
-  payMode = function () {
+  payMode () {
     IMP.init('imp56421298'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 
     IMP.request_pay({
@@ -72,10 +84,8 @@ export class PaymentComponent implements OnInit {
       m_redirect_url: 'http://localhost:4200/shop/1'
     }, function (rsp) {
       if (rsp.success) {
-
         jquery.ajax({
           url: `${this.appUrl}/reservations/${this.reservationPk}/payment`, //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-          // /reservations/${this.reservationPk}/payment/
           type: 'POST',
           dataType: 'json',
           data: {
@@ -95,7 +105,9 @@ export class PaymentComponent implements OnInit {
         msg += '에러내용 : ' + rsp.error_msg;
       }
       alert(msg);
+      this.payCreat(rsp.imp_uid);
     });
+    
   }
 
 
