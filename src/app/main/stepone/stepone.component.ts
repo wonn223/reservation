@@ -26,7 +26,8 @@ export class SteponeComponent implements OnInit {
   check(fd) {
     // 이전에 다른 곳에서 체크 표시가 있을 경우
     // console.dir(fd.value);
-    this.searchRes.oneheaderValue = fd;
+    console.log(fd.textContent);
+    this.searchRes.oneheaderValue = fd.textContent;
   }
 
   hover(food) {

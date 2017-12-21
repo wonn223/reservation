@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SearchedResDetailService } from '../../services/searched-res-detail.service';
+
 
 @Component({
   selector: 'app-steptwo',
@@ -22,7 +24,7 @@ export class SteptwoComponent implements OnInit, OnDestroy {
   pageScr;
 
 
-  constructor(public route: ActivatedRoute ) {
+  constructor(public route: ActivatedRoute, public searchedRes: SearchedResDetailService ) {
   }
 
 

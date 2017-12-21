@@ -49,7 +49,7 @@ templateRef: TemplateRef<any>;
       .subscribe(
       () => {
         this.modalRef.hide();
-        this.router.navigate(['step1']);
+        this.router.navigate(['step']);
       },
       ({ error }) => {
         console.log(error.message);
