@@ -12,9 +12,9 @@ import { MainResultComponent } from './main/main-result/main-result.component';
 // 라우트 구성
 const mainCompRoutes: Routes = [
     { path: '', component: SteponeComponent },
-    { path: 'step2', component: SteptwoComponent },
-    { path: 'step2/step3', component: StepthreeComponent },
-    { path: 'step2/step3/main_result', component: MainResultComponent }
+    { path: ':priceParams', component: SteptwoComponent },
+    { path: ':priceParms/:type', component: StepthreeComponent },
+    { path: ':priceParms/:type/:location', component: MainResultComponent }
 ];
 
 @NgModule ({
@@ -25,9 +25,9 @@ const mainCompRoutes: Routes = [
         MainResultComponent
     ],
 
-    imports: [RouterModule.forChild(mainCompRoutes),
-    CommonModule],
-
+    imports: [
+        CommonModule,
+        RouterModule.forChild(mainCompRoutes)],
     exports: [RouterModule]
 })
 

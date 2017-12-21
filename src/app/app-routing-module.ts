@@ -22,7 +22,7 @@ import { AuthGuard } from './guards/auth.guard';
 // 라우트 구성
 const routes: Routes = [
   { path: 'main', component: MainComponent },
-  { path: 'step1',
+  { path: 'step',
     loadChildren : 'app/main/main.module#MainModule'
   },
   { path: 'shop/:resPk', component: ShopComponent, data: { pk : ':id'} },

@@ -141,7 +141,27 @@ export class ShopComponent implements OnInit, OnDestroy {
         } else { this.toggleStatus = 'btn btn-lg btn-default'; }
       });
   }
+  
+  
+  favoriteStatus() {
+    const payload = {}
 
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+    }
+    const options = {
+      headers: new HttpHeaders(headers)
+    }
+
+    this.http.get(`${this.appUrl}/reservations/${this.resPk}/favorite-toggle/`, options)
+      .subscribe((toggleStatus: any) => {
+        console.log(toggleStatus)
+        if (toggleStatus.result === true) {
+          this.toggleStatus = "btn btn-lg btn-danger"
+        } else { this.toggleStatus = "btn btn-lg btn-default" }
+      })
+  }
   // 예약가능시간 조회
 
   getAvailableTime() {
@@ -164,6 +184,7 @@ export class ShopComponent implements OnInit, OnDestroy {
       this.resPk = +params['resPk']; 
     });
     this.getShop(this.resPk);
+    this.favoriteStatus();
     this.bsConfig = Object.assign({}, { containerClass: 'theme-red' });
   }
 
