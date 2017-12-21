@@ -1,19 +1,10 @@
 @import url('../main.component.css');
 
 * {
-    z-index: 2;
-    position: relative;
     background-color: black;
-    height: 100%;
-    /* width: 100%; */
 }
 
 .row .nav-header {
 	width: 100%;
 	color: white;
-	text-align: center;
-	margin: 0 auto;
-	padding-top: 2%;	
-}
-
-
+}   

@@ -6,8 +6,12 @@
   src: url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.eot?#iefix) format('embedded-opentype'), url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.woff2) format('woff2'), url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.woff) format('woff'), url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.ttf) format('truetype');
 }
 
-.modal-dialog.modal-con {
-  width: 500px;
+.modal.in .modal-dialog {
+  width: 400px;
+}
+
+.modal-content {
+  width: 400px;
 }
 
 .name {
@@ -39,7 +43,7 @@
 .sign-form-wrapper {
   position: relative;
   margin: 0 auto;
-  width: 500px;
+  width: 400px;
   left: 25px;
   /* height: 600px; */
   /* background: rgb(235, 228, 228); */
@@ -101,14 +105,10 @@
   background: url('../../assets/man.png') no-repeat;
 } */
 
-.sign-form-wrapper>.sign-input-list {
-  /* position: absolute; */
-  /* top: -150px; */
-  /* left: 10%; */
-  max-width: 380px;
-  margin-top: 0px;
-  margin-left: 50px;
-  /* height: 300px; */
+  
+.sign-form-wrapper > .sign-input-list {
+  width: 70%;
+  margin: 0 auto;
 }
 
 .row-sns {
@@ -195,4 +195,10 @@ input.ng-touched.ng-invalid[_ngcontent-c0] {
   width: 380px;
   margin: 20px auto;
   text-align: center;
+}
+
+@media (min-width: 768px) {
+  .modal-content {
+    width: 400px !important;
+  }
 }

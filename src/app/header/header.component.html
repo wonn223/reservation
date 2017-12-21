@@ -29,10 +29,12 @@
     </div>
     <div class="col-xs-4 col-md-4 navs">
         <nav class="nav-menus">
-                <a routerLink="/signin">
-                  <button type="button" class="login-button" (click)="openModal(loginComp)">로그인</button>
-                </a>
-                <a href="#">회원가입</a>
+            <a>
+                <button type="button" class="login-button" (click)="openModal(template)">로그인</button>
+            </a>
+            <a>
+                <button type="button" class="login-button" (click)="openModal(loginComp)">회원가입</button>
+            </a>
             <button class="login-icon">
                 <figure class="user">
                     <span class="badge"></span>
@@ -44,8 +46,9 @@
 </div>
 
 <ng-template #loginComp>
- 
+ <app-login></app-login>
 </ng-template>
+
 <ng-template #template>
     <div class="sign-form-wrapper">
       <div class="title-wrapper">
