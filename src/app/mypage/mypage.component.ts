@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { HttpHandler } from '@angular/common/http/src/backend';
-
+import { AuthService } from '../services/auth.service'
 
 interface ReservationLists {
   shopName: string;
@@ -126,6 +126,7 @@ export class MypageComponent implements OnInit {
     // XMLHttpRequest 객체의 생성
     var req = new XMLHttpRequest();
     // 동기식 처리
+    const token = this.auth.getToken()
     req.open('GET', `${this.appUrl}/accounts/6/profile/`, false);
     req.setRequestHeader('Authorization', 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d');
     req.setRequestHeader('Content-type', 'application/json');
@@ -137,7 +138,7 @@ export class MypageComponent implements OnInit {
   }
 
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, public auth : AuthService) { }
 
   ngOnInit() {
     this.myReservation()

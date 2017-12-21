@@ -80,29 +80,7 @@ export class PaymentComponent implements OnInit {
       .subscribe(res => console.log(res))
   }
 
-  test(){
-    var req = new XMLHttpRequest();
-    req.open('POST', `http://api.booki.kr/reservations/24/payment`);
-    req.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-    var data = {
-      imp_uid: "imp_080504610870",
-      price: 30000
-    }
-    var dataJ = JSON.stringify(data)
-    console.log(data)
-    console.log(dataJ)
-    req.send(dataJ);
-    // req.onreadystatechange = function (e) {
-    //   if (req.readyState === XMLHttpRequest.DONE) {
-    //     if (req.status === 201) {
-          
-    //       console.log("s")
-    //     } else {
-    //       console.log("Error!");
-    //     }
-    //   }
-    // }
-  }
+
   // imp UID와 예약정보의 연결방법
 
   // 결제창을 띄우는 함수
@@ -132,56 +110,16 @@ export class PaymentComponent implements OnInit {
     });
   };
 
-    // function (rsp) {
-      // if (rsp.success) {
-
-        
-
-      //   var req = new XMLHttpRequest();
-      //   req.open('POST', `http://api.booki.kr/reservations/${reservationPk}/payment`);
-      //   req.setRequestHeader('Content-type', 'application/json');
-      //   var data = {
-      //     "imp_uid": rsp.imp_uid,
-      //     "price": price
-      //   }
-      //   var dataJson = JSON.stringify(data)
-      //   // Request를 전송한다  501ㅇㅔ러
-      //   req.send(dataJson);
-   
-      //   // angular jquery 에러
-      //   // jquery.ajax({
-      //   //   url: `${this.appUrl}/reservations/${this.reservationPk}/payment`, //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-      //   //   type: 'POST',
-      //   //   dataType: 'json',
-      //   //   data: {
-      //   //     imp_uid: rsp.imp_uid,
-      //   //     //기타 필요한 데이터가 있으면 추가 전달
-      //   //     price: this.amount
-      //   //   }
-      //   // })
-
-      //   var msg = '결제가 완료되었습니다.';
-      //   msg += data;
-      //   msg += reservationPk;
-      //   msg += price
-      //   console.log(data)
-      // } else {
-      //   var msg = '결제에 실패하였습니다.';
-      //   msg += '에러내용 : ' + rsp.error_msg;
-      // }
-      // alert(msg);
-      
-    // });
-
     cb (res) {
       console.log(res);
       const payload = {
         imp_uid: res.imp_uid,
         price: this.amount
-
       }
       console.log(payload);
       this.http.post(`${this.appUrl}/reservations/${this.reservationPk}/payment/`, payload)
-        .subscribe(res => console.log(res))
+        .subscribe(res => console.log("success"))
+
+      setTimeout("location.href='http://www.naver.com'",2000)
     }
 }

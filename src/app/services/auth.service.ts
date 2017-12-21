@@ -27,8 +27,8 @@ export class AuthService {
     }
     signin(credential: User): Observable<Token> {
         return this.http.post<Token>(`${this.appUrl}/accounts/signin/`, credential)
-            .do(res => {
-                this.setToken(res.token);
+            .do( (res : (any)) => {
+                this.setToken(res.token, res.user.pk);
                 console.log(res);
             })
             .shareReplay();
@@ -62,8 +62,9 @@ export class AuthService {
         return localStorage.getItem(this.TOKEN_NAME);
     }
 
-    setToken(token: string): void {
+    setToken(token: string, userpk:number): void {
         localStorage.setItem(this.TOKEN_NAME, token);
+        localStorage.setItem("mypk", userpk.toString())
         console.log(shareReplay);
         console.log(this.TOKEN_NAME, token);
     }
