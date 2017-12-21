@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 
 // 컴포넌트 임포트
 import { SteponeComponent } from './main/stepone/stepone.component';

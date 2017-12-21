@@ -183,6 +183,5 @@ export class PaymentComponent implements OnInit {
       console.log(payload);
       this.http.post(`${this.appUrl}/reservations/${this.reservationPk}/payment/`, payload)
         .subscribe(res => console.log(res))
-  
     }
 }

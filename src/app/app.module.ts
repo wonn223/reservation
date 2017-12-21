@@ -29,7 +29,6 @@ import { MypageComponent } from './mypage/mypage.component';
 import { ReplyComponent } from './reply/reply.component';
 import { MainComponent } from './main/main.component';
 
-import { LoginRoutingModule } from './login-routing.module';
 
 import { ManagepageComponent } from './managepage/managepage.component';
 import { LoginComponent } from './login/login.component';
