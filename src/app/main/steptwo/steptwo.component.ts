@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-steptwo',
   templateUrl: './steptwo.component.html',
   styleUrls: ['./steptwo.component.css']
 })
-export class SteptwoComponent implements OnInit {
+export class SteptwoComponent implements OnInit, OnDestroy {
 
-  isHover = false;
+  // 패러미터 가져오기 위한 변수
+  public priceParams: string;
+  private sub: any;
+
   checkActivated = false;
+  food = ['kor', 'chn', 'jpn', 'mex', 'amc', 'tha', 'med', 'ita', 'vtn', 'spn', 'ind', 'etc'];
   foodCategory = ['hansik', 'jungsik', 'ilsik', 'yangsik', 'byeolsik'];
   headerValue = ['한식'];
   eventStorage = [];
@@ -17,12 +22,13 @@ export class SteptwoComponent implements OnInit {
   pageScr;
 
 
-  constructor() {
+  constructor(public route: ActivatedRoute ) {
   }
+
 
   check(fd, event) {
     // 이전에 다른 곳에서 체크 표시가 있을 경우
-    fd.checkActivated = !this.checkActivated;
+    fd.checkActivated = !(this.checkActivated);
   }
 
   hover(food) {
@@ -32,6 +38,14 @@ export class SteptwoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.sub = this.route.params.subscribe ( params => {
+      this.priceParams = params['priceParams'];
+    });
   }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
 
 }

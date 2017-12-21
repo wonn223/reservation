@@ -7,7 +7,7 @@ body{
 }
 
 .header {
-  background: black;
+  background: #333541;
   color:white;
   height: 80px;
 }
@@ -134,7 +134,7 @@ body{
 .main-search {
   width: 31vw;
   height: 50px;
-  border: 2px solid red;
+  border: 2px solid lightgray;
   border-radius: 80px;
   margin: 15px auto 0 auto;
 }
@@ -156,9 +156,9 @@ body{
   height: 48px;
   width : 80px;
   border-radius: 80px;
-  border: 2px solid red;
+  border: 2px solid lightgray;
   color : white;
-  background-color: red;
+  background-color: lightgray;
 
 }
 /* 로그인 아이콘 */
@@ -551,7 +551,7 @@ body{
   top: 0;
   left: 0;
   padding: 20px 30px 30px 30px; 
-  z-index: 3; 
+  z-index: 100; 
 }
 
 /* 햄버거 메뉴 & 버튼 */
@@ -588,7 +588,7 @@ body{
   background-color: rgba(0,0,0, 0.5);
   transform: translateX(-100%);
   transition: all 1.2s;
-  z-index: 2;
+  z-index: 10;
 }
 
 .toggle-menu.is-active {
@@ -617,7 +617,7 @@ body{
   .main-search {
     width: 100%;
     height: 50px;
-    border: 2px solid red;
+    border: 2px solid lightgray;
     border-radius: 80px;
     margin: 15px auto 0 auto;
   }
@@ -639,9 +639,9 @@ body{
     height: 48px;
     width : 80px;
     border-radius: 80px;
-    border: 2px solid red;
+    border: 2px solid lightgray;
     color : white;
-    background-color: red;
+    background-color: lightgray;
   
   }
   /* 로그인 아이콘 */
@@ -697,7 +697,7 @@ body{
     position: relative;
     left: -15px;
     height: 50px;
-    border: 2px solid red;
+    border: 2px solid lightgrey;
     border-radius: 80px;
     margin: 15px auto 0 auto;
   }
@@ -720,9 +720,9 @@ body{
     height: 48px;
     width : 80px;
     border-radius: 80px;
-    border: 2px solid red;
+    border: 2px solid lightgrey;
     color : white;
-    background-color: red;
+    background-color:lightgrey;
   
   }
   /* 로그인 아이콘 */
