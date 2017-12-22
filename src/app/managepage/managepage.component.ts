@@ -52,9 +52,23 @@ export class ManagepageComponent implements OnInit {
     this.cancelComment = event.target.value;
   }
   
-  paymentCancle(){
+  paymentCancle(imp_uid){
     this.modalRef.hide()
-
+    console.log(imp_uid)
+    const payload = {
+      reason: this.cancelComment
+    }
+    this.http.post(`${this.appUrl}/reservations/${imp_uid}/paymentcancel/`, payload)
+      .subscribe(test => {
+        console.log(test)
+        this.paymentPatch(imp_uid)})
+  }
+  paymentPatch(imp_uid){
+    const payload = {
+      reason: this.cancelComment
+    }
+    this.http.patch(`${this.appUrl}/reservations/${imp_uid}/payment/`, payload)
+      .subscribe(test => console.log("!!!!",test))
   }
   
   

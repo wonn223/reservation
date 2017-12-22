@@ -41,6 +41,7 @@
         <td>인원</td>
         <td>결제금액</td>
         <td>상태</td>
+        <td>결제정보</td>
         <td> </td>
       </tr>
       <tr *ngFor="let item of reservationInfomations; let i =index" >
@@ -50,7 +51,8 @@
         <td> {{ item.buyer_name}}</td>
         <td> {{ item.reservation.party }}</td>
         <td> {{ item.amount }}</td>
-        <td> {{ item.status }} </td>
+        <td> {{ item.status }}</td>
+        <td> {{ item.imp_uid }}</td>
         <td>
           <button type="button" class="btn btn-primary" (click)="openModal(template)">취소하기</button>
           <ng-template #template>
@@ -63,7 +65,7 @@
             <div class="modal-body">
               <h3>취소사유를 입력해주세요</h3>
               <input type="text" class="form-control" placeholder="Text input" [value]="cancelComment" (input)="onInput($event)">
-              <button type="button" class="btn btn-primary" (click)= "paymentCancle()">취소하기</button>
+              <button type="button" class="btn btn-primary" (click)= "paymentCancle(item.imp_uid)">취소하기</button>
             </div>
           </ng-template>
         </td>
