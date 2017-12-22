@@ -1,6 +1,7 @@
 import { Injectable, TemplateRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+// import { JwtHelper } from 'angular2-jwt';
 
 
 import 'rxjs/add/observable/of';
@@ -19,44 +20,58 @@ export class AuthService {
     templateRef: TemplateRef<any>;
     headerModalRef: BsModalRef;
     appUrl = environment.apiUrl;
-    TOKEN_NAME = 'jwt_token';
+    TOKEN_NAME = 'drf token';
     token: string = this.getToken();
+    myPk: string = this.getUserPk();
 
-    constructor(private http: HttpClient ) {
+    constructor(private http: HttpClient) {
         console.log('[appUrl] ', this.appUrl);
     }
+
     signin(credential: User): Observable<Token> {
         return this.http.post<Token>(`${this.appUrl}/accounts/signin/`, credential)
+
             .do(res => {
                 this.setToken(res.token);
                 console.log(res);
+                this.setUserPk(res.user.pk);
             })
             .shareReplay();
     }
 
     signout() {
-        // const headers = {
-        //     'Authorization':`Token ${this.token}`
-        // };
-        // const options = {
-        //         headers: new HttpHeaders(headers)
-        //     };
-        //     console.log(options);
-          let headers = new HttpHeaders();
-          headers = headers.set('Authorization', `Token ${this.token}`);
-          console.log(headers);
-        return this.http.post(`${this.appUrl}/accounts/signout/`,null, { headers})
+        let headers = new HttpHeaders();
+        headers = headers.set('Authorization', `Token ${this.token}`);
+        console.log(headers);
+        return this.http.post(`${this.appUrl}/accounts/signout/`, null, { headers })
 
-            .do(() => this.removeToken())
+            .do(() => {
+                this.removeToken();
+                this.removeUserPk();
+            })
             .shareReplay();
-
     }
+
+
+    setUserPk(pk: string): void {
+        localStorage.setItem('Pk', pk);
+        console.log('Pk', pk);
+    }
+
+    getUserPk(): string {
+        return localStorage.getItem('Pk');
+    }
+
+    removeUserPk(): void {
+        localStorage.removeItem('Pk');
+    }
+
 
     // 토큰 유효성 검증
-    isAuthenticated(): boolean {
-        const token = this.getToken();
-        return token ? true : false;
-    }
+    // isAuthenticated(): boolean {
+    //     const token = this.getToken();
+    //     return token ? !this.isTokenExpired(token) : false;
+    // }
 
     getToken(): string {
         return localStorage.getItem(this.TOKEN_NAME);
@@ -64,7 +79,6 @@ export class AuthService {
 
     setToken(token: string): void {
         localStorage.setItem(this.TOKEN_NAME, token);
-        console.log(shareReplay);
         console.log(this.TOKEN_NAME, token);
     }
 
@@ -83,4 +97,5 @@ export class AuthService {
       npm install angular2-jwt
       https://github.com/auth0/angular2-jwt
     */
+
 }
