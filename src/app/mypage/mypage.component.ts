@@ -37,7 +37,7 @@ export class MypageComponent implements OnInit {
   //발급된 토큰을 생성함
   makeTokenInfo(){
     this.tokenInfo = this.auth.getToken();
-    this.mypk = this.auth.getToken();
+    this.mypk = this.auth.getUserPk();
     console.log(this.mypk)
   }
   
