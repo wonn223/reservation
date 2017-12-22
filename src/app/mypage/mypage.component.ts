@@ -32,12 +32,12 @@ export class MypageComponent implements OnInit {
   resList: any;
   favoriteList: FavoriteLists[];
   tokenInfo: string;
-  mypk: number;
+  mypk: string;
 
   //발급된 토큰을 생성함
   makeTokenInfo(){
-    this.tokenInfo = this.auth.getToken()
-    this.mypk = parseInt(localStorage.getItem("mypk"));
+    this.tokenInfo = this.auth.getToken();
+    this.mypk = this.auth.getToken();
     console.log(this.mypk)
   }
   
