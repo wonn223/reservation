@@ -103,7 +103,6 @@ export class ShopComponent implements OnInit, OnDestroy {
 
 
   getShop(shopPk: number) {
-    Observable
     console.log(this.appUrl);
     this.http.get<ShopInfo>(`${this.appUrl}/restaurants/${this.resPk}`)
       .subscribe((shopInfo: ShopInfo) => {
