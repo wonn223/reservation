@@ -1,5 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { SearchedResDetailService } from '../../services/searched-res-detail.service';
 
 
 @Component({
@@ -9,27 +11,26 @@ import { Router } from '@angular/router';
 })
 export class SteponeComponent implements OnInit {
 
+  interpolation: string = null;
   isHover = false;
   checkActivated = false;
   foodCategory = ['hansik', 'jungsik', 'ilsik', 'yangsik', 'byeolsik'];
-  headerValue = ['한식', '중식', '일식', '양식', '주류/별식'];
+  headerValue = '';
   eventStorage = [];
   stepVal = [];
+  price = ['c', 'n', 'e', 'v'];
   state = 'inactive';
 
-  constructor(public router: Router) {
-  }
+  constructor(public router: Router, public http: HttpClient, public searchRes: SearchedResDetailService) { }
 
   check(fd) {
     // 이전에 다른 곳에서 체크 표시가 있을 경우
-    console.log(event);
-    fd.checkActivated = !this.checkActivated;
+    // console.dir(fd.value);
+    console.log(fd.textContent);
+    this.searchRes.oneheaderValue = fd.textContent;
   }
 
   hover(food) {
-    // this.eventStorage = event;
-    // 마우스 이벤트 발생 = event.target.id활용
-    // console.log(this.eventStorage);
     console.log('[hovering]', this.foodCategory[food.id]);
     // 레퍼런스 변수의 id값
     if (food.classList[3] === this.foodCategory[food.id]) {
@@ -40,6 +41,7 @@ export class SteponeComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
 }

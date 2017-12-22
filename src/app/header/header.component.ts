@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { AuthService } from '../services/auth.service';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Validators } from '@angular/forms';
 
@@ -23,21 +24,33 @@ export class HeaderComponent implements OnInit {
   modalRef: BsModalRef;
   modalRef2: BsModalRef;
   modalRef3: BsModalRef;
+  loginComp: TemplateRef<any>;
+  isActivated = false;
   template: TemplateRef<any>;
 
-  constructor(private modalService: BsModalService) { }
-
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { class : 'modal-con'});
-  }
-  openModal2(template: TemplateRef<any>) {
-    this.modalRef2 = this.modalService.show(template, { class: 'second' });
-  }
-  openModal3(template: TemplateRef<any>) {
-    this.modalRef3 = this.modalService.show(template);
+  addClass () {
+    console.log('addClass');
+    this.isActivated = !this.isActivated;
   }
 
-  closeModal(template: TemplateRef<any>) {
+  constructor(private modalService: BsModalService, public auth: AuthService ) { }
+
+  openModal(loginComp: TemplateRef<any>) {
+    this.auth.templateRef = loginComp;
+    this.modalRef = this.modalService.show(loginComp, { class : 'modal-con'});
+    this.auth.headerModalRef = this.modalRef;
+    console.log(this.auth.templateRef);
+    console.log(this.auth.headerModalRef);
+
+  }
+  openModal2(loginComp: TemplateRef<any>) {
+    this.modalRef2 = this.modalService.show(loginComp, { class: 'second' });
+  }
+  openModal3(loginComp: TemplateRef<any>) {
+    this.modalRef3 = this.modalService.show(loginComp);
+  }
+
+  closeModal(loginComp: TemplateRef<any>) {
     this.modalRef.hide();
     this.modalRef = null;
   }
@@ -47,7 +60,7 @@ export class HeaderComponent implements OnInit {
   }
 
   initUser() {
-    this.user = new User('', '','','');
+    this.user = new User('', '', ' ', ' ');
   }
 
 }

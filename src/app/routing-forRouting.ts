@@ -7,3 +7,4 @@ export * from './main/stepone/stepone.component';
 export * from './main/steptwo/steptwo.component';
 export * from './main/stepthree/stepthree.component';
 export * from './main/main-result/main-result.component';
+export * from './managepage/managepage.component';

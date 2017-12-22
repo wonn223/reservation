@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
   selector: 'app-login',
@@ -12,43 +14,65 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-signForm: FormGroup;
+loginForm: FormGroup;
 message: string;
+modalRef: BsModalRef;
+templateRef: TemplateRef<any>;
 
   constructor(
     private auth: AuthService,
-    private router: Router) { }
+    private router: Router,
+    public modalService: BsModalService
+    ) {
+      // this.modalRef = this.modalService.show(this.templateRef);
+    }
 
 
   ngOnInit() {
-    this.signForm = new FormGroup({
-      email: new FormControl('',[
+    this.templateRef = this.auth.templateRef;
+    this.modalRef = this.auth.headerModalRef;
+    console.log(this.templateRef);
+    console.log(this.modalRef);
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [
         Validators.required,
         Validators.pattern('^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$')
       ]),
       password: new FormControl('',[ Validators.required, Validators.minLength(4)])
      });
-    console.log(this.signForm);
+    console.log(this.loginForm);
   }
 
-  signin(){
-    console.log('[payload]', this.signForm.value);
-    this.auth.signin(this.signForm.value)
+  signin() {
+    console.log('[payload]', this.loginForm.value);
+    this.auth.signin(this.loginForm.value)
       .subscribe(
-      () => this.router.navigate(['dashboard']),
+      () => {
+        this.modalRef.hide();
+        this.router.navigate(['step']);
+      },
       ({ error }) => {
         console.log(error.message);
         this.message = error.message;
       }
       );
-
+  }
+  signout() {
+    return this.auth.signout()
+    .subscribe(
+      () => this.router.navigate(['signin']),
+      ({ error }) => {
+        console.log(error.message);
+        this.message = error.message;
+      }
+    );
   }
 
   get email() {
-    return this.signForm.get('email');
+    return this.loginForm.get('email');
   }
   get password() {
-    return this.signForm.get('password');
+    return this.loginForm.get('password');
   }
 
 }

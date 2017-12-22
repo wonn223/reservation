@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ShopListService } from '../services/shop-service.service';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, RequestOptions } from '@angular/http';
+import { HttpHandler } from '@angular/common/http/src/backend';
+import { AuthService } from '../services/auth.service'
 declare var jquery: any;
 declare var $: any;
 declare var IMP: any;
 
+class PayInfo {
+  constructor(public price: number, public uid: string) {};
+}
 
 @Component({
   selector: 'app-payment',
@@ -15,42 +19,84 @@ declare var IMP: any;
 })
 export class PaymentComponent implements OnInit {
 
+  payInfo: PayInfo
+  appUrl = environment.apiUrl;
 
   amount = this.shopListService.resInfo.people * this.shopListService.resInfo.price;
   name: string;   // 예약자이름
   tel: string; // 예약자전화번호
   mail: string; // 예약자 이메일
   reservationPk: number;
+  imp_uid: string;
+  tokenInfo: string;
+
+  //서버로 전달하기
+  constructor(public shopListService: ShopListService, public http: HttpClient, public auth: AuthService) {
+    this.payInfo = new PayInfo(0, '');
+    this.makeTokenInfo();
+  }
+
+  ngOnInit() {
+    console.log(this.shopListService.resInfo)
+  }
+
+  makeTokenInfo() {
+    this.tokenInfo = this.auth.getToken()
+  }
 
   // 예약관련 함수와 결제.
+
   reservationCreat() {
     const payload = {
-      "name": "userid",
-      "party": this.name,
-      "price": this.shopListService.resInfo.price * this.shopListService.resInfo.people,
+      "name": this.name,
+      "party": this.shopListService.resInfo.people,
+      "price": this.amount,
       "phone_number": this.tel,
       "email": this.mail
     };
-    console.log(payload)
-    this.payMode()
-    // const headers = {
-    //   'Content-Type': 'application/json',
-    //   'Accept': 'application/json',
-    //   'Access-Control-Allow-Headers': 'Content-Type',
-    //   'token': '8e4c0b883c763e0cf5e7573ae20276c062f05f46'
-    // };
-    // this.http.post(this.appUrl, payload, header)
-        // .subscribe(res => {
-        //   console.log(res)
-        // res.id})
+    //해더의 생성
+    // const headers = new HttpHeaders()
+    //   .set('Authorization', 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d');
+
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': `Token ${this.tokenInfo}`
+    }
+    const options = {
+      headers : new HttpHeaders(headers)
+    }
+
+    console.log(headers, options)
+    
+    this.http.post(`${this.appUrl}/reservations/${this.shopListService.resInfo.timePk}/reservation/`, payload, options)
+      .subscribe( (info : any) => {
+        this.reservationPk = info.pk;
+        this.payMode(info.pk, info.price)})
+    console.log(payload, headers)
+    
+  }
+
+  payCreat(uid) {
+    const payload = {
+      imp_uid: uid,
+      price: this.amount
+    }
+    console.log("createpay:" + payload)
+
+    this.http.post(`${this.appUrl}/reservations/${this.reservationPk}/payment`, payload)
+      .subscribe(res => console.log(res))
   }
 
 
-
+  // imp UID와 예약정보의 연결방법
 
   // 결제창을 띄우는 함수
-  payMode = function () {
-    IMP.init('iamport'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+  payMode (reservationPk, price) {
+    IMP.init('imp56421298'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+
+    console.log(this);
+
+    const that = this;
 
     IMP.request_pay({
       pg: "inicis", // version 1.1.0부터 지원.
@@ -58,44 +104,29 @@ export class PaymentComponent implements OnInit {
       merchant_uid: 'merchant_' + new Date().getTime(),
       name: '예약금결제',
       amount: this.amount,
-      buyer_email: this.email,
+      buyer_email: this.mail,
       buyer_name: this.name,
       buyer_tel: this.tel,
-      m_redirect_url: 'https://www.yourdomain.com/payments/complete'
-    }, function (rsp) {
-      if (rsp.success) {
-
-        jquery.ajax({
-          url: `/reservations/${this.reservationPk}/payment`, //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-          // /reservations/${this.reservationPk}/payment/
-          type: 'POST',
-          dataType: 'json',
-          data: {
-            imp_uid: rsp.imp_uid,
-            //기타 필요한 데이터가 있으면 추가 전달
-            price: this.amount
-          }
-        })
-
-        var msg = '결제가 완료되었습니다.';
-        msg += '고유ID : ' + rsp.imp_uid;
-        msg += '상점 거래ID : ' + rsp.merchant_uid;
-        msg += '결제 금액 : ' + rsp.paid_amount;
-        msg += '카드 승인번호 : ' + rsp.apply_num;
-      } else {
-        var msg = '결제에 실패하였습니다.';
-        msg += '에러내용 : ' + rsp.error_msg;
-      }
-      alert(msg);
+      m_redirect_url: 'http://www.naver.com'
+    }, (res) => {
+      // console.log('[THIS!!!!!]', this);
+      // console.log('[RES]', res);
+      // console.log('[HTTP]', this.http);
+      this.cb(res);
+      
     });
-  }
+  };
 
+    cb (res) {
+      console.log(res);
+      const payload = {
+        imp_uid: res.imp_uid,
+        price: this.amount
+      }
+      console.log(payload);
+      this.http.post(`${this.appUrl}/reservations/${this.reservationPk}/payment/`, payload)
+        .subscribe(res => console.log("success"))
 
-  //서버로 전달하기
-  constructor(public shopListService: ShopListService) { }
-
-  ngOnInit() {
-
-  }
-
+      setTimeout("location.href='http://localhost:4200/'",2000)
+    }
 }

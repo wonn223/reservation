@@ -1,44 +1,16 @@
-<app-header></app-header>
 <div class="content-fluid">
   <div class="row col-md-12 contentBox-top">
-    <div class="col-sm-4 col-md-4 contentBox"  *ngFor="let res of restaurantList">
+    <div class="col-sm-4 col-md-4 contentBox" *ngFor="let res of restaurantList">
       <div class="thumbnail">
         <img src="https://s3.ap-northeast-2.amazonaws.com/zinzi/static/testimage/test4.png" alt="레스토랑 썸네일">
         <div class="caption">
           <h3>{{ res.name }}</h3>
           <p>{{ res.address }}</p>
           <p class="buttons">
-            <a href="#" class="btn btn-primary" role="button">방문하기</a>
-            <a href="#" class="btn btn-default" role="button">좋아요취소</a>
+            <a [routerLink]="['/shop', res.pk]" (click)="this.shop.shopParmsPk = res.pk" class="btn btn-primary" role="button">방문하기</a>
           </p>
         </div>
       </div>
     </div>
-    <!-- <div class="col-sm-4 col-md-4 contentBox">
-        <div class="thumbnail">
-          <img src="#" alt="#">
-          <div class="caption">
-            <h3>ABC레스토랑</h3>
-            <p>...</p>
-            <p>
-              <a href="#" class="btn btn-primary" role="button">방문하기</a>
-              <a href="#" class="btn btn-default" role="button">좋아요취소</a>
-            </p>
-          </div>
-        </div>
-    </div>
-    <div class="col-sm-4 col-md-4 contentBox">
-        <div class="thumbnail">
-          <img src="#" alt="#">
-          <div class="caption">
-            <h3>ABC레스토랑</h3>
-            <p>...</p>
-            <p>
-              <a href="#" class="btn btn-primary" role="button">방문하기</a>
-              <a href="#" class="btn btn-default" role="button">좋아요취소</a>
-            </p>
-          </div>
-        </div>
-    </div> -->
   </div>
 </div>

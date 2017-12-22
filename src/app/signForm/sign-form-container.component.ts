@@ -1,9 +1,11 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup,Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { PasswordValidator } from './password-validator'
+
 
 
 class User {
@@ -27,9 +29,9 @@ class Profile{
   styleUrls: ['./sign-form-container.component.css']
 })
 export class SignFormContainerComponent implements OnInit {
-
+  signupForm: FormGroup;
   selectedValue = null;
-  user: User;
+  // user: User;
   userProfile: Profile;
   modalRef: BsModalRef;
   modalRef2: BsModalRef;
@@ -72,29 +74,56 @@ export class SignFormContainerComponent implements OnInit {
   }
 
   // 회원가입 데이터 전달
-  onSubmit(signform) {
-    console.log('Send user to server: ', signform);
-    const payload = { name: signform.value.name, email: signform.value.email, password1: signform.value.password1, password2: signform.value.password2 };
+  onSignup() {
+    console.log('Send user to server: ', this.signupForm.value);
+    let signvalue = this.signupForm.value;
+    console.log(signvalue);
+    let payload = { name: signvalue.name, email:signvalue.email, password1:signvalue.passwordGroup.password1, password2:signvalue.passwordGroup.password2 };
+    console.log(payload);
     this.http.post(`${this.appUrl}/accounts/signup/`, payload)
     
       .subscribe((res) => console.log(res));
   
-    this.initUser();
-    // userForm.reset();
+    this.signupForm.reset();
   }
 
   ngOnInit() {
-    this.initUser();
-    this.initProfile();
-    console.log(this.user);
+    this.signupForm = new FormGroup({
+      name: new FormControl('',[
+        Validators.required
+      ]),
+      email: new FormControl('',[
+        Validators.required,
+        Validators.pattern('^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$')
+      ]),
+      passwordGroup: new FormGroup({
+        password1: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9]{4,10}')]),
+        password2: new FormControl('', Validators.required)
+      }, PasswordValidator.match)
+    });
+    console.log(this.signupForm);
+    
     console.log('[appUrl]', this.appUrl);
   }
+  get name() {
+    return this.signupForm.get('name');
+  }
+  get email() {
+    return this.signupForm.get('email');
+  }
 
-  initUser() {
-    this.user = new User('', '', '', '');
+  get passwordGroup() {
+    return this.signupForm.get('passwordGroup');
   }
-  initProfile() {
-    this.userProfile = new Profile('');
+
+  get password1() {
+    return this.signupForm.get('passwordGroup.password1');
   }
+
+  get password2() {
+    return this.signupForm.get('passwordGroup.password2');
+  }
+
+
 
 }

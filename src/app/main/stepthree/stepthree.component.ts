@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { SearchedResDetailService } from '../../services/searched-res-detail.service';
 
 
 @Component({
@@ -6,18 +8,24 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './stepthree.component.html',
   styleUrls: ['./stepthree.component.css']
 })
-export class StepthreeComponent implements OnInit {
+export class StepthreeComponent implements OnInit, OnDestroy  {
+
+  type: string;
+  private sub: any;
+
   isHover = false;
   checkActivated = false;
+  location = ['kangbuk', 'kangnam', 'kangseo', 'kangdong'];
   foodCategory = ['hansik', 'jungsik', 'ilsik', 'yangsik', 'byeolsik'];
-  headerValue = ['한식', '중식', '일식', '양식', '주류/별식'];
+  headerValue = '';
   eventStorage = [];
   stepVal = [];
   state = 'inactive';
   pageScr;
 
 
-  constructor() {
+  constructor(public route: ActivatedRoute, public searchedRes: SearchedResDetailService) {
+    this.headerValue = this.searchedRes.oneheaderValue;
   }
 
   check(fd, event) {
@@ -40,6 +48,13 @@ export class StepthreeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.sub = this.route.params.subscribe ( params => {
+      this.type = params['type'];
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }

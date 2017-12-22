@@ -1,3 +1,4 @@
+
 em{
   text-align: center;
   color: red;
@@ -19,6 +20,11 @@ em{
 #floatdiv a   { color: #5D5D5D; border: 0; text-decoration: none; display: block; }
 #floatdiv a:hover, #floatdiv .menu  { background-color: #5D5D5D; color: #fff; }
 #floatdiv .menu, #floatdiv .last    { margin-bottom: 0px; } */
+
+.container-fluid {
+  color: black;
+}
+
 .title{
    color: #ff792a;
     font-size: 5rem;
@@ -64,9 +70,7 @@ em{
   width: 200px;
 }
 .btn-default{
-  background: red;
-  position: relative;
-  top: 18px;
+  background: #E0DEDE;
 }
 
 

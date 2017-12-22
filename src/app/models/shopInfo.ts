@@ -1,4 +1,4 @@
-export interface shopInfo {
+export interface ShopInfo {
   pk: number;
   name: string;
   address: string;
@@ -20,12 +20,12 @@ export interface shopInfo {
   images: any;
 }
 
-export interface timeList {
-  pk : number;
-  restaurant : number,
-  acceptable_size_of_party: number,
-  price : number,
-  time : string,
-  date : string
+export interface TimeList {
+  pk: number;
+  restaurant: number;
+  acceptable_size_of_party: number;
+  price: number;
+  time: string;
+  date: string;
 }
 
