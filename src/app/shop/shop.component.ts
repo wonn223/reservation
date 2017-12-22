@@ -8,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { HttpHandler } from '@angular/common/http/src/backend';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 // interface ResList {
 //   id: number;
@@ -93,7 +94,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
 
   getShop(shopPk: number) {
-
+    Observable
     console.log(this.appUrl);
     this.http.get<ShopInfo>(`${this.appUrl}/restaurants/${this.resPk}`)
       .subscribe((shopInfo: ShopInfo) => {
@@ -161,7 +162,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.resPk = +params['resPk']; 
+      this.resPk = +params['resPk'];
     });
     this.getShop(this.resPk);
     this.bsConfig = Object.assign({}, { containerClass: 'theme-red' });
