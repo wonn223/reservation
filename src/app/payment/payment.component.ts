@@ -37,11 +37,11 @@ export class PaymentComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.shopListService.resInfo)
+    console.log(this.shopListService.resInfo);
   }
 
   makeTokenInfo() {
-    this.tokenInfo = this.auth.getUserPk()
+    this.tokenInfo = this.auth.getUserPk();
   }
 
   // 예약관련 함수와 결제.
