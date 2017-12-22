@@ -41,7 +41,7 @@ export class PaymentComponent implements OnInit {
   }
 
   makeTokenInfo() {
-    this.tokenInfo = this.auth.getToken()
+    this.tokenInfo = this.auth.getUserPk()
   }
 
   // 예약관련 함수와 결제.
