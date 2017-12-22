@@ -120,6 +120,7 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.starRate = shopInfo.star_rate;
         this.images = shopInfo.images.map((image:any)=>image.image)
         this.menu = shopInfo.menu;
+        console.log("test",shopInfo)
         if(shopInfo.average_price == "c"){this.reservationPrice = 10000} 
         else if(shopInfo.average_price == "n"){this.reservationPrice = 15000}
         else if (shopInfo.average_price == "e"){this.reservationPrice = 20000}

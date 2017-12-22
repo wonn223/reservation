@@ -34,22 +34,41 @@
   <tab heading="예약관리">
     <table class="table table-striped">
       <tr>
+        <td>no</td>
         <td>예약일자</td>
+        <td>예약시간</td>
         <td>예약자</td>
         <td>인원</td>
-        <td>방문시간</td>
         <td>결제금액</td>
-        <td>취소요청 및 사유</td>
+        <td>상태</td>
+        <td>결제정보</td>
         <td> </td>
       </tr>
-      <tr>
-        <td>2017년 12월 26일</td>
-        <td>이우주</td>
-        <td>2명</td>
-        <td>10시</td>
-        <td>30000원</td>
-        <td></td>
-        <td><button>취소</button> </td>
+      <tr *ngFor="let item of reservationInfomations; let i =index" >
+        <td> {{ i + 1 }}</td>
+        <td> {{ item.reservation.information.date }}</td>
+        <td> {{ item.reservation.information.time }} </td>
+        <td> {{ item.buyer_name}}</td>
+        <td> {{ item.reservation.party }}</td>
+        <td> {{ item.amount }}</td>
+        <td> {{ item.status }}</td>
+        <td> {{ item.imp_uid }}</td>
+        <td>
+          <button type="button" class="btn btn-primary" (click)="openModal(template)">취소하기</button>
+          <ng-template #template>
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">예약취소하기</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h3>취소사유를 입력해주세요</h3>
+              <input type="text" class="form-control" placeholder="Text input" [value]="cancelComment" (input)="onInput($event)">
+              <button type="button" class="btn btn-primary" (click)= "paymentCancle(item.imp_uid)">취소하기</button>
+            </div>
+          </ng-template>
+        </td>
       </tr>
     </table>
   </tab>
