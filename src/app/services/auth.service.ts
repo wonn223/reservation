@@ -30,7 +30,6 @@ export class AuthService {
 
     signin(credential: User): Observable<Token> {
         return this.http.post<Token>(`${this.appUrl}/accounts/signin/`, credential)
-
             .do(res => {
                 this.setToken(res.token);
                 console.log(res);
@@ -99,3 +98,5 @@ export class AuthService {
     */
 
 }
+
+

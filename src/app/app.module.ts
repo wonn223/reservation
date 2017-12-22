@@ -28,6 +28,8 @@ import { PaymentComponent } from './payment/payment.component';
 import { MypageComponent } from './mypage/mypage.component';
 import { ReplyComponent } from './reply/reply.component';
 import { MainComponent } from './main/main.component';
+
+
 import { ManagepageComponent } from './managepage/managepage.component';
 import { LoginComponent } from './login/login.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
