@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SearchedResDetailService } from '../../services/searched-res-detail.service';
 
 
 @Component({
@@ -16,14 +17,15 @@ export class StepthreeComponent implements OnInit, OnDestroy  {
   checkActivated = false;
   location = ['kangbuk', 'kangnam', 'kangseo', 'kangdong'];
   foodCategory = ['hansik', 'jungsik', 'ilsik', 'yangsik', 'byeolsik'];
-  headerValue = ['한식', '중식', '일식', '양식', '주류/별식'];
+  headerValue = '';
   eventStorage = [];
   stepVal = [];
   state = 'inactive';
   pageScr;
 
 
-  constructor(public route: ActivatedRoute) {
+  constructor(public route: ActivatedRoute, public searchedRes: SearchedResDetailService) {
+    this.headerValue = this.searchedRes.oneheaderValue;
   }
 
   check(fd, event) {
