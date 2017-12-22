@@ -78,7 +78,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   menu: string;
   images: any;
   tokenInfo: string;
-  mypk: number;
+  mypk: string;
 
   constructor(public shopListService: ShopListService,
     public modalService: BsModalService,
@@ -88,8 +88,8 @@ export class ShopComponent implements OnInit, OnDestroy {
   ) { this.makeTokenInfo() }
 
   makeTokenInfo() {
-    this.tokenInfo = this.auth.getToken()
-    this.mypk = parseInt(localStorage.getItem("mypk"));
+    this.tokenInfo = this.auth.token;
+    this.mypk = this.auth.myPk;
     console.log(this.mypk)
   }
 
@@ -103,7 +103,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
 
   getShop(shopPk: number) {
-
+    Observable
     console.log(this.appUrl);
     this.http.get<ShopInfo>(`${this.appUrl}/restaurants/${this.resPk}`)
       .subscribe((shopInfo: ShopInfo) => {
@@ -191,7 +191,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.resPk = +params['resPk']; 
+      this.resPk = +params['resPk'];
     });
     this.getShop(this.resPk);
     this.favoriteStatus();
