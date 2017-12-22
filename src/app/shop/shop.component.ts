@@ -8,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { HttpHandler } from '@angular/common/http/src/backend';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../services/auth.service'
 
 // interface ResList {
 //   id: number;
@@ -76,12 +77,21 @@ export class ShopComponent implements OnInit, OnDestroy {
   AvailableTime: any;
   menu: string;
   images: any;
+  tokenInfo: string;
+  mypk: number;
 
   constructor(public shopListService: ShopListService,
     public modalService: BsModalService,
     public http: HttpClient,
-    public route: ActivatedRoute
-    ) {  }
+    public route: ActivatedRoute,
+    public auth: AuthService
+  ) { this.makeTokenInfo() }
+
+  makeTokenInfo() {
+    this.tokenInfo = this.auth.getToken()
+    this.mypk = parseInt(localStorage.getItem("mypk"));
+    console.log(this.mypk)
+  }
 
   collapsed(event: any): void {
       // console.log(event);
@@ -126,7 +136,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
     const headers = {
       // 'WWW-Authenticate' : 'Token',
-      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+      'Authorization': `Token ${this.tokenInfo}`
     };
 
     const options = {
@@ -148,7 +158,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
     const headers = {
       // 'WWW-Authenticate' : 'Token',
-      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+      'Authorization': `Token ${this.tokenInfo}`
     }
     const options = {
       headers: new HttpHeaders(headers)
