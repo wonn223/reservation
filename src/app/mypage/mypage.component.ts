@@ -31,12 +31,23 @@ export class MypageComponent implements OnInit {
   appUrl = environment.apiUrl;
   resList: any;
   favoriteList: FavoriteLists[];
+  tokenInfo: string;
+  mypk: string;
+
+  //발급된 토큰을 생성함
+  makeTokenInfo(){
+    this.tokenInfo = this.auth.getToken();
+    this.mypk = this.auth.getToken();
+    console.log(this.mypk)
+  }
+  
+  
 
   // 회원의 예약리스트가져오기
   myReservation() {
     const headers = {
       // 'WWW-Authenticate' : 'Token',
-      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+      'Authorization': `Token ${this.tokenInfo}`
     };
     const options = {
       headers: new HttpHeaders(headers)
@@ -60,7 +71,7 @@ export class MypageComponent implements OnInit {
   setFavorite() {
     const headers = {
       // 'WWW-Authenticate' : 'Token',
-      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+      'Authorization': `Token ${this.tokenInfo}`
     };
     const options = {
       headers: new HttpHeaders(headers)
@@ -87,7 +98,7 @@ export class MypageComponent implements OnInit {
 
     const headers = {
       // 'WWW-Authenticate' : 'Token',
-      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+      'Authorization': `Token ${this.tokenInfo}`
     };
     const options = {
       headers: new HttpHeaders(headers)
@@ -127,8 +138,8 @@ export class MypageComponent implements OnInit {
     var req = new XMLHttpRequest();
     // 동기식 처리
     const token = this.auth.getToken()
-    req.open('GET', `${this.appUrl}/accounts/6/profile/`, false);
-    req.setRequestHeader('Authorization', 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d');
+    req.open('GET', `${this.appUrl}/accounts/${this.mypk}/profile/`, false);
+    req.setRequestHeader('Authorization', `Token ${this.tokenInfo}`);
     req.setRequestHeader('Content-type', 'application/json');
     // Request를 전송한다
     req.send();
@@ -138,12 +149,13 @@ export class MypageComponent implements OnInit {
   }
 
 
-  constructor(public http: HttpClient, public auth : AuthService) { }
+  constructor(public http: HttpClient, public auth: AuthService) { this.makeTokenInfo() }
 
   ngOnInit() {
     this.myReservation()
     this.setFavorite()
     this.setMyInfo()
+    
   }
 
 }

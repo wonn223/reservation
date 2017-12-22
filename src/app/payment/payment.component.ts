@@ -3,6 +3,7 @@ import { ShopListService } from '../services/shop-service.service';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpHandler } from '@angular/common/http/src/backend';
+import { AuthService } from '../services/auth.service'
 declare var jquery: any;
 declare var $: any;
 declare var IMP: any;
@@ -27,14 +28,20 @@ export class PaymentComponent implements OnInit {
   mail: string; // 예약자 이메일
   reservationPk: number;
   imp_uid: string;
+  tokenInfo: string;
 
   //서버로 전달하기
-  constructor(public shopListService: ShopListService, public http: HttpClient) {
+  constructor(public shopListService: ShopListService, public http: HttpClient, public auth: AuthService) {
     this.payInfo = new PayInfo(0, '');
+    this.makeTokenInfo();
   }
 
   ngOnInit() {
-    console.log(this.shopListService.resInfo)
+    console.log(this.shopListService.resInfo);
+  }
+
+  makeTokenInfo() {
+    this.tokenInfo = this.auth.getUserPk();
   }
 
   // 예약관련 함수와 결제.
@@ -53,7 +60,7 @@ export class PaymentComponent implements OnInit {
 
     const headers = {
       // 'WWW-Authenticate' : 'Token',
-      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+      'Authorization': `Token ${this.tokenInfo}`
     }
     const options = {
       headers : new HttpHeaders(headers)
@@ -120,6 +127,6 @@ export class PaymentComponent implements OnInit {
       this.http.post(`${this.appUrl}/reservations/${this.reservationPk}/payment/`, payload)
         .subscribe(res => console.log("success"))
 
-      setTimeout("location.href='http://www.naver.com'",2000)
+      setTimeout("location.href='http://localhost:4200/'",2000)
     }
 }
