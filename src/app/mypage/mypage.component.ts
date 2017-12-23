@@ -4,6 +4,9 @@ import { environment } from '../../environments/environment';
 import { HttpHandler } from '@angular/common/http/src/backend';
 import { AuthService } from '../services/auth.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { TemplateRef } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 interface ReservationLists {
   shopName: string;
@@ -34,6 +37,14 @@ export class MypageComponent implements OnInit {
   favoriteList: FavoriteLists[];
   tokenInfo: string;
   mypk: string;
+  myNickname = '';
+  resultNickname: string
+
+  modalRef: BsModalRef;
+ 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
 
   //발급된 토큰을 생성함
   makeTokenInfo(){
@@ -56,34 +67,37 @@ export class MypageComponent implements OnInit {
       // For Preview
       const file = files[0];
       const reader = new FileReader();
-
-      /* 브라우저는 보안 문제로 인해 파일 경로의 참조를 허용하지 않는다.
-        따라서 파일 경로를 img 태그에 바인딩할 수 없다.
-        FileReader.readAsDataURL 메소드를 사용하여 이미지 파일을 읽어
-        base64 인코딩된 스트링 데이터를 취득한 후, img 태그에 바인딩한다. */
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.imageSrc = reader.result;
       };
-
-      /* reactive form에서 input[type="file"]을 지원하지 않는다.
-        즉 파일 선택 시에 값이 폼컨트롤에 set되지 않는다
-        https://github.com/angular/angular.io/issues/3466
-        form validation을 위해 file.name을 폼컨트롤에 set한다. */
       this.avatar.setValue(file.name);
     }
   }
 
   onSubmit(files: FileList) {
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': `Token ${this.tokenInfo}`
+    };
+    const options = {
+      headers: new HttpHeaders(headers)
+    };
+
     const formData = new FormData();
+   
     formData.append('avatar', files[0]);
 
-    this.loading = true;
-    // Send data (payload = formData)
-    console.log(formData.get('avatar'));
+    const payload = {
+      profile_image: files[0]
+    }
+  
 
+    this.loading = true;
+  
     // // 폼데이터를 서버로 전송한다.
-    // this.http.post(`${this.apiUrl}/upload`, formData)
+    this.http.patch(`${this.appUrl}/accounts/${this.mypk}/profile/`, payload, options)
+      .subscribe(res => console.log(res))
     //   .subscribe(res => {
     //     this.result = res;
     //     this.loading = false;
@@ -93,6 +107,27 @@ export class MypageComponent implements OnInit {
 
   get avatar() {
     return this.form.get('avatar');
+  }
+
+  // 닉네임변경
+  changeNickname(name){
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': `Token ${this.tokenInfo}`
+    };
+    const options = {
+      headers: new HttpHeaders(headers)
+    };
+    const payload = {
+      nickname : name
+    }
+
+    this.http.patch(`${this.appUrl}/accounts/${this.mypk}/profile/`, payload, options)
+      .subscribe((res : any) => {
+        console.log(res)
+        this.resultNickname = res.nickname;
+      })
+    this.modalRef.hide()
   }
 
   // 회원의 예약리스트가져오기
@@ -201,7 +236,7 @@ export class MypageComponent implements OnInit {
   }
 
 
-  constructor(public http: HttpClient, public auth: AuthService, private fb: FormBuilder,) {
+  constructor(public http: HttpClient, public auth: AuthService, private fb: FormBuilder, private modalService: BsModalService) {
     this.form = this.fb.group({
       avatar: ['', Validators.required]
     }); 
