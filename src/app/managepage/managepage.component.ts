@@ -90,6 +90,20 @@ export class ManagepageComponent implements OnInit {
       })
   }
 
+  // 이미지처리
+  imageSrc = '../../assets/man.png';
+  onFileChange(files: FileList) {
+    if (files && files.length > 0) {
+      // For Preview
+      const file = files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imageSrc = reader.result;
+      };
+    }
+  }
+
   constructor(public http: HttpClient, private modalService: BsModalService) { }
 
   ngOnInit() {

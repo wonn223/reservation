@@ -90,7 +90,6 @@ export class ShopComponent implements OnInit, OnDestroy {
   makeTokenInfo() {
     this.tokenInfo = this.auth.token;
     this.mypk = this.auth.myPk;
-    console.log(this.mypk)
   }
 
   collapsed(event: any): void {

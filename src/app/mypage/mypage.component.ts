@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { HttpHandler } from '@angular/common/http/src/backend';
-import { AuthService } from '../services/auth.service'
+import { AuthService } from '../services/auth.service';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { TemplateRef } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 interface ReservationLists {
   shopName: string;
@@ -33,6 +37,14 @@ export class MypageComponent implements OnInit {
   favoriteList: FavoriteLists[];
   tokenInfo: string;
   mypk: string;
+  myNickname = '';
+  resultNickname: string
+
+  modalRef: BsModalRef;
+ 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
 
   //발급된 토큰을 생성함
   makeTokenInfo(){
@@ -41,7 +53,82 @@ export class MypageComponent implements OnInit {
     console.log(this.mypk)
   }
   
+  // 이미지처리
+  form: FormGroup;
+  loading = false;
+  imageSrc = '../../assets/man.png';
+
+  result; // file upload 수행 이후 서버로부터 수신한 데이터
+
+ 
+
+  onFileChange(files: FileList) {
+    if (files && files.length > 0) {
+      // For Preview
+      const file = files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imageSrc = reader.result;
+      };
+      this.avatar.setValue(file.name);
+    }
+  }
+
+  onSubmit(files: FileList) {
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': `Token ${this.tokenInfo}`
+    };
+    const options = {
+      headers: new HttpHeaders(headers)
+    };
+
+    const formData = new FormData();
+   
+    formData.append('avatar', files[0]);
+
+    const payload = {
+      profile_image: files[0]
+    }
   
+
+    this.loading = true;
+  
+    // // 폼데이터를 서버로 전송한다.
+    this.http.patch(`${this.appUrl}/accounts/${this.mypk}/profile/`, payload, options)
+      .subscribe(res => console.log(res))
+    //   .subscribe(res => {
+    //     this.result = res;
+    //     this.loading = false;
+    //     this.avatar.setValue(null);
+    //   });
+  }
+
+  get avatar() {
+    return this.form.get('avatar');
+  }
+
+  // 닉네임변경
+  changeNickname(name){
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': `Token ${this.tokenInfo}`
+    };
+    const options = {
+      headers: new HttpHeaders(headers)
+    };
+    const payload = {
+      nickname : name
+    }
+
+    this.http.patch(`${this.appUrl}/accounts/${this.mypk}/profile/`, payload, options)
+      .subscribe((res : any) => {
+        console.log(res)
+        this.resultNickname = res.nickname;
+      })
+    this.modalRef.hide()
+  }
 
   // 회원의 예약리스트가져오기
   myReservation() {
@@ -149,7 +236,11 @@ export class MypageComponent implements OnInit {
   }
 
 
-  constructor(public http: HttpClient, public auth: AuthService) { this.makeTokenInfo() }
+  constructor(public http: HttpClient, public auth: AuthService, private fb: FormBuilder, private modalService: BsModalService) {
+    this.form = this.fb.group({
+      avatar: ['', Validators.required]
+    }); 
+    this.makeTokenInfo() }
 
   ngOnInit() {
     this.myReservation()
