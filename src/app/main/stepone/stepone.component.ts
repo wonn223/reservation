@@ -23,11 +23,9 @@ export class SteponeComponent implements OnInit {
 
   constructor(public router: Router, public http: HttpClient, public searchRes: SearchedResDetailService) { }
 
-  check(fd) {
-    // 이전에 다른 곳에서 체크 표시가 있을 경우
-    // console.dir(fd.value);
-    console.log(fd.textContent);
-    this.searchRes.oneheaderValue = fd.textContent;
+  check(price) {
+    const headerOneValue = price.textContent.trim();
+    this.searchRes.oneheaderValue = price.textContent;
   }
 
   hover(food) {

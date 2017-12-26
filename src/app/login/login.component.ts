@@ -7,6 +7,7 @@ import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +39,7 @@ templateRef: TemplateRef<any>;
         Validators.required,
         Validators.pattern('^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$')
       ]),
-      password: new FormControl('',[ Validators.required, Validators.minLength(4)])
+      password: new FormControl('', [ Validators.required, Validators.minLength(4)])
      });
     console.log(this.loginForm);
   }
@@ -54,18 +55,27 @@ templateRef: TemplateRef<any>;
       ({ error }) => {
         console.log(error.message);
         this.message = error.message;
-      }
+      },
+       ()  => {
+         console.log('completed');
+       }
       );
   }
+
   signout() {
     return this.auth.signout()
     .subscribe(
-      () => this.router.navigate(['signin']),
-      ({ error }) => {
+      () => {
+        alert('방문해주셔서 감사합니다');
+        this.router.navigate(['main']);
+      },
+      ( error) => {
         console.log(error.message);
         this.message = error.message;
-      }
-    );
+      },
+      () => {
+        console.log('completed');
+      });
   }
 
   get email() {

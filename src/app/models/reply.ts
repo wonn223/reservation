@@ -23,3 +23,16 @@ export interface Profile {
     profile_image: string;
 }
 
+
+class Nature {
+    location: string;
+}
+
+class Pesron extends Nature {
+    name: string;
+
+    constructor() {
+        super();
+    }
+}
+

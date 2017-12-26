@@ -3,6 +3,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { AuthService } from '../services/auth.service';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 class User {
@@ -27,13 +28,17 @@ export class HeaderComponent implements OnInit {
   loginComp: TemplateRef<any>;
   isActivated = false;
   template: TemplateRef<any>;
+  isLoggined: boolean;
+  message: string;
 
   addClass () {
     console.log('addClass');
     this.isActivated = !this.isActivated;
   }
 
-  constructor(private modalService: BsModalService, public auth: AuthService ) { }
+  constructor(private modalService: BsModalService, public router: Router, public auth: AuthService ) {
+    this.isLoggined = this.auth.isLoggined;
+  }
 
   openModal(loginComp: TemplateRef<any>) {
     this.auth.templateRef = loginComp;
@@ -54,6 +59,24 @@ export class HeaderComponent implements OnInit {
     this.modalRef.hide();
     this.modalRef = null;
   }
+
+  signout() {
+    return this.auth.signout()
+    .subscribe(
+      () => {
+        alert('방문해주셔서 감사합니다');
+        this.router.navigate(['main']);
+      },
+      (error) => {
+        console.log(error.message);
+        this.message = error.message;
+      },
+      () => {
+        console.log('completed');
+      });
+  }
+
+
 
   ngOnInit() {
     this.initUser();

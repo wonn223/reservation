@@ -1,4 +1,4 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import { Injectable, TemplateRef, TypeDecorator } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 // import { JwtHelper } from 'angular2-jwt';
@@ -14,6 +14,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { User } from '../models/user';
 import { Token } from '../models/token';
 import { shareReplay } from 'rxjs/operator/shareReplay';
+import { TypeCheck } from '../models/typecheck';
+
 
 @Injectable()
 export class AuthService {
@@ -23,6 +25,7 @@ export class AuthService {
     TOKEN_NAME = 'drf token';
     token: string = this.getToken();
     myPk: string = this.getUserPk();
+    isLoggined = false;
 
     constructor(private http: HttpClient) {
         console.log('[appUrl] ', this.appUrl);
@@ -31,6 +34,8 @@ export class AuthService {
     signin(credential: User): Observable<Token> {
         return this.http.post<Token>(`${this.appUrl}/accounts/signin/`, credential)
             .do(res => {
+                this.isLoggined = !(this.isLoggined);
+                console.log('signin', this.isLoggined);
                 this.setToken(res.token);
                 console.log(res);
                 this.setUserPk(res.user.pk);
@@ -43,19 +48,32 @@ export class AuthService {
         headers = headers.set('Authorization', `Token ${this.token}`);
         console.log(headers);
         return this.http.post(`${this.appUrl}/accounts/signout/`, null, { headers })
-
             .do(() => {
+                this.isLoggined = false;
+                console.log('[signout]', this.isLoggined);
                 this.removeToken();
                 this.removeUserPk();
             })
             .shareReplay();
     }
 
+    Check() {
+        // 리턴 키워드가 있어야 데코레이터 함수의 매개변수로 리턴값이 들어가기 때문.
+        return function (target: any, propName: string, description: PropertyDescriptor) {
+            console.log('[check func]', description);
+            console.log(propName);
+        };
+    }
 
+    // @Check()
     setUserPk(pk: string): void {
         localStorage.setItem('Pk', pk);
         console.log('Pk', pk);
     }
+
+    // changeType (pk: TypeCheck ): pk is TypeCheck {
+    //      return pk === undefined ;
+    // }
 
     getUserPk(): string {
         return localStorage.getItem('Pk');

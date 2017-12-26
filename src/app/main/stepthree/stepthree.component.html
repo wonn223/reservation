@@ -13,9 +13,9 @@
   <div class="row nav-header">
     <div class="col-md-2"></div>
     <div class="col-md-8 user-choice">
-      <h5 class="col-md-3 step active">{{headerValue]}</h5>
-      <h5 class="col-md-3 step">한식</h5>
-      <h5 class="col-md-3 step">{{ interpolation }}</h5>
+      <h5 class="col-md-3 step active">{{this.headerValue}}</h5>
+      <h5 class="col-md-3 step">{{ this.headerTwoValue }}</h5>
+      <!-- <h5 class="col-md-3 step"></h5> -->
     </div>
     <div class="col-md-2"></div>
   </div>
@@ -25,15 +25,13 @@
       <div class="col-md-6">
         <div [routerLink]="[this.location[0]]"
         #hansik class="card col-md-6 hansik" 
-        [class.han]="hansik.checkActivated" 
-        id="0" (click)="check(hansik, $event)">
+        id="0" (click)="check()">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>강북구</h4>
         </div>
         <div [routerLink]="[this.location[1]]" 
         #jungsik class="card col-md-6 jungsik" 
-        [class.han]="jungsik.checkActivated" 
-        id="1" (click)="check(jungsik, $event)">
+        id="1" (click)="check()">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>강남구</h4>
         </div>
@@ -48,15 +46,13 @@
       <div class="col-md-6">
         <div [routerLink]="[this.location[2]]"
         #ilsik class="card col-md-6 ilsik" 
-        [class.han]="ilsik.checkActivated" 
-        id="0" (click)="check(hansik, $event)">
+        id="0" (click)="check()">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>강서구</h4>
         </div>
-        <div [routerLink]="[this.location[4]]" 
+        <div [routerLink]="[this.location[3]]" 
         #yangsik class="card col-md-6 yangsik" 
-        [class.han]="yangsik.checkActivated" 
-        id="1" (click)="check(jungsik, $event)">
+        id="1" (click)="check()">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>강동구</h4>
         </div>

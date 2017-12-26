@@ -15,9 +15,10 @@ export class StepthreeComponent implements OnInit, OnDestroy  {
 
   isHover = false;
   checkActivated = false;
-  location = ['kangbuk', 'kangnam', 'kangseo', 'kangdong'];
+  location = ['강북구', '강남구', '강서구', '강동구'];
   foodCategory = ['hansik', 'jungsik', 'ilsik', 'yangsik', 'byeolsik'];
-  headerValue = '';
+  headerValue: string;
+  headerTwoValue: string;
   eventStorage = [];
   stepVal = [];
   state = 'inactive';
@@ -26,12 +27,13 @@ export class StepthreeComponent implements OnInit, OnDestroy  {
 
   constructor(public route: ActivatedRoute, public searchedRes: SearchedResDetailService) {
     this.headerValue = this.searchedRes.oneheaderValue;
+    this.headerTwoValue = this.searchedRes.twoheaderValue;
+    console.log(this.searchedRes.oneheaderValue);
   }
 
-  check(fd, event) {
+  check() {
     // 이전에 다른 곳에서 체크 표시가 있을 경우
     console.log(event);
-    fd.checkActivated = !this.checkActivated;
   }
 
   hover(food, event) {

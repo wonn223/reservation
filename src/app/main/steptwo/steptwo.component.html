@@ -28,14 +28,14 @@
         <div [routerLink]="[this.food[0]]"
         #hansik class="card col-md-6 hansik" 
         [class.han]="hansik.checkActivated" 
-        id="0" (click)="check(hansik, $event)">
+        id="0" (click)="check(hansik)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>한식</h4>
         </div>
         <div [routerLink]="[this.food[1]]" 
         #jungsik class="card col-md-6 jungsik" 
         [class.han]="jungsik.checkActivated" 
-        id="1" (click)="check(jungsik, $event)">
+        id="1" (click)="check(jungsik)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>중식</h4>
         </div>
@@ -51,14 +51,14 @@
         <div [routerLink]="[this.food[2]]"
         #ilsik class="card col-md-6 ilsik" 
         [class.han]="ilsik.checkActivated" 
-        id="0" (click)="check(hansik, $event)">
+        id="0" (click)="check(hansik)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>일식</h4>
         </div>
         <div [routerLink]="[this.food[4]]" 
         #yangsik class="card col-md-6 yangsik" 
         [class.han]="yangsik.checkActivated" 
-        id="1" (click)="check(jungsik, $event)">
+        id="1" (click)="check(jungsik)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>양식</h4>
         </div>

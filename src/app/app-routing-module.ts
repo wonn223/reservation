@@ -15,7 +15,7 @@ import {
   ManagepageComponent,
   SteponeComponent
 } from './routing-forRouting';
-import { AuthGuard } from './guards/auth.guard';
+// import { AuthGuard } from './guards/auth.guard';
 // import { ParamsauthGuard} from './guards/paramsauth.guard';
 
 

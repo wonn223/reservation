@@ -13,8 +13,8 @@ import { MainResultComponent } from './main/main-result/main-result.component';
 const mainCompRoutes: Routes = [
     { path: '', component: SteponeComponent },
     { path: ':priceParams', component: SteptwoComponent },
-    { path: ':priceParms/:type', component: StepthreeComponent },
-    { path: ':priceParms/:type/:location', component: MainResultComponent }
+    { path: ':priceParams/:type', component: StepthreeComponent },
+    { path: ':priceParams/:type/:location', component: MainResultComponent }
 ];
 
 @NgModule ({

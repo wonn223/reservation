@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
 })
+
 export class MainComponent implements OnInit {
 
   isHover = false;
@@ -16,11 +18,12 @@ export class MainComponent implements OnInit {
   stepVal = [];
   state = 'inactive';
   pageScr;
+
   // 내장 객체 Window
   public _window: Window;
 
 
-  constructor(public router: Router) {
+  constructor(public router: Router, public auth: AuthService) {
   }
 
   check(fd, event) {
@@ -44,7 +47,7 @@ export class MainComponent implements OnInit {
 
 
   ngOnInit() {
-
+    console.log(this.auth.getToken());
   }
 
 }

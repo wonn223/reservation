@@ -259,34 +259,6 @@ body{
   /* z-index: 1; */
 }
 
-.reservation-form {
-  width: 500px;
-}
-
-.reservation-form fieldset {
-  margin: 10px 0;
-}
-
-.reservation-form input {
-  width: 100%;
-}
-
-.reservation-location {
-  padding : 0 5px 0 5px;
-  background-color: white;
-}
-
-.reservation-map {
-  padding : 5px;
-  /* background-image: url(''); */
-  width: 400px;
-  height: 400px;
-}
-
-.map-info {
-  height: 400px;
-}
-
 /* from now on, login css */
 
 @font-face {
@@ -300,9 +272,6 @@ body{
          url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.ttf) format('truetype');
   }
   
-
-
-
   .name {
     left : 4%;
     top : -40%; 
@@ -493,13 +462,6 @@ body{
     height: 100%;
     /* background-color: darkolivegreen; */
   }
-  
-.foodCategory {
-  position: relative;
-  float: left;
-  /* width: 150px; */
-  height: 100%;
-}
 
 .category1 {
     /* background: lightskyblue; */
@@ -687,6 +649,11 @@ body{
     background-image: url('https://secure.gravatar.com/avatar/ed340a9cb8162dfb315d4b9bbbc2334e?s=36&d=https://app.zeplin.io/img/emotars/emotarMonkeyFace.png' );
     /* background-color: aquamarine; */
     border-radius: 50px;
+  }
+
+  /* 로그아웃 아이콘 */
+  .login-state {
+    display: block;
   }
 
 } 

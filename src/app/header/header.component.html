@@ -29,8 +29,9 @@
     </div>
     <div class="col-xs-4 col-md-4 navs">
         <nav class="nav-menus">
+                <button type="button" style="display: none" class="login-button" [class.login-state]="this.isLoggined===true" (click)="signout()">로그아웃</button>
             <a>
-                <button type="button" class="login-button" (click)="openModal(loginComp)">로그인</button>
+                <button type="button" class="login-button" [class.login-state]="this.isLoggined===false" (click)="openModal(loginComp)">로그인</button>
             </a>
             <a>
                 <button type="button" class="login-button" (click)="openModal(template)">회원가입</button>
