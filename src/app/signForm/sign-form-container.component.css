@@ -16,6 +16,7 @@
 /* 회원가입 입력창 */
 .sign-form-wrapper {
   width: 100%;
+  height: 300px;
 }
 
 .sign-header {
