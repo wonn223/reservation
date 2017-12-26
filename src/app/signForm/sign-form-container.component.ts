@@ -1,10 +1,10 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { FormControl, FormGroup,Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { PasswordValidator } from './password-validator'
+import { PasswordValidator } from './password-validator';
 
 
 
@@ -14,17 +14,16 @@ class User {
     public email: string,
     public password1: string,
     public password2: string
- 
   ) { }
 }
-class Profile{
+class Profile {
   constructor(
     public nickname: string
-    ){}
+    ) { }
 }
 
 @Component({
-  selector: 'app-sign-form-container',
+  selector: 'app-sign-form',
   templateUrl: './sign-form-container.component.html',
   styleUrls: ['./sign-form-container.component.css']
 })
@@ -76,23 +75,27 @@ export class SignFormContainerComponent implements OnInit {
   // 회원가입 데이터 전달
   onSignup() {
     console.log('Send user to server: ', this.signupForm.value);
-    let signvalue = this.signupForm.value;
+    const signvalue = this.signupForm.value;
     console.log(signvalue);
-    let payload = { name: signvalue.name, email:signvalue.email, password1:signvalue.passwordGroup.password1, password2:signvalue.passwordGroup.password2 };
+    const payload = {
+      name: signvalue.name,
+      email: signvalue.email,
+      password1: signvalue.passwordGroup.password1,
+      password2: signvalue.passwordGroup.password2 };
     console.log(payload);
     this.http.post(`${this.appUrl}/accounts/signup/`, payload)
-    
+
       .subscribe((res) => console.log(res));
-  
+
     this.signupForm.reset();
   }
 
   ngOnInit() {
     this.signupForm = new FormGroup({
-      name: new FormControl('',[
+      name: new FormControl('', [
         Validators.required
       ]),
-      email: new FormControl('',[
+      email: new FormControl('', [
         Validators.required,
         Validators.pattern('^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$')
       ]),
@@ -102,12 +105,14 @@ export class SignFormContainerComponent implements OnInit {
       }, PasswordValidator.match)
     });
     console.log(this.signupForm);
-    
+
     console.log('[appUrl]', this.appUrl);
   }
+
   get name() {
     return this.signupForm.get('name');
   }
+
   get email() {
     return this.signupForm.get('email');
   }
@@ -123,7 +128,4 @@ export class SignFormContainerComponent implements OnInit {
   get password2() {
     return this.signupForm.get('passwordGroup.password2');
   }
-
-
-
 }

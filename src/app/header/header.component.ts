@@ -41,11 +41,6 @@ export class HeaderComponent implements OnInit {
     return this.isActivated = !this.isActivated;
   }
 
-
-  constructor(private modalService: BsModalService, public router: Router, public auth: AuthService ) {
-    this.isLoggined = this.auth.isLoggined;
-  }
-
   openModal(loginComp: TemplateRef<any>) {
     this.auth.templateRef = loginComp;
     this.modalRef = this.modalService.show(loginComp, { class : 'modal-con'});
@@ -80,6 +75,10 @@ export class HeaderComponent implements OnInit {
       () => {
         console.log('completed');
       });
+  }
+
+  constructor(private modalService: BsModalService, public router: Router, public auth: AuthService ) {
+    this.isLoggined = this.auth.isLoggined;
   }
 
   ngOnInit() {

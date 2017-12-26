@@ -28,7 +28,7 @@
                 <button type="button" class="login-button" [class.login-state]="this.isLoggined===false" (click)="openModal(loginComp)">로그인</button>
             </a>
             <a>
-                <button type="button" class="login-button" (click)="openModal(template)">회원가입</button>
+                <button type="button" class="login-button" (click)="openModal(signformComp)">회원가입</button>
             </a>
             <button class="login-icon">
                 <figure class="user">
@@ -44,9 +44,14 @@
  <app-login></app-login>
 </ng-template>
 
-<ng-template #template>
-    <div class="sign-form-wrapper">
-      <div class="title-wrapper">
+<ng-template #signformComp>
+ <app-sign-form></app-sign-form>
+</ng-template>
+       
+
+<!-- <ng-template #template>
+      <div class="sign-form-wrapper">
+       <div class="title-wrapper">
         <div class="logo-wrapper">
           <div class="base"></div>
           <div class="logo"></div>
@@ -54,8 +59,8 @@
          <h2 class="sign-header"></h2>
          <h3 class="name">진지한</h3>
          <h3 class="name2"><p>밥</p><p>상</p></h3>
-      </div>
-      <form class="sign-form sign-input-list">
+       </div>
+       <form class="sign-form sign-input-list">
         <div class="form-group">
             <label for="signform-InputEmail"></label>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16"><path fill-rule="evenodd" d="M0 4v8c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1H1c-.55 0-1 .45-1 1zm13 0L7 9 1 4h12zM1 5.5l4 3-4 3v-6zM2 12l3.5-3L7 10.5 8.5 9l3.5 3H2zm11-.5l-4-3 4-3v6z"/></svg>            
@@ -99,59 +104,11 @@
       </form>
       <div class="bottom-wrapper">
           <!-- 새로 만들어서 넣기 -->
-        <a (click)="openModal2()">
+        <!-- <a (click)="openModal2()">
           진지한 밥상이 처음이신가요?
           <span class="icon-arrow-right"></span>
         </a>
       </div>
       <div class="cc">Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-    </div>
-  </ng-template>
- 
-  <!-- join 클릭 후 -->
-  <ng-template #templateNested>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">좋아하는 음식을 고르세요</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="openModal3(signinStep2)">
-            다음 단계
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="row">
-        <div class="col-xs-12 modal-body join-modal">
-                <div class="col-xs-12 content_wrap">
-                     <div class="col-xs-2 foodCategory">  
-                         <!-- <a href="#" class="category1"></a> -->
-                     </div>
-                     <div class="col-xs-4 foodCategory">
-                         <a href="#" class="category1"></a>
-                     </div>
-                     <div class="col-xs-4 foodCategory">
-                         <a href="#" class="category1"></a>
-                     </div>
-                     <div class="col-xs-2 foodCategory">
-                         <!-- <a href="#" class="category1"></a> -->
-                     </div>
-                    </div>
-                  This is nested modal.<br>
-        </div>
-    </div>
-    <button *ngIf="modalRef" type="button" class="btn btn-danger" (click)="closeModal()">Close first modal</button>
-  </ng-template>
-
-  <ng-template #signinStep2>
-        <div class="modal-header join-modal">
-            <h4 class="modal-title pull-left">방문하는 지역을 선택해주세요</h4>
-            <button type="button" class="close pull-right" aria-laxbel="Close" (click)="modalRef2.hide()">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body join-modal">
-                This is nested modal.<br>
-            <button *ngIf="modalRef" type="button" class="btn btn-danger" (click)="closeModal()">Close first modal</button>
-        </div>
-  </ng-template>
-
-  
-
-
+    </div> -->
+<!-- </ng-template> -->
