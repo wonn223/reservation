@@ -4,6 +4,7 @@ import { Headers, RequestOptions } from '@angular/http';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Reply, Result, Author, Profile } from '../models/reply';
 import { forEach } from '@angular/router/src/utils/collection';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class ReplyComponent implements OnInit {
    currentPage = 1;
 
 
-  constructor(public http: HttpClient, public fb: FormBuilder) {
+  constructor(public http: HttpClient, public fb: FormBuilder, private auth: AuthService) {
     this.getcomments();
   }
 
@@ -172,10 +173,16 @@ export class ReplyComponent implements OnInit {
   // restaurant 프로퍼티 pk값 저장
 
   // 클래스 바인딩 실행 함수
-  changeAct(rm) {
+  changeAct(pk, rm) {
+    const userPk = this.auth.getUserPk();
+
+    // author.pk와 로그인한 유저의 pk비교로 권한 확인
+    if ( pk === userPk) {
     this.isActivated = !this.isActivated;
     this.iconDeactivated = !this.iconDeactivated;
-    console.dir(rm);
+    } else {
+      alert('권한이 없습니다');
+    }
   }
 
   // patch

@@ -3,9 +3,15 @@
     margin-top: 15px;
 }
 
+/* 설명 부분 */
+.caption {
+    position: relative;
+}
+
 .buttons {
     text-align: right;
 }
+
 .star-wrapper {
     position: relative;
     width: 100%;

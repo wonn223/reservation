@@ -93,9 +93,9 @@
                 </label>
             </div>
              <div class="icon-wrapper">
-              <i class="glyphicon glyphicon-edit" [class.editMode]="isActivated" (click)="changeAct(remove)"></i>
+              <i class="glyphicon glyphicon-edit" [class.editMode]="isActivated" (click)="changeAct(td.author[0], remove)"></i>
               <i class="glyphicon glyphicon-ok" [class.editMode]="isActivated" (click)="patchComm(td.pk, patchInput)"></i>
-              <i class="glyphicon glyphicon-remove" [class.editMode]="isActivated" (click)="changeAct(remove)"></i>
+              <i class="glyphicon glyphicon-remove" [class.editMode]="isActivated" (click)="changeAct(td.author[0], remove)"></i>
               <i #remove class="glyphicon glyphicon-remove-sign" [class.editMode]="isActivated"  (click)="removeComm(td.pk)"></i>
               
              </div>

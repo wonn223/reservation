@@ -27,7 +27,7 @@ export class AuthService {
     myPk: string = this.getUserPk();
     isLoggined = false;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient ) {
         console.log('[appUrl] ', this.appUrl);
     }
 
