@@ -36,6 +36,12 @@ export class HeaderComponent implements OnInit {
     this.isActivated = !this.isActivated;
   }
 
+  removeClass() {
+    console.log('test', !this.isActivated);
+    return this.isActivated = !this.isActivated;
+  }
+
+
   constructor(private modalService: BsModalService, public router: Router, public auth: AuthService ) {
     this.isLoggined = this.auth.isLoggined;
   }
@@ -75,8 +81,6 @@ export class HeaderComponent implements OnInit {
         console.log('completed');
       });
   }
-
-
 
   ngOnInit() {
     this.initUser();

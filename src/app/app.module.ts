@@ -15,6 +15,7 @@ import { environment } from '../environments/environment';
 import { ShopListService } from './services/shop-service.service';
 import { FilterPipe, PricePipe  } from './filter.pipe' ;
 
+import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 
@@ -71,7 +72,7 @@ import { LoginComponent } from './login/login.component';
     appRouting,
   ],
   providers: [ ShopListService, BsDatepickerConfig, AuthService,
-    UserService ],
+    UserService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
