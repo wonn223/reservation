@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { HttpHandler } from '@angular/common/http/src/backend';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { AuthService } from '../services/auth.service'
 
 // interface ResList {
 //   id: number;
@@ -77,12 +77,20 @@ export class ShopComponent implements OnInit, OnDestroy {
   AvailableTime: any;
   menu: string;
   images: any;
+  tokenInfo: string;
+  mypk: string;
 
   constructor(public shopListService: ShopListService,
     public modalService: BsModalService,
     public http: HttpClient,
-    public route: ActivatedRoute
-    ) {  }
+    public route: ActivatedRoute,
+    public auth: AuthService
+  ) { this.makeTokenInfo() }
+
+  makeTokenInfo() {
+    this.tokenInfo = this.auth.token;
+    this.mypk = this.auth.myPk;
+  }
 
   collapsed(event: any): void {
       // console.log(event);
@@ -94,7 +102,6 @@ export class ShopComponent implements OnInit, OnDestroy {
 
 
   getShop(shopPk: number) {
-    Observable
     console.log(this.appUrl);
     this.http.get<ShopInfo>(`${this.appUrl}/restaurants/${this.resPk}`)
       .subscribe((shopInfo: ShopInfo) => {
@@ -112,6 +119,7 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.starRate = shopInfo.star_rate;
         this.images = shopInfo.images.map((image:any)=>image.image)
         this.menu = shopInfo.menu;
+        console.log("test",shopInfo)
         if(shopInfo.average_price == "c"){this.reservationPrice = 10000} 
         else if(shopInfo.average_price == "n"){this.reservationPrice = 15000}
         else if (shopInfo.average_price == "e"){this.reservationPrice = 20000}
@@ -127,7 +135,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
     const headers = {
       // 'WWW-Authenticate' : 'Token',
-      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+      'Authorization': `Token ${this.tokenInfo}`
     };
 
     const options = {
@@ -149,7 +157,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
     const headers = {
       // 'WWW-Authenticate' : 'Token',
-      'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
+      'Authorization': `Token ${this.tokenInfo}`
     }
     const options = {
       headers: new HttpHeaders(headers)

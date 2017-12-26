@@ -85,10 +85,10 @@ export class AuthService {
 
 
     // 토큰 유효성 검증
-    // isAuthenticated(): boolean {
-    //     const token = this.getToken();
-    //     return token ? !this.isTokenExpired(token) : false;
-    // }
+    isAuthenticated() {
+        const token = this.getToken();
+        // return token ? !this.isTokenExpired(token) : false;
+    }
 
     getToken(): string {
         return localStorage.getItem(this.TOKEN_NAME);
