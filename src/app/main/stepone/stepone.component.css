@@ -90,3 +90,15 @@ z-index:0;
 .card .textAlign2 {
 	left: 15%;
 }
+
+
+.price-font {
+    position: absolute;
+    /* vertical-align: middle; */
+    text-align: center;
+    top: 75%;
+	right: 0;
+	color: white;
+	font-size: 6rem;
+	z-index: 2;
+}
