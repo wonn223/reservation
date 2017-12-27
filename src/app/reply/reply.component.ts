@@ -5,6 +5,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Reply, Result, Author, Profile } from '../models/reply';
 import { forEach } from '@angular/router/src/utils/collection';
 import { AuthService } from '../services/auth.service';
+import { Event } from '@angular/router/src/events';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class ReplyComponent implements OnInit {
    profile2: string;
    patchUrl = 'http://api.booki.kr/restaurants/comments';
    removeUrl = 'http://api.booki.kr/restaurants/comments';
+   //  ?page=6
    getUrl = 'http://api.booki.kr/restaurants/1/comments/';
    appUrl = 'http://api.booki.kr/accounts/signup/';
    title = 'Review';
@@ -36,9 +38,9 @@ export class ReplyComponent implements OnInit {
    startingIndex = 0;
    endIndex = 3;
    itemsPerPage = 5;
-   totalItems = 20;
+   totalItems = 30;
    currentPage = 1;
-
+   txtvalue: string;
 
   constructor(public http: HttpClient, public fb: FormBuilder, private auth: AuthService) {
     this.getcomments();
@@ -96,10 +98,8 @@ export class ReplyComponent implements OnInit {
     this.patchRate = evt.target.id;
   }
 
-  dd(tt, com) {
-    tt = '';
-    console.log(tt);
-    console.log(com);
+  dd(txt) {
+    return '';
   }
 
   returnval() {
@@ -107,7 +107,8 @@ export class ReplyComponent implements OnInit {
     this.isActivated = !this.isActivated;
   }
 
-  postComments(txt, val: string, rate: number) {
+  postComments(txt, val: string, rate: number, event: KeyboardEvent) {
+    console.dir(event);
       // 코멘트, 별점 미입력 방지
       // '별점을 등록해주세요!' 애니메이션
       // 엔터키 누르는 이벤트 확인
@@ -115,9 +116,6 @@ export class ReplyComponent implements OnInit {
         console.log('plz add a star rate');
         return '';
       }
-
-      // 키 이벤트 확인
-      console.log(this.evt.keyCode);
 
       const payload = {
         comment: val,
@@ -134,15 +132,14 @@ export class ReplyComponent implements OnInit {
       };
 
       console.log('header확인', options);
-
+      ( payload && rate !== 0 && event.key === 'Enter') ?
       this.http.post(this.getUrl, payload, options)
       .subscribe ( (res: any) => {
+        this.txtvalue = '';
         this.getcomments();
         console.log('profile', this.profile);
         console.log('post 체크', res);
-      });
-
-       txt = null;
+      }) : console.log('error. sth wrong');
   }
 
   checkCount(starVal: number) {

@@ -45,7 +45,7 @@
       </div>
       <div class="comment-block">
         <form #com="ngForm">
-          <textarea ngModel #txt="ngModel" name="comment" id="comment" rows="4" minlength="1" maxlength="110" placeholder="Add a comment.." (click)="dd(txt, com)" (keyup.enter)="postComments(txt, txt.value, rate)" required></textarea>
+          <textarea #txt [(ngModel)]="txtvalue" value="txtvalue" name="comment" id="comment" rows="4" minlength="1" maxlength="110" placeholder="Add a comment.." (click)="dd()" (keyup.enter)="postComments(txt, txt.value, rate, $event)" required></textarea>
           <!-- <p *ngIf="txt.invalid && txt.touched" placeholder="내용을 입력해주세요"></p> -->
           <button type="button" class="btn btn-primary comment-btn">
           POST
