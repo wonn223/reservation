@@ -42,10 +42,11 @@ export class ReplyComponent implements OnInit {
    currentPage = 1;
    txtvalue: string;
    token: string;
+   authorPk: Author[];
 
   constructor(public http: HttpClient, public fb: FormBuilder, private auth: AuthService) {
     this.getcomments();
-    this.token = 'bfec561d6317ab26bb0cb6ddb1fa662871be4f6b';
+    this.token = this.auth.getToken();
   }
 
   onKeyup(com, val: string, rate: number) {
@@ -56,10 +57,12 @@ export class ReplyComponent implements OnInit {
     this.http.get(this.getUrl)
     .subscribe( ( comm: Reply )  =>  {
       this.comment = comm.results;
+      this.authorPk = this.comment.map((item: Result) => item.author[0]);
+      // console.log('[authorPk]', this.authorPk);
       // this.sliceTotalComments();
       this.countAll(comm);
       this.countRating();
-      console.log(this.count2);
+      console.log(this.comment);
     });
   }
 
@@ -181,16 +184,18 @@ export class ReplyComponent implements OnInit {
   // restaurant 프로퍼티 pk값 저장
 
   // 클래스 바인딩 실행 함수
-  changeAct(pk, rm) {
-    const userPk = this.auth.getUserPk();
-
+  changeAct(td:Author) {
+    const userPk = +this.auth.getUserPk();
+    console.log('[userPk]', userPk);
+    console.log('author', td.pk);
+    
     // author.pk와 로그인한 유저의 pk비교로 권한 확인
-    // if ( pk === userPk) {
-    // this.isActivated = !this.isActivated;
-    // this.iconDeactivated = !this.iconDeactivated;
-    // } else {
-    //   alert('권한이 없습니다');
-    // }
+    if ( td.pk === userPk) {
+    this.isActivated = !this.isActivated;
+    this.iconDeactivated = !this.iconDeactivated;
+    } else {
+      alert('권한이 없습니다');
+    }
   }
 
   // patch
@@ -211,12 +216,11 @@ export class ReplyComponent implements OnInit {
     };
 
     console.log(options);
-    // this.http.patch(`${this.patchUrl}/${pk}/`, payload, options)
-    // .subscribe(( res ) => {
-      // console.log('patch result', res);
-      // this.getcomments();
-    // });
-  
+    this.http.patch(`${this.patchUrl}/${pk}/`, payload, options)
+    .subscribe(( res ) => {
+      console.log('patch result', res);
+      this.getcomments();
+    });
   }
 
   patchRating(event: any) {
