@@ -41,9 +41,11 @@ export class ReplyComponent implements OnInit {
    totalItems = 30;
    currentPage = 1;
    txtvalue: string;
+   token: string;
 
   constructor(public http: HttpClient, public fb: FormBuilder, private auth: AuthService) {
     this.getcomments();
+    this.token = 'bfec561d6317ab26bb0cb6ddb1fa662871be4f6b';
   }
 
   onKeyup(com, val: string, rate: number) {
@@ -124,7 +126,7 @@ export class ReplyComponent implements OnInit {
 
       const headers = {
         // 'WWW-Authenticate': 'Token',
-        'Authorization': 'Token bfec561d6317ab26bb0cb6ddb1fa662871be4f6b'
+        'Authorization': `Token ${this.token}`
       };
 
       const options = {
@@ -149,22 +151,31 @@ export class ReplyComponent implements OnInit {
 
   // remove
   removeComm(td: number) {
-
-    console.log('[td]', td);
+    // HTTP헤더
     const headers = {
-      // 'WWW-Authenticate': 'Token',
-      'Authorization': 'Token bfec561d6317ab26bb0cb6ddb1fa662871be4f6b'
-    };
+      'Authorization' : `Token ${this.token}`
+      };
+
     const options = {
       headers : new HttpHeaders(headers)
-    };
-    console.log('header확인', options);
+      };
+      console.log(options);
 
+
+    // const headers = {
+    //   // 'WWW-Authenticate': 'Token',
+    //   'Authorization': 'Token bfec561d6317ab26bb0cb6ddb1fa662871be4f6b'
+    // };
+    // const options = {
+    //   headers : new HttpHeaders(headers)
+    // };
+    // console.log('header확인', options);
 
     this.http.delete(`${this.removeUrl}/${td}/`, options)
     .subscribe((res) => {
+      console.dir(res);
       this.getcomments();
-    console.log('deleted!');
+      console.log('deleted!');
     });
   }
   // restaurant 프로퍼티 pk값 저장
@@ -174,12 +185,12 @@ export class ReplyComponent implements OnInit {
     const userPk = this.auth.getUserPk();
 
     // author.pk와 로그인한 유저의 pk비교로 권한 확인
-    if ( pk === userPk) {
-    this.isActivated = !this.isActivated;
-    this.iconDeactivated = !this.iconDeactivated;
-    } else {
-      alert('권한이 없습니다');
-    }
+    // if ( pk === userPk) {
+    // this.isActivated = !this.isActivated;
+    // this.iconDeactivated = !this.iconDeactivated;
+    // } else {
+    //   alert('권한이 없습니다');
+    // }
   }
 
   // patch
@@ -192,18 +203,20 @@ export class ReplyComponent implements OnInit {
 
     // HTTP헤더
     const headers = {
-      // 'WWW-Authenticate': 'Token',
-      'Authorization': 'Token bfec561d6317ab26bb0cb6ddb1fa662871be4f6b'
+      'Authorization' : `'Token' + ' ' + ${this.auth.getToken()}`
     };
+
     const options = {
       headers : new HttpHeaders(headers)
     };
 
-    this.http.patch(`${this.patchUrl}/${pk}/`, payload, options)
-    .subscribe(( res ) => {
-      console.log('patch result', res);
-      this.getcomments();
-    });
+    console.log(options);
+    // this.http.patch(`${this.patchUrl}/${pk}/`, payload, options)
+    // .subscribe(( res ) => {
+      // console.log('patch result', res);
+      // this.getcomments();
+    // });
+  
   }
 
   patchRating(event: any) {
