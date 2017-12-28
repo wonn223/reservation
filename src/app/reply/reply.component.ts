@@ -42,7 +42,7 @@ export class ReplyComponent implements OnInit {
    currentPage = 1;
    txtvalue: string;
    token: string;
-   authorPk: Author[];
+   authorPk: number;
 
   constructor(public http: HttpClient, public fb: FormBuilder, private auth: AuthService) {
     this.getcomments();
@@ -57,7 +57,7 @@ export class ReplyComponent implements OnInit {
     this.http.get(this.getUrl)
     .subscribe( ( comm: Reply )  =>  {
       this.comment = comm.results;
-      this.authorPk = this.comment.map((item: Result) => item.author[0]);
+      // this.authorPk = this.comment.map((item: Result) => item.author[0]);
       // console.log('[authorPk]', this.authorPk);
       // this.sliceTotalComments();
       this.countAll(comm);
@@ -75,18 +75,6 @@ export class ReplyComponent implements OnInit {
     });
   }
 
-  // sliceTotalComments() {
-  //   배열 slice
-  //   this.comment = this.comment.slice(this.startingIndex, this.itemsPerPage);
-  //   console.log('[slice result]', this.comment);
-  //   this.startingIndex = this.itemsPerPage;
-  //   this.endIndex = this.endIndex + 3;
-  //   console.log('[starting index change check]', this.startingIndex);
-  //   console.log('[end index change check]', this.itemsPerPage);
-  //   return this.comment;
-  //   1페이지 인덱스 : 0,3 2페이지 : 3, 6, 3페이지 : 6, 10
-  // }
-
   countRating() {
     // nothing
     this.count1 = this.comment.filter(comm => comm.star_rate <= 2).length;
@@ -101,10 +89,6 @@ export class ReplyComponent implements OnInit {
 
   getPatchedrate(evt) {
     this.patchRate = evt.target.id;
-  }
-
-  dd(txt) {
-    return '';
   }
 
   returnval() {
@@ -184,13 +168,16 @@ export class ReplyComponent implements OnInit {
   // restaurant 프로퍼티 pk값 저장
 
   // 클래스 바인딩 실행 함수
-  changeAct(td:Author) {
+  changeAct(td:Author, event) {
     const userPk = +this.auth.getUserPk();
     console.log('[userPk]', userPk);
-    console.log('author', td.pk);
-    
-    // author.pk와 로그인한 유저의 pk비교로 권한 확인
-    if ( td.pk === userPk) {
+
+    this.authorPk = td.pk;
+    console.log('[commentatorPk]', this.authorPk);
+
+    console.log(event.target.id);
+
+    if ( this.authorPk === userPk ) {
     this.isActivated = !this.isActivated;
     this.iconDeactivated = !this.iconDeactivated;
     } else {

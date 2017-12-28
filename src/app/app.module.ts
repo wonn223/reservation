@@ -33,6 +33,7 @@ import { MainComponent } from './main/main.component';
 
 import { ManagepageComponent } from './managepage/managepage.component';
 import { LoginComponent } from './login/login.component';
+import { SignFormContainerComponent } from './signForm/sign-form-container.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 
@@ -42,6 +43,7 @@ import { LoginComponent } from './login/login.component';
     ContainerComponent,
     HeaderComponent,
     LoginComponent,
+    SignFormContainerComponent,
     // DashboardComponent,
     ShopComponent,
     ReplyComponent,
