@@ -3,6 +3,13 @@
     margin-top: 15px;
 }
 
+@font-face{
+    font-family:icons;
+    src:url();
+
+}
+
+
 /* 설명 부분 */
 .caption {
     position: relative;
@@ -12,23 +19,30 @@
     text-align: right;
 }
 
+.stars {
+    position: absolute;
+    color: rgba(0,0,0,0);
+}
+
+.stars-filled {
+    color:orange;
+}
 .star-wrapper {
     position: relative;
-    width: 100%;
-    text-align: right;
-    top : -3rem;
+    width: 70px;
+    top: -30px;
+    left: 83%;
 }
 
 .stars-filled {
     position: absolute;
-    color: orange;
     z-index:10;
     top: -0rem;
     right:0;
+    overflow: hidden;
 }
 
-.glyphicon.glyphicon-star,
- {
-    position: absolute;
-    right: 0;
+.stars .glyphicon-star:before,
+.stars-filled .glyphicon-star:before {
+    content: "\e006\e006\e006\e006\e006";
 }

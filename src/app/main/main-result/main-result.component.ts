@@ -5,8 +5,11 @@ import { Response } from '@angular/http';
 import { SearchedVal, Restaurant } from '../../models/searchedRes';
 import { SearchedResDetailService } from '../../services/searched-res-detail.service';
 import { ShopListService } from '../../services/shop-service.service';
+import { AuthService } from '../../services/auth.service';
+
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { Result, Reply } from '../../models/reply';
 
 @Component({
   selector: 'app-main-result',
@@ -24,11 +27,29 @@ export class MainResultComponent implements OnInit, OnDestroy  {
   restaurantList: Restaurant[];
   thumbnail: string;
   appUrl = 'http://api.booki.kr/restaurants/';
+  getUrl = 'http://api.booki.kr/restaurants/1/comments/';
+  // getStarRaing에서 덧셈을 위한 0 할당
+  star_rate:number = 0;
+  countRateLength:number = 0;
+  percentage:number = 0;
 
   constructor(public http: HttpClient, public resDetail: SearchedResDetailService,
-              public shop: ShopListService, public route: ActivatedRoute ) {
-                console.log('컨스트럭터');
+              public shop: ShopListService, public route: ActivatedRoute, public auth: AuthService ) {
+                this.getStarRating()
   }
+
+  // star icon width와 평균 별점 연동
+  getStarRating() {
+    this.http.get(this.getUrl)
+    .subscribe((item: Reply) => {
+      item.results.filter( (result) => {
+        this.countRateLength += result.star_rate.toString().length;
+        this.star_rate += result.star_rate
+      })
+      return console.log(this.percentage = Math.floor(+((this.star_rate/(this.countRateLength * 5) * 100).toFixed()))); 
+    })
+  }
+
 
   getRes() {
     // 배열 값을 받아서 map으로 오퍼레이팅 후 값 전달
