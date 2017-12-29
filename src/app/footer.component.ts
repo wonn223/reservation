@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   styles: [`
 
   *{
-    position: absolute;
+    position: fixed;
     bottom: 0;
   }
 
