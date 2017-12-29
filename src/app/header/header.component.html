@@ -7,8 +7,8 @@
                 <span class="menubar"></span>
                 <span class="menubar"></span>
             </label>
-            <ul class="toggle-menu" [class.is-active]="isActivated">
-                <li routerLink="/mypage" (click)="removeClass()">마이 페이지</li>
+            <ul #nav class="toggle-menu" [class.is-active]="isActivated" (click)="removeClass(nav)">
+                <li routerLink="/mypage">마이 페이지</li>
                 <li>예약내역 확인</li>
                 <li>즐겨찾기</li>
                 <li (click)="signout()">로그아웃</li>

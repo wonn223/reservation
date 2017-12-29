@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EventManagerPlugin } from '@angular/platform-browser/src/dom/events/event_manager';
 
 
 class User {
@@ -31,12 +32,16 @@ export class HeaderComponent implements OnInit {
   isLoggined: boolean;
   message: string;
 
+  onblur() {
+    console.log('mouseout');
+  }
+
   addClass () {
     console.log('addClass');
     this.isActivated = !this.isActivated;
   }
 
-  removeClass() {
+  removeClass(template) {
     console.log('test', !this.isActivated);
     return this.isActivated = !this.isActivated;
   }
