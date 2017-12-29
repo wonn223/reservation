@@ -44,18 +44,13 @@
   margin: 0 auto;
   width: 80%;
   left: 25px;
-  /* height: 600px; */
-  /* background: rgb(235, 228, 228); */
-  /* border: 2px solid rgb(197, 197, 194); */
 }
 
 .title-wrapper {
   position: relative;
-  /* display: block; */
-  top: 5px;
-  left: 33%;
   width: 150px;
   height: 150px;
+  margin: 0 auto;
 }
 
 .logo {
@@ -200,7 +195,6 @@ input.ng-touched.ng-invalid[_ngcontent-c0] {
 }
 
 .bottom-wrapper {
-  width: 380px;
   margin: 20px auto;
   text-align: center;
 }
