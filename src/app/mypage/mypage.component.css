@@ -6,7 +6,7 @@ div{
 }
 .jumbotron{
   margin: 15px;
-  height: 200px;
+  height: auto;
 }
 .blank {
   height: 30px;
@@ -27,6 +27,11 @@ div{
 .myInfo{
   font-size: 20px;
 }
+
 .table-nav{
   background:rgb(223, 213, 213);
+}
+
+.btnTable {
+  border-style: none;
 }

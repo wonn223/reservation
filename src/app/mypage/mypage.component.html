@@ -39,7 +39,7 @@
           <td>
              {{mypageObj.user.email }}
           </td>
-          <td></td>
+          <td class="btnTable"></td>
         </tr>
         <tr>
           <td class="table-nav">
@@ -48,7 +48,7 @@
           <td>
              {{mypageObj.user.name }}
           </td>
-          <td></td>
+          <td class="btnTable"></td>
         </tr>
           <tr>
             <td class="table-nav">
@@ -57,7 +57,7 @@
             <td>
               {{ mypageObj.nickname }}
             </td>
-            <td>
+            <td class="btnTable">
               <button class="btn btn-primary btn-sm" (click)="openModal(template)">변경하기</button>
               <ng-template #template>
                 <div class="modal-header">
@@ -89,11 +89,14 @@
           <td>
             {{mypageObj.prfeeernces}}
           </td>
-          <td><button class="btn btn-primary btn-sm">수정하기</button>
-          <button class="btn btn-primary btn-sm">회원탈퇴</button></td>
+          <td class="btnTable">
+            <button class="btn btn-primary btn-sm">수정하기</button>
+          <button class="btn btn-primary btn-sm">회원탈퇴</button>
+        </td>
         </tr>
       </table>
     </div>
+    <div class="col-md-2"></div>    
   </div>
 
   <tabset>
