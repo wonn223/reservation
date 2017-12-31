@@ -11,8 +11,8 @@
                 <li routerLink="/mypage">마이 페이지</li>
                 <li>예약내역 확인</li>
                 <li>즐겨찾기</li>
-                <li [style.display]="isLoggined === true ? 'block' : 'true'" (click)="signout()">로그아웃</li>
-                <!-- <li [style.display]="isLoggined === false? 'block' : 'none'" (click)="openModal(loginComp)">로그인</li> -->
+                <li [style.display]="isLoggined === true ? 'block' : 'none'" (click)="signout()">로그아웃</li>
+                <li [style.display]="isLoggined === false? 'block' : 'none'" (click)="openModal(loginComp)">로그인</li>
             </ul> 
         </nav>
     </div>
