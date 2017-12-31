@@ -1,11 +1,11 @@
-import { Injectable, TemplateRef, TypeDecorator } from '@angular/core';
+import { Injectable, TemplateRef, TypeDecorator, NgZone} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 // import { JwtHelper } from 'angular2-jwt';
 
-
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/shareReplay';
 
 import { environment } from '../../environments/environment';
@@ -15,6 +15,7 @@ import { User } from '../models/user';
 import { Token } from '../models/token';
 import { shareReplay } from 'rxjs/operator/shareReplay';
 import { TypeCheck } from '../models/typecheck';
+import { error } from 'util';
 
 
 @Injectable()
@@ -26,19 +27,23 @@ export class AuthService {
     token: string = this.getToken();
     myPk: string = this.getUserPk();
     isLoggined = false;
+    starAverage: number;
+    credit: User;
 
-    constructor(private http: HttpClient ) {
+    constructor(private http: HttpClient, private ngzone: NgZone ) {
         console.log('[appUrl] ', this.appUrl);
     }
 
     signin(credential: User): Observable<Token> {
+        this.credit = credential;
         return this.http.post<Token>(`${this.appUrl}/accounts/signin/`, credential)
             .do(res => {
-                this.isLoggined = !(this.isLoggined);
-                console.log('signin', this.isLoggined);
-                this.setToken(res.token);
-                console.log(res);
-                this.setUserPk(res.user.pk);
+                    this.setToken(res.token);
+                    this.token = res.token;
+                    console.log(res);
+                    this.setUserPk(res.user.pk);
+                    this.myPk = res.user.pk;
+
             })
             .shareReplay();
     }
@@ -49,8 +54,6 @@ export class AuthService {
         console.log(headers);
         return this.http.post(`${this.appUrl}/accounts/signout/`, null, { headers })
             .do(() => {
-                this.isLoggined = false;
-                console.log('[signout]', this.isLoggined);
                 this.removeToken();
                 this.removeUserPk();
             })
@@ -115,7 +118,6 @@ export class AuthService {
       npm install angular2-jwt
       https://github.com/auth0/angular2-jwt
     */
-
 }
 
 

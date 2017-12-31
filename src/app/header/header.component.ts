@@ -1,10 +1,12 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { AuthService } from '../services/auth.service';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { EventManagerPlugin } from '@angular/platform-browser/src/dom/events/event_manager';
+import { NgZone } from '@angular/core/src/zone/ng_zone';
+import { Observable } from 'rxjs/Observable';
+import { Token } from '../models/token';
 
 
 class User {
@@ -14,6 +16,10 @@ class User {
     public password: string,
     public password2: string
   ) { }
+}
+
+interface Login {
+  isLogin: boolean;
 }
 
 @Component({
@@ -29,11 +35,16 @@ export class HeaderComponent implements OnInit {
   loginComp: TemplateRef<any>;
   isActivated = false;
   template: TemplateRef<any>;
-  isLoggined: boolean;
+  isLoggined = false;
   message: string;
 
   onblur() {
     console.log('mouseout');
+  }
+
+  onOpen(evt) {
+    console.log(evt);
+    this.isLoggined = !this.isLoggined;
   }
 
   addClass () {
@@ -67,9 +78,10 @@ export class HeaderComponent implements OnInit {
   }
 
   signout() {
-    return this.auth.signout()
+    this.auth.signout()
     .subscribe(
       () => {
+        this.isLoggined = false;
         alert('방문해주셔서 감사합니다');
         this.router.navigate(['main']);
       },
@@ -82,8 +94,15 @@ export class HeaderComponent implements OnInit {
       });
   }
 
-  constructor(private modalService: BsModalService, public router: Router, public auth: AuthService ) {
-    this.isLoggined = this.auth.isLoggined;
+
+  constructor(private modalService: BsModalService, public router: Router,
+              public auth: AuthService,
+              public cd: ChangeDetectorRef ) {
+    console.log('rertry');
+    setTimeout(( ) => {
+      console.log('[컨스트럭터 isLoggined]', this.isLoggined === true);
+      this.cd.detectChanges();
+    }, 5000);
   }
 
   ngOnInit() {

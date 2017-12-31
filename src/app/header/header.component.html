@@ -11,7 +11,8 @@
                 <li routerLink="/mypage">마이 페이지</li>
                 <li>예약내역 확인</li>
                 <li>즐겨찾기</li>
-                <li (click)="signout()">로그아웃</li>
+                <li [style.display]="isLoggined === true ? 'block' : 'true'" (click)="signout()">로그아웃</li>
+                <!-- <li [style.display]="isLoggined === false? 'block' : 'none'" (click)="openModal(loginComp)">로그인</li> -->
             </ul> 
         </nav>
     </div>
@@ -23,14 +24,16 @@
     </div>
     <div class="col-xs-4 col-md-4 navs">
         <nav class="nav-menus">
-                <button type="button" style="display: none" class="login-button" [class.login-state]="this.isLoggined===true" (click)="signout()">로그아웃</button>
             <a>
-                <button type="button" class="login-button" [class.login-state]="this.isLoggined===false" (click)="openModal(loginComp)">로그인</button>
+                <button type="button" class="logout-button" *ngIf="this.isLoggined" (click)="signout()">로그아웃</button>
+            </a>
+            <a [style.width]="isLoggined === true ? '0' : 'auto'">
+                <button type="button" class="login-button" *ngIf="this.isLoggined===false"(click)="openModal(loginComp)">로그인</button>
             </a>
             <a>
                 <button type="button" class="login-button" (click)="openModal(signformComp)">회원가입</button>
             </a>
-            <button class="login-icon">
+            <button class="login-icon" *ngIf="isLoggined">
                 <figure class="user">
                     <span class="badge"></span>
                     <div class="thumb"></div>
@@ -41,7 +44,7 @@
 </div>
 
 <ng-template #loginComp>
- <app-login></app-login>
+ <app-login (open)="onOpen($event)"></app-login>
 </ng-template>
 
 <ng-template #signformComp>
