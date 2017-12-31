@@ -6,11 +6,10 @@
   </div>
 
   <div class="row jumbotron">
-    <div class="col-md-2">
+    <div class="col-md-2 profile">
       <!-- <img src="{{mypageObj.profile_image}}" alt="..." class="img-circle"> -->
       <div class="container">
         <div class="row">
-          <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
             <form [formGroup]="form" (ngSubmit)="onSubmit(fileInput.files)">
               <div class="form-group">
                 <img *ngIf="imageSrc" [src]="imageSrc" class="avatar">
@@ -25,11 +24,9 @@
                 </div>
               </div>
             </form>
-          </div>
         </div>
       </div>
     </div>
-  
     <div class="col-md-8">
       <table class="table table-condensed myInfo">
         <tr>

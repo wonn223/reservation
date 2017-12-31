@@ -4,6 +4,19 @@ li{
 div{
   color: black!important;
 }
+
+/* 프로필 이미지 업로드 미리보기 */
+.avatar {
+  width: 30%;
+  height: 60px;
+  margin: 1.2rem auto;
+}
+
+.btns.clearfix {
+  width: 100%;
+  height: auto;
+}
+
 .jumbotron{
   margin: 15px;
   height: auto;
@@ -20,6 +33,10 @@ div{
   height: 80px;
 }
 
+.container {
+  padding: 0;
+}
+
 .contentBox-top{
   margin-top: 20px;
 }
@@ -34,4 +51,18 @@ div{
 
 .btnTable {
   border-style: none;
+}
+
+/* 프로필 */
+.profile {
+  text-align: center; 
+}
+
+.form-group { 
+  margin-bottom: 0;
+}
+
+/* label 안 버튼 */
+.btn {
+  padding: 0;
 }
