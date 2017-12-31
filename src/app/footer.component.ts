@@ -8,14 +8,14 @@ import { Component } from '@angular/core';
   styles: [`
 
   *{
-    position: fixed;
+    position: static;
     bottom: 0;
+    height: 35px;
   }
 
   .footer{
       background: #333541;
       color: white;
-      height: 50px;
       text-align: center;
       padding-top: 10px;
     }`]

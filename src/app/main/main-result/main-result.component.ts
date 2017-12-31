@@ -46,13 +46,12 @@ export class MainResultComponent implements OnInit, OnDestroy  {
         this.countRateLength += result.star_rate.toString().length;
         this.star_rate += result.star_rate
       })
-      return console.log(this.percentage = Math.floor(+((this.star_rate/(this.countRateLength * 5) * 100).toFixed()))); 
+      return this.percentage = Math.floor(+((this.star_rate/(this.countRateLength * 5) * 100).toFixed())); 
     })
   }
 
 
   getRes() {
-    // 배열 값을 받아서 map으로 오퍼레이팅 후 값 전달
     console.log(this.price);
     this.http.get<SearchedVal>(`${this.appUrl}/?price=${this.price}&type=${this.type}&district=${this.location}`)
      .subscribe( (res: SearchedVal ) => {
