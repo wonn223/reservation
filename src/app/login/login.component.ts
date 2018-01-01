@@ -12,8 +12,9 @@ import { Window } from 'selenium-webdriver';
 import { WindowRef } from '@agm/core/utils/browser-globals';
 
 // declare : 타입스크립트가 아닌 파일의 객체에 any타입 부여
-declare let window: any;
-// declare let FB: any;
+declare var window: any;
+declare var FB: any;
+declare var $: any;
 
 @Component({
   selector: 'app-login',
@@ -91,6 +92,27 @@ templateRef: TemplateRef<any>;
        console.log('completed');
      });
  }
+  FbInit() {
+    Promise.resolve(
+      FB.init({
+      appId            : '232105043996115',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v2.11'
+    }));
+
+    FB.AppEvents.logPageView();
+
+    // 상태 체크
+    // FB.getLoginStatus((response) => {
+    //   console.log(response);
+    //     if (response.status === 'connected') {
+    //       console.log('Logged in.');
+    //     } else {
+    //       FB.login();
+    //     }
+    // });
+  }
 
   ngOnInit() {
     this.templateRef = this.auth.templateRef;
@@ -103,24 +125,15 @@ templateRef: TemplateRef<any>;
       ]),
       password: new FormControl('', [ Validators.required, Validators.minLength(4)])
      });
- 
-     console.log(window.fb);
 
-     window.fbasyncInit = () => {
-      console.log('check');
-      window.FB.init({
-        appId            : '232105043996115',
-        autoLogAppEvents : true,
-        xfbml            : true,
-        version          : 'v2.11'
-      });
+    this.FbInit();
 
-    window.FB.AppEvents.logPageView();
     console.log('check2');
-    };
 
-    if (window.FB) {
-      window.FB.XFBML.parse();
+    // 페북 버튼 사라짐 방지
+    if (FB) {
+      // XFBML은 페이스북에서 만든 마크업 언어
+      FB.XFBML.parse();
     }
   }
 
