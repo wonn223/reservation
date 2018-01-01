@@ -2,13 +2,15 @@ import { Component, OnInit, OnChanges, TemplateRef, Output, NgZone, EventEmitter
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
-
+import { Source } from '../models/eventEmitter';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Observable } from 'rxjs/Observable';
 
+declare const window: any;
+declare const FB: any;
 
 @Component({
   selector: 'app-login',
@@ -22,23 +24,42 @@ message: string;
 modalRef: BsModalRef;
 templateRef: TemplateRef<any>;
 
-@Output() open: EventEmitter<boolean> = new EventEmitter();
-
+@Output() open: EventEmitter<Source> = new EventEmitter();
+ 
   constructor(
     private auth: AuthService,
     private router: Router,
     public modalService: BsModalService,
     private zone: NgZone
     ) {
+      (function(d, s, id) {
+        let js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.11';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
       // this.modalRef = this.modalService.show(this.templateRef);
+
+      window.fbasyncInit = () => {
+        console.log('check');
+        FB.init({
+          appId            : 'facebook app id here',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v2.10'
+        });
+        FB.AppEvents.logPageView();
+      };
     }
+
 
   signin() {
     console.log('[payload]', this.loginForm.value);
     this.auth.signin(this.loginForm.value)
       .subscribe(
       () => {
-        this.open.emit(true);
+        this.open.emit({bool: true, token: this.auth.token} as Source);
         this.modalRef.hide();
         this.router.navigate(['step']);
       },
@@ -67,12 +88,10 @@ templateRef: TemplateRef<any>;
        console.log('completed');
      });
  }
- 
+
   ngOnInit() {
     this.templateRef = this.auth.templateRef;
     this.modalRef = this.auth.headerModalRef;
-    console.log(this.templateRef);
-    console.log(this.modalRef);
     this.loginForm = new FormGroup({
       email: new FormControl('', [
         Validators.required,

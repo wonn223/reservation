@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { NgZone } from '@angular/core/src/zone/ng_zone';
 import { Observable } from 'rxjs/Observable';
 import { Token } from '../models/token';
+import { Source } from '../models/eventEmitter';
+import { error } from 'util';
 
 
 class User {
@@ -42,9 +44,9 @@ export class HeaderComponent implements OnInit {
     console.log('mouseout');
   }
 
-  onOpen(evt) {
-    console.log(evt);
-    this.isLoggined = !this.isLoggined;
+  onOpen(evt: Source) {
+    console.log('source from eventEmitter', evt);
+    return (evt.bool && evt.token) ? this.isLoggined = !this.isLoggined : '';
   }
 
   addClass () {
@@ -61,13 +63,12 @@ export class HeaderComponent implements OnInit {
     this.auth.templateRef = loginComp;
     this.modalRef = this.modalService.show(loginComp, { class : 'modal-con'});
     this.auth.headerModalRef = this.modalRef;
-    console.log(this.auth.templateRef);
-    console.log(this.auth.headerModalRef);
-
   }
+
   openModal2(loginComp: TemplateRef<any>) {
     this.modalRef2 = this.modalService.show(loginComp, { class: 'second' });
   }
+
   openModal3(loginComp: TemplateRef<any>) {
     this.modalRef3 = this.modalService.show(loginComp);
   }
@@ -85,20 +86,18 @@ export class HeaderComponent implements OnInit {
         alert('방문해주셔서 감사합니다');
         this.router.navigate(['main']);
       },
-      (error) => {
-        console.log(error.message);
-        this.message = error.message;
+      (err) => {
+        console.log(err.message);
+        this.message = err.message;
       },
       () => {
         console.log('completed');
       });
   }
 
-
   constructor(private modalService: BsModalService, public router: Router,
               public auth: AuthService,
               public cd: ChangeDetectorRef ) {
-    console.log('rertry');
     setTimeout(( ) => {
       console.log('[컨스트럭터 isLoggined]', this.isLoggined === true);
       this.cd.detectChanges();
@@ -106,7 +105,12 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('oninit');
+    const that = this;
     this.initUser();
+    return (this.auth.token && this.auth.myPk) ? (function() {
+      console.log('새로고침 후 로그인 상태 체크');
+      that.isLoggined = true; })() : '';
   }
 
   initUser() {
