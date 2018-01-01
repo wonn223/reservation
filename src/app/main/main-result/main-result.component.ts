@@ -29,13 +29,13 @@ export class MainResultComponent implements OnInit, OnDestroy  {
   appUrl = 'http://api.booki.kr/restaurants/';
   getUrl = 'http://api.booki.kr/restaurants/1/comments/';
   // getStarRaing에서 덧셈을 위한 0 할당
-  star_rate:number = 0;
-  countRateLength:number = 0;
-  percentage:number = 0;
+  star_rate = 0;
+  countRateLength = 0;
+  percentage = 0;
 
   constructor(public http: HttpClient, public resDetail: SearchedResDetailService,
               public shop: ShopListService, public route: ActivatedRoute, public auth: AuthService ) {
-                this.getStarRating()
+                this.getStarRating();
   }
 
   // star icon width와 평균 별점 연동
@@ -44,10 +44,10 @@ export class MainResultComponent implements OnInit, OnDestroy  {
     .subscribe((item: Reply) => {
       item.results.filter( (result) => {
         this.countRateLength += result.star_rate.toString().length;
-        this.star_rate += result.star_rate
-      })
-      return this.percentage = Math.floor(+((this.star_rate/(this.countRateLength * 5) * 100).toFixed())); 
-    })
+        this.star_rate += result.star_rate;
+      });
+      return this.percentage = Math.floor(+((this.star_rate / (this.countRateLength * 5) * 100).toFixed())); 
+    });
   }
 
 
@@ -71,6 +71,10 @@ export class MainResultComponent implements OnInit, OnDestroy  {
       this.type = params ['type'];
     });
     this.getRes();
+    setTimeout( () => {
+      this.auth.modalRef.hide();
+      console.log('닫음');
+    } , 3000);
   }
 
   ngOnDestroy() {

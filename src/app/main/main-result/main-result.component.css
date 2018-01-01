@@ -1,6 +1,7 @@
 .row.col-md-12.contentBox-top {
     margin-left: 2px;
     margin-top: 15px;
+    height: 100vh;
 }
 
 @font-face{
