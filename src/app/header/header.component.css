@@ -441,11 +441,12 @@ body{
     outline: none;
   }
 
+  .logout-button,
   .login-button {
       background: transparent;
       border : 0;
   }
-
+  
   /* 모달 안에 제목 보더 선으로 구분 */
   .modal-header {
     border: solid 1px #d3d3d3;
@@ -617,7 +618,12 @@ body{
   .nav-menus {
     float: right;
   }
-  /* > a까지 구체적으로. */
+
+  /* 적용이 안됨. 이유? */
+  .nav-menus > .hide-width {
+    display: none;
+  }
+  
   .nav-menus > a {
     display: block;
     float: left; 
@@ -628,7 +634,6 @@ body{
     /* background-color: gray; */
     text-align: center;
   }
-  
   .login-icon {
     height : 60px;
     width: 60px;
@@ -657,6 +662,8 @@ body{
   }
 
 } 
+
+
 
 @media screen and (min-width: 601px) and ( max-width: 719px ) {
   .main-search {

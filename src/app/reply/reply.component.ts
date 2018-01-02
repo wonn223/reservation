@@ -5,6 +5,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Reply, Result, Author, Profile } from '../models/reply';
 import { forEach } from '@angular/router/src/utils/collection';
 import { AuthService } from '../services/auth.service';
+import { Event } from '@angular/router/src/events';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class ReplyComponent implements OnInit {
    profile2: string;
    patchUrl = 'http://api.booki.kr/restaurants/comments';
    removeUrl = 'http://api.booki.kr/restaurants/comments';
+   //  ?page=6
    getUrl = 'http://api.booki.kr/restaurants/1/comments/';
    appUrl = 'http://api.booki.kr/accounts/signup/';
    title = 'Review';
@@ -36,12 +38,15 @@ export class ReplyComponent implements OnInit {
    startingIndex = 0;
    endIndex = 3;
    itemsPerPage = 5;
-   totalItems = 20;
+   totalItems = 30;
    currentPage = 1;
-
+   txtvalue: string;
+   token: string;
+   authorPk: number;
 
   constructor(public http: HttpClient, public fb: FormBuilder, private auth: AuthService) {
     this.getcomments();
+    this.token = this.auth.getToken();
   }
 
   onKeyup(com, val: string, rate: number) {
@@ -52,10 +57,12 @@ export class ReplyComponent implements OnInit {
     this.http.get(this.getUrl)
     .subscribe( ( comm: Reply )  =>  {
       this.comment = comm.results;
+      // this.authorPk = this.comment.map((item: Result) => item.author[0]);
+      // console.log('[authorPk]', this.authorPk);
       // this.sliceTotalComments();
       this.countAll(comm);
       this.countRating();
-      console.log(this.count2);
+      console.log(this.comment);
     });
   }
 
@@ -67,18 +74,6 @@ export class ReplyComponent implements OnInit {
       this.comment = comm.results;
     });
   }
-
-  // sliceTotalComments() {
-  //   배열 slice
-  //   this.comment = this.comment.slice(this.startingIndex, this.itemsPerPage);
-  //   console.log('[slice result]', this.comment);
-  //   this.startingIndex = this.itemsPerPage;
-  //   this.endIndex = this.endIndex + 3;
-  //   console.log('[starting index change check]', this.startingIndex);
-  //   console.log('[end index change check]', this.itemsPerPage);
-  //   return this.comment;
-  //   1페이지 인덱스 : 0,3 2페이지 : 3, 6, 3페이지 : 6, 10
-  // }
 
   countRating() {
     // nothing
@@ -96,18 +91,13 @@ export class ReplyComponent implements OnInit {
     this.patchRate = evt.target.id;
   }
 
-  dd(tt, com) {
-    tt = '';
-    console.log(tt);
-    console.log(com);
-  }
-
   returnval() {
     console.log('마우스아웃');
     this.isActivated = !this.isActivated;
   }
 
-  postComments(txt, val: string, rate: number) {
+  postComments(txt, val: string, rate: number, event: KeyboardEvent) {
+    console.dir(event);
       // 코멘트, 별점 미입력 방지
       // '별점을 등록해주세요!' 애니메이션
       // 엔터키 누르는 이벤트 확인
@@ -116,9 +106,6 @@ export class ReplyComponent implements OnInit {
         return '';
       }
 
-      // 키 이벤트 확인
-      console.log(this.evt.keyCode);
-
       const payload = {
         comment: val,
         star_rate: this.rate,
@@ -126,7 +113,7 @@ export class ReplyComponent implements OnInit {
 
       const headers = {
         // 'WWW-Authenticate': 'Token',
-        'Authorization': 'Token bfec561d6317ab26bb0cb6ddb1fa662871be4f6b'
+        'Authorization': `Token ${this.token}`
       };
 
       const options = {
@@ -134,15 +121,14 @@ export class ReplyComponent implements OnInit {
       };
 
       console.log('header확인', options);
-
+      ( payload && rate !== 0 && event.key === 'Enter') ?
       this.http.post(this.getUrl, payload, options)
       .subscribe ( (res: any) => {
+        this.txtvalue = '';
         this.getcomments();
         console.log('profile', this.profile);
         console.log('post 체크', res);
-      });
-
-       txt = null;
+      }) : console.log('error. sth wrong');
   }
 
   checkCount(starVal: number) {
@@ -152,32 +138,46 @@ export class ReplyComponent implements OnInit {
 
   // remove
   removeComm(td: number) {
-
-    console.log('[td]', td);
+    // HTTP헤더
     const headers = {
-      // 'WWW-Authenticate': 'Token',
-      'Authorization': 'Token bfec561d6317ab26bb0cb6ddb1fa662871be4f6b'
-    };
+      'Authorization' : `Token ${this.token}`
+      };
+
     const options = {
       headers : new HttpHeaders(headers)
-    };
-    console.log('header확인', options);
+      };
+      console.log(options);
 
+
+    // const headers = {
+    //   // 'WWW-Authenticate': 'Token',
+    //   'Authorization': 'Token bfec561d6317ab26bb0cb6ddb1fa662871be4f6b'
+    // };
+    // const options = {
+    //   headers : new HttpHeaders(headers)
+    // };
+    // console.log('header확인', options);
 
     this.http.delete(`${this.removeUrl}/${td}/`, options)
     .subscribe((res) => {
+      console.dir(res);
       this.getcomments();
-    console.log('deleted!');
+      console.log('deleted!');
     });
   }
   // restaurant 프로퍼티 pk값 저장
 
   // 클래스 바인딩 실행 함수
-  changeAct(pk, rm) {
-    const userPk = this.auth.getUserPk();
+  changeAct(td:Author, event) {
+    const userPk = +this.auth.getUserPk();
+    console.log('[userPk]', userPk);
 
-    // author.pk와 로그인한 유저의 pk비교로 권한 확인
-    if ( pk === userPk) {
+    this.authorPk = td.pk;
+    console.log('[commentatorPk]', this.authorPk);
+
+    console.log(event.target.id);
+
+    if ( this.authorPk === userPk ) {
     this.isActivated = !this.isActivated;
     this.iconDeactivated = !this.iconDeactivated;
     } else {
@@ -195,13 +195,14 @@ export class ReplyComponent implements OnInit {
 
     // HTTP헤더
     const headers = {
-      // 'WWW-Authenticate': 'Token',
-      'Authorization': 'Token bfec561d6317ab26bb0cb6ddb1fa662871be4f6b'
+      'Authorization' : `'Token' + ' ' + ${this.auth.getToken()}`
     };
+
     const options = {
       headers : new HttpHeaders(headers)
     };
 
+    console.log(options);
     this.http.patch(`${this.patchUrl}/${pk}/`, payload, options)
     .subscribe(( res ) => {
       console.log('patch result', res);

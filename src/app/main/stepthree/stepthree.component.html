@@ -15,7 +15,7 @@
     <div class="col-md-8 user-choice">
       <h5 class="col-md-3 step active">{{this.headerValue}}</h5>
       <h5 class="col-md-3 step">{{ this.headerTwoValue }}</h5>
-      <!-- <h5 class="col-md-3 step"></h5> -->
+      <h5 class="col-md-3 step">{{ this.stepVal }}</h5>
     </div>
     <div class="col-md-2"></div>
   </div>
@@ -25,13 +25,13 @@
       <div class="col-md-6">
         <div [routerLink]="[this.location[0]]"
         #hansik class="card col-md-6 hansik" 
-        id="0" (click)="check()">
+        id="0" (click)="check($event)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>강북구</h4>
         </div>
         <div [routerLink]="[this.location[1]]" 
         #jungsik class="card col-md-6 jungsik" 
-        id="1" (click)="check()">
+        id="1" (click)="check($event)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>강남구</h4>
         </div>
@@ -46,13 +46,13 @@
       <div class="col-md-6">
         <div [routerLink]="[this.location[2]]"
         #ilsik class="card col-md-6 ilsik" 
-        id="0" (click)="check()">
+        id="0" (click)="check($event, loadingcomp)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>강서구</h4>
         </div>
         <div [routerLink]="[this.location[3]]" 
         #yangsik class="card col-md-6 yangsik" 
-        id="1" (click)="check()">
+        id="1" (click)="check($event)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>강동구</h4>
         </div>
@@ -73,3 +73,15 @@
   </div>
 <!-- <div routerLink="/shop">상세페이지</div> -->
 </div> 
+
+<ng-template #loadingcomp>
+    <div class="sign-form-wrapper">
+      <div class="title-wrapper">
+        <div class="logo-wrapper">
+          <div class="base"></div>
+          <div class="logo"></div>
+        </div>
+          <h2 class="sign-header">로딩 중입니다</h2>
+      </div>
+    </div>
+</ng-template>
