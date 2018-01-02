@@ -50,8 +50,8 @@ export class AuthService {
 
     signout() {
         let headers = new HttpHeaders();
-        headers = headers.set('Authorization', `Token ${this.token}`);
-        console.log(headers);
+        headers = headers.set('Authorization', `Token ${this.getToken()}`);
+        console.log(this.getToken());
         return this.http.post(`${this.appUrl}/accounts/signout/`, null, { headers })
             .do(() => {
                 this.removeToken();

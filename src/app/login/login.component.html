@@ -1,28 +1,5 @@
-<!-- <form [formGroup]="signForm" novalidate>
-  <span class="has-float-label">
-    <div class="form-group input-group">
-      <input id="email" type="email" formControlName="email" name='email' class="form-control" placeholder="email">
-      <label for="email" class="sign-form-label">Email</label>
-       <em *ngIf="email.errors?.pattern && email.touched" class="alert">User id는 email 형식으로 입력하세요!</em>
-      <em *ngIf="email.errors?.required && email.touched" class="alert">User id로 사용할 email을 입력하세요!</em>
-    </div>
-  </span>
-  <span class="has-float-label">
-      <div class="form-group input-group">
-        <input id="password" type="password" formControlName="password" class="form-control" placeholder="password">
-        <label for="password" class="sign-form-label">Password</label>
-        <em *ngIf="password.errors?.required && password.touched " class="alert ">
-          Password를 입력하세요!
-        </em>
-      </div>
-    </span>
-</form> -->
+<!-- 로그인 템플릿 -->
 
-
-
-<!-- <button type="button" class="btn btn-primary" (click)="openModal(logintemplate)">Sign Up</button> -->
-
-<!-- <ng-template #logintemplate> -->
 <div class="sign-form-wrapper">
   <div class="title-wrapper">
     <div class="logo-wrapper">
@@ -31,6 +8,7 @@
     </div>
     <h2 class="sign-header"></h2>
   </div>
+
   <form [formGroup]="loginForm" (ngSubmit)="signin()" novalidate>
     <span class="has-float-label">
     <div class="form-group input-group">
@@ -52,12 +30,13 @@
       </div>
     </span>
 
+    <div *ngIf="message" class="alert">{{message}}</div>
     <button [disabled]="loginForm.invalid" type="submit" class="btn btn-lg btn-success btn-block">Sign In</button>
-    <a class="btn btn-default" (click)="signout()">Signout</a>
-    <div class="row-sns auth-sns">
-      <div class="col-xs-4">
-        <a href="#">
-          <div class="btn-block btn-twitter">twitter</div>
+    <a class=" btn btn-default " (click)="signout() ">Signout</a>
+    <div class="row-sns auth-sns ">
+      <div class="col-xs-4 ">
+        <a href="# ">
+          <div class="btn-block btn-twitter ">twitter</div>
         </a>
       </div>
       <div class="col-xs-4">
@@ -65,21 +44,20 @@
           <div scope="public_profile, email" class="fb-login-button btn-facebook" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div>
         </a>
       </div>
-      <div class="col-xs-4">
-        <a href="#">
-          <div class="btn-block btn-gmail">gmail</div>
+      <div class="col-xs-4 ">
+        <a href="# ">
+          <div class="btn-block btn-gmail ">gmail</div>
         </a>
       </div>
     </div>
   </form>
-  <div class="bottom-wrapper">
-    <a href="#">
+  <div class="bottom-wrapper ">
+    <a href="# ">
         진지한 밥상이 처음이신가요?
-        <span class="icon-arrow-right"></span>
+        <span class="icon-arrow-right "></span>
       </a>
   </div>
-  <div class="cc">Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"
-      title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+  <div class="cc ">Icons made by <a href="https://www.flaticon.com/authors/those-icons " title="Those Icons ">Those Icons</a> from <a href="https://www.flaticon.com/ " title="Flaticon ">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/ "
+      title="Creative Commons BY 3.0 " target="_blank ">CC 3.0 BY</a></div>
 </div>
-<div *ngIf="message" class="alert alert-danger">{{ message }}</div>
-<!-- </ng-template> -->
+<!-- <div *ngIf="message" class="alert alert-danger ">{{ message }}</div> -->
