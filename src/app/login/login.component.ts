@@ -71,8 +71,8 @@ ErrCode:number;
       },
       (err: HttpErrorResponse) => {
         if (err.status == 401) {
-          this.isError == true;
-          this.ErrCode == err.status;
+          this.isError = true;
+          this.ErrCode = err.status;
           // 클라이언트 또는 네트워크 에러
           this.message = '가입되지 않은 ID 이거나, 비밀번호를 잘못 입력 하셨습니다.'
           console.log(`Client-side error: ${this.message}`);
