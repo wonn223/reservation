@@ -56,8 +56,7 @@ import { SignFormContainerComponent } from './signForm/sign-form-container.compo
     FooterComponent,
     // SteponeComponent
     MainComponent,
-    ManagepageComponent,
-    SignFormContainerComponent
+    ManagepageComponent
   ],
   imports: [
     BrowserModule, FormsModule, ButtonsModule.forRoot(),
