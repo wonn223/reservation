@@ -35,7 +35,6 @@ import { SignFormContainerComponent } from './signForm/sign-form-container.compo
 
 import { ManagepageComponent } from './managepage/managepage.component';
 import { LoginComponent } from './login/login.component';
-import { SignFormContainerComponent } from './signForm/sign-form-container.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 
