@@ -9,7 +9,7 @@ div{
 .avatar {
   width: 30%;
   height: 60px;
-  margin: 1.2rem auto;
+  margin: 0.7rem auto;
 }
 
 .btns.clearfix {
@@ -64,7 +64,7 @@ div{
 
 /* label 안 버튼 */
 .btn {
-  padding: 0;
+  padding: 5px;
 }
 
 input[type=file] {

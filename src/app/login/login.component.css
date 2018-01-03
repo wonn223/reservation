@@ -172,11 +172,13 @@ a {
   border-color: #00c7f7
 }
 
-.btn-facebook {
+.fb-login-button.btn-facebook {
   display: block;
-  color: white;
-  background-color: #335397 !important;
-  border-color: #335397;
+  width: auto;
+  padding: 10px;
+  background-color: #446cb0 !important;
+  border-color: #446cb0;
+  text-align: center;
 }
 
 .btn-gmail {
@@ -197,6 +199,10 @@ input.ng-touched.ng-invalid[_ngcontent-c0] {
 .bottom-wrapper {
   margin: 20px auto;
   text-align: center;
+}
+
+.pluginSkinLight.pluginFontHelvetica {
+  width: auto;
 }
 
 @media (min-width: 768px) {

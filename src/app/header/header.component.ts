@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit {
 
   onOpen(evt: Source) {
     console.log('source from eventEmitter', evt);
-    return (evt.bool && evt.token) ? this.isLoggined = !this.isLoggined : '';
+    return (evt.bool || evt.token) ? this.isLoggined = evt.bool : '';
   }
 
   addClass () {

@@ -1,9 +1,9 @@
-import { Component, OnInit, OnChanges, TemplateRef, Output, NgZone, EventEmitter  } from '@angular/core';
+import { Component, OnInit, TemplateRef, Output, NgZone, EventEmitter  } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { Source } from '../models/eventEmitter';
-import { User } from '../models/user';
+import { User, AuthResponse, FbUser } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -22,7 +22,7 @@ declare var $: any;
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent implements OnInit, OnChanges {
+export class LoginComponent implements OnInit {
 loginForm: FormGroup;
 message: string;
 modalRef: BsModalRef;
@@ -35,7 +35,6 @@ templateRef: TemplateRef<any>;
     private router: Router,
     public modalService: BsModalService,
     ) {
-
       (function(d, s, id) {
         let js: HTMLScriptElement;
         let _js = d.getElementsByTagName(s)[0];
@@ -57,12 +56,12 @@ templateRef: TemplateRef<any>;
 
     }
 
-
   signin() {
     console.log('[payload]', this.loginForm.value);
     this.auth.signin(this.loginForm.value)
       .subscribe(
       () => {
+
         this.open.emit({bool: true, token: this.auth.token});
         this.modalRef.hide();
         this.router.navigate(['step']);
@@ -76,6 +75,7 @@ templateRef: TemplateRef<any>;
        }
       );
   }
+
   signout() {
     this.auth.signout()
    .subscribe(
@@ -91,27 +91,49 @@ templateRef: TemplateRef<any>;
      () => {
        console.log('completed');
      });
- }
+  }
+
   FbInit() {
     Promise.resolve(
-      FB.init({
-      appId            : '232105043996115',
-      autoLogAppEvents : true,
-      xfbml            : true,
-      version          : 'v2.11'
-    }));
-
+        FB.init({
+          appId            : '232105043996115',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v2.11'
+        }))
+    .then (
+      FB.getLoginStatus((response: AuthResponse) => {
+        // switch (response.status) :{
+        //   case 'connected':
+        //   console.log('dd');
+        //   default;
+        // }
+        console.log(response);
+          if (response.status === 'connected' && this.auth.fbPk === undefined) {
+            console.log('Logged in.');
+            this.open.emit({bool: true});
+            this.auth.fbPk = response.authResponse.accessToken;
+            this.auth.fbId = response.authResponse.userID;
+          } else {
+            if (response.status === 'unknown') {
+              console.log('unknown상태입니다');
+            } else {
+              return '';
+            }
+          }
+        })
+    );
+    // 로그 남기는 메소드
     FB.AppEvents.logPageView();
+    // .then();
+  }
 
-    // 상태 체크
-    // FB.getLoginStatus((response) => {
-    //   console.log(response);
-    //     if (response.status === 'connected') {
-    //       console.log('Logged in.');
-    //     } else {
-    //       FB.login();
-    //     }
-    // });
+  keepFbButton() {
+    // 페북 버튼 사라짐 방지
+    if (FB) {
+      // XFBML은 페이스북에서 만든 마크업 언어
+      FB.XFBML.parse();
+    }
   }
 
   ngOnInit() {
@@ -126,25 +148,9 @@ templateRef: TemplateRef<any>;
       password: new FormControl('', [ Validators.required, Validators.minLength(4)])
      });
 
+    // 버튼 클릭할 때 상태변화가 일어남
     this.FbInit();
-
-    console.log('check2');
-
-    // 페북 버튼 사라짐 방지
-    if (FB) {
-      // XFBML은 페이스북에서 만든 마크업 언어
-      FB.XFBML.parse();
-    }
-  }
-
-  ngOnChanges() {
-    // task 큐에 더 이상 task가 없을 때 알려주는 메소드
-    // this.zone.onMicrotaskEmpty
-    // 루트 존인 NgZone을 구독
-      // .subscribe(() => {
-        // 앵귤러 바깥에서 처리된 태스크를 다시 앵귤러 존으로 진입시키는 역할
-        // this.zone.run( () => console.log('done'));
-    // });
+    this.keepFbButton();
   }
 
   get email() {
