@@ -76,7 +76,7 @@ export class ManagepageComponent implements OnInit {
     console.log(this.appUrl)
     this.http.get<ReservationsInfo>(`${this.appUrl}/reservations/${shopPk}/restaurant/`)
       .subscribe( (resInfo : any) => 
-      {  console.log(resInfo)
+      { 
         this.reservationInfomations = resInfo.map((list:any) => Object.assign({},
         {
           buyer_name : list.buyer_name,
@@ -87,8 +87,13 @@ export class ManagepageComponent implements OnInit {
           reservation: list.reservation
         }))
         console.log(this.reservationInfomations)
+        console.log('!!!', resInfo.imp_uid)
       })
+    //imp로 GET요청하면 취소사유를 받아옴 (reservationInfomations에 같이 객체화 할 수 있나?)
+    // this.http.get(`http://api.booki.kr/reservations/imp_565241924715/paymentcancel/`)
   }
+
+
 
   // 이미지처리
   imageSrc = '../../assets/man.png';
