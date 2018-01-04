@@ -182,7 +182,14 @@ export class ShopComponent implements OnInit, OnDestroy {
       date: this.bsValue.getDate()
     };
 
-    this.http.get<TimeList[]>(`http://api.booki.kr/restaurants/${this.resPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${selectedOption.month}-${selectedOption.date}`)
+    let paramMonth: string = selectedOption.month.toString()
+    let paramDate: string = selectedOption.date.toString()
+
+    if(paramMonth.length === 1) { paramMonth = '0' + selectedOption.month }
+    if(paramDate.length === 1) { paramDate = '0' + selectedOption.date }
+    console.log(paramMonth, paramDate)
+
+    this.http.get<TimeList[]>(`http://api.booki.kr/restaurants/${this.resPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${paramMonth}-${paramDate}`)
       .subscribe(getTime => {
         this.times = getTime.map(list => Object.assign({}, {time: list.time, timePk: list.pk}));
         console.log(this.times);
