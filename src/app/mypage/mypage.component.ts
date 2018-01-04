@@ -115,6 +115,7 @@ export class MypageComponent implements OnInit {
       // 'WWW-Authenticate' : 'Token',
       'Authorization': `Token ${this.tokenInfo}`
     };
+    console.log(headers)
     const options = {
       headers: new HttpHeaders(headers)
     };
