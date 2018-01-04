@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { SearchedResDetailService } from '../../services/searched-res-detail.service';
+import { BsModalService } from 'ngx-bootstrap/modal/bs-modal.service';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -6,24 +11,38 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './stepthree.component.html',
   styleUrls: ['./stepthree.component.css']
 })
-export class StepthreeComponent implements OnInit {
+export class StepthreeComponent implements OnInit, OnChanges, OnDestroy  {
+
+  type: string;
+  private sub: any;
+
   isHover = false;
   checkActivated = false;
+  location = ['강북구', '강남구', '강서구', '강동구'];
   foodCategory = ['hansik', 'jungsik', 'ilsik', 'yangsik', 'byeolsik'];
-  headerValue = ['한식', '중식', '일식', '양식', '주류/별식'];
+  headerValue: string;
+  headerTwoValue: string;
   eventStorage = [];
-  stepVal = [];
+  stepVal: string;
   state = 'inactive';
   pageScr;
 
 
-  constructor() {
+  constructor(public route: ActivatedRoute,
+              public auth: AuthService,
+              public searchedRes: SearchedResDetailService,
+              public router: Router
+            ) {
+    this.headerValue = this.searchedRes.oneheaderValue;
+    this.headerTwoValue = this.searchedRes.twoheaderValue;
+    console.log(this.searchedRes.oneheaderValue);
   }
 
-  check(fd, event) {
-    // 이전에 다른 곳에서 체크 표시가 있을 경우
-    console.log(event);
-    fd.checkActivated = !this.checkActivated;
+  check(evt, comp) {
+    this.stepVal = evt.target.textContent.trim();
+    console.log('stepval', this.stepVal);
+    // 로딩 modal
+    this.auth.openModal(comp);
   }
 
   hover(food, event) {
@@ -40,6 +59,17 @@ export class StepthreeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.sub = this.route.params.subscribe ( params => {
+      this.type = params['type'];
+    });
+  }
+
+  ngOnChanges() {
+    console.log('뷰 변화');
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }

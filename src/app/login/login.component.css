@@ -6,8 +6,12 @@
   src: url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.eot?#iefix) format('embedded-opentype'), url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.woff2) format('woff2'), url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.woff) format('woff'), url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.ttf) format('truetype');
 }
 
-.modal-dialog.modal-con {
-  width: 500px;
+.modal.in .modal-dialog {
+  width: 400px;
+}
+
+.modal-content {
+  width: 400px;
 }
 
 .name {
@@ -37,22 +41,16 @@
 /* 모달 최상위 */
 
 .sign-form-wrapper {
-  position: relative;
   margin: 0 auto;
-  width: 500px;
+  width: 80%;
   left: 25px;
-  /* height: 600px; */
-  /* background: rgb(235, 228, 228); */
-  /* border: 2px solid rgb(197, 197, 194); */
 }
 
 .title-wrapper {
   position: relative;
-  /* display: block; */
-  top: 5px;
-  left: 33%;
   width: 150px;
   height: 150px;
+  margin: 0 auto;
 }
 
 .logo {
@@ -76,8 +74,12 @@
 .form-group {
   font-weight: 200;
   margin: 0 auto;
-  width: auto;
+  width: 100%;
   /* height: 80px; */
+}
+
+.form-group.input-group > input {
+  min-height: 43px;
 }
 
 .icon-jinji-id::before {
@@ -101,14 +103,10 @@
   background: url('../../assets/man.png') no-repeat;
 } */
 
-.sign-form-wrapper>.sign-input-list {
-  /* position: absolute; */
-  /* top: -150px; */
-  /* left: 10%; */
-  max-width: 380px;
-  margin-top: 0px;
-  margin-left: 50px;
-  /* height: 300px; */
+  
+.sign-form-wrapper > .sign-input-list {
+  width: 70%;
+  margin: 0 auto;
 }
 
 .row-sns {
@@ -119,7 +117,7 @@
 }
 
 .auth-sns {
-  width: 380px;
+  width: 100%;
 }
 
 .btn {
@@ -141,8 +139,13 @@ a {
   outline: none !important;
 }
 
+.btn-default {
+  color : #fff;
+}
+
 .btn-block {
   display: block;
+  width: 100%;
   height: 34px;
   padding: 10px 2px 30px 2px;
   border-radius: 2px;
@@ -169,11 +172,13 @@ a {
   border-color: #00c7f7
 }
 
-.btn-facebook {
+.fb-login-button.btn-facebook {
   display: block;
-  color: white;
-  background-color: #335397 !important;
-  border-color: #335397;
+  width: auto;
+  padding: 10px;
+  background-color: #446cb0 !important;
+  border-color: #446cb0;
+  text-align: center;
 }
 
 .btn-gmail {
@@ -192,7 +197,16 @@ input.ng-touched.ng-invalid[_ngcontent-c0] {
 }
 
 .bottom-wrapper {
-  width: 380px;
   margin: 20px auto;
   text-align: center;
+}
+
+.pluginSkinLight.pluginFontHelvetica {
+  width: auto;
+}
+
+@media (min-width: 768px) {
+  .modal-content {
+    width: 400px !important;
+  }
 }

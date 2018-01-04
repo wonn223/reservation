@@ -1,72 +1,75 @@
  <!-- 단계별로 선택한 값을 헤더 밑에 표시. -->
- <div class="row nav-header">
+<div class="row main-first-page " style="height:100vh">
+  <div class="bg-overlay"></div>
+  <div class="row nav-header">
     <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <h2 class="col-md-3 step active">1단계</h2>
-      <h2 class="col-md-3 step">2단계</h2>
-      <h2 class="col-md-3 step">3단계</h2>
-      <h2 class="col-md-3 step">4단계</h2>
+    <div class="col-md-8 step-text">
+      <h5 class="col-md-3 step active">가격</h5>
+      <h5 class="col-md-3 step">음식</h5>
+      <h5 class="col-md-3 step">지역</h5>
     </div>
     <div class="col-md-2"></div>
   </div>
   <div class="row nav-header">
     <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <h2 class="col-md-3 step active">{{ headerValue | filter:eventStorage}}</h2>
-      <h2 class="col-md-3 step">{{ "interpolation" }}</h2>
-      <h2 class="col-md-3 step">{{ "interpolation" }}</h2>
-      <h2 class="col-md-3 step">{{ "interpolation" }}</h2>
+    <div class="col-md-8 user-choice">
+      <h4 class="col-md-3 step"></h4>
+      <h4 class="col-md-3 step"></h4>
+      <h4 class="col-md-3 step"></h4>
     </div>
     <div class="col-md-2"></div>
   </div>
-  <div id="thisPart" class="row main-content-padding">
-    <div class="col-md-1">
+  <div class="col-md-12">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 stepone-menu">
+      <div class="col-md-6">
+        <div [routerLink]="['/step', this.price[0]]"
+        #cheap class="card col-md-6 hansik" 
+        value="cheap" id="0" (click)="check(cheap)">
+          <i class="glyphicon glyphicon-cutlery"></i>
+          <h4>Cheap</h4>
+        </div>
+        <div [routerLink]="['/step', this.price[1]]" 
+        #normal class="card col-md-6 jungsik" 
+        id="1" (click)="check(normal)">
+          <i class="glyphicon glyphicon-cutlery"></i>
+          <h4>Normal</h4>
+        </div>
+      </div>
+      <div class="col-md-6 price-font">Jinji</div>
     </div>
-    <div class="col-md-10">
-      <div routerLink="/step2" routerLinkActive="active" 
-          #hansik class="card col-md-2 shading hansik" 
-          [class.han]="hansik.checkActivated" 
-          id="0" (click)="check(hansik, $event)">
-          <h2 *ngIf="hansik.isHover==true">한식</h2>
-          <img class="card-span-top" 
-            [class.han]="hansik.checkActivated" 
-            src="../../assets/hansik2.png" alt="Card image cap">
+    <div class="col-md-1"></div>
+  </div>
+  <div class="col-md-12">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 second-menu">
+      <div class="col-md-6">
+        <div [routerLink]="['/step', this.price[2]]"
+        #expensive class="card col-md-6 ilsik" 
+        id="2" (click)="check(expensive)">
+          <i class="glyphicon glyphicon-cutlery"></i>
+          <h4 class="textAlign">Expensive</h4>
+        </div>
+        <div [routerLink]="['/step', this.price[3]]" 
+        #vexpensive class="card col-md-6 yangsik" 
+        id="3" (click)="check(vexpensive)">
+          <i class="glyphicon glyphicon-cutlery"></i>
+          <h4 class="textAlign2">Very Expensive</h4>
+        </div>
       </div>
-      <div #jungsik class="card col-md-2 shading jungsik" 
-        [class.han]="jungsik.checkActivated" [id]="1" (click)="check(jungsik, $event)">
-        <!-- <a routerLink="/step2"></a> -->
-        <img class="card-img-top" [class.han]="jungsik.checkActivated" 
-          src="../../assets/jungsik2.png" alt="Card image cap">
-        <h2 *ngIf="jungsik.isHover === true">중식</h2>
-      </div>
-      <div #ilsik class="card col-md-2 shading ilsik" [class.han]="ilsik.checkActivated" [id]="2" (click)="check(ilsik, $event)">
-        <!-- <a routerLink="/step2"></a> -->
-        <img class="card-img-top ilsik" [class.han]="ilsik.checkActivated" src="../../assets/ilsik2.png" alt="Card image cap">
-        <h2 *ngIf="ilsik.isHover==true">일식</h2>
-      </div>
-      <div #yangsik class="card col-md-2 shading yangsik" [class.han]="yangsik.checkActivated" [id]="3" (click)="check(yangsik, $event)">
-        <!-- <a routerLink="/step2"></a> -->
-        <img class="card-img-top" [class.han]="yangsik.checkActivated" src="../../assets/yangsik2.png" alt="Card image cap">
-        <h2 *ngIf="yangsik.isHover==true">양식</h2>
-      </div>
-      <div #byeolsik class="card col-md-2 shading byeolsik" [class.han]="byeolsik.checkActivated" [id]="4" (click)="check(byeolsik, $event)">
-        <!-- <a routerLink="/step2"></a> -->
-         <img class="card-img-top" [class.han]="byeolsik.checkActivated" src="../../assets/chimaek2.png" alt="Card image cap">
-         <h2 *ngIf="byeolsik.isHover==true">주류/별식</h2>
-      </div>
+      <div class="col-md-6 price-font"></div>
     </div>
-    <div class="col-md-1">
-    </div>
+    <div class="col-md-1"></div>
   </div>
   <div class="row">
     <!-- 폰트 relative로 화면 센터 -->
     <div class="col-md-3">
     </div>
     <div class="col-md-6 center-title">
-      <h2 class="title-text">좋아하는 음식을 선택하세요</h2>
+      <h2 class="title-text">가격대를 선택하세요</h2>
     </div>
     <div class="col-md-3">
     </div>
   </div>
-
 <!-- <div routerLink="/shop">상세페이지</div> -->
+</div> 

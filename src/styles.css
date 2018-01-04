@@ -3,13 +3,19 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 @import url(https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.0/dist/bootstrap-float-label.min.css);
 @import "./normalize.css";
-.modal-content {
-  width: 450px;
-  height: 450px;
-  border-radius: 0;
-  border: 0;
+
+/* 모달 창 상위 클래스 너비 선언 */
+.modal.in .modal-dialog {
+  width: 400px;
 }
 
-body {
-  background: #F7F7F7;
+/* 모달 창 너비100%, 중앙 정렬 */
+.modal-content {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ul태그 안 li 커서 변경 */
+ul > li {
+  cursor: pointer;
 }

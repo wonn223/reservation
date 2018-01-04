@@ -15,7 +15,24 @@ export interface Result {
 
 export interface Author {
     pk: number;
+    profile: Profile[];
+}
+
+export interface Profile {
+    nickname: string;
+    profile_image: string;
+}
+
+
+class Nature {
+    location: string;
+}
+
+class Pesron extends Nature {
     name: string;
-    email: string;
+
+    constructor() {
+        super();
+    }
 }
 

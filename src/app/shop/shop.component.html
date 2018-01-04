@@ -20,7 +20,8 @@
       <h1> {{ shopName }}</h1>
       <a href="shop/#review">리뷰 : {{ shopListService.shopTest.reviewCount }}건 | 평점 : {{ starRate }}점</a>
       <span class="favorite">
-      <img class="heart" src="../../../assets/heart.png" (click)="shopListService.addFavorite()"> ({{ shopListService.shopTest.countFavorite }}) </span>
+      <a (click)="favoriteToggle()" [class]="toggleStatus"> 
+        <span class="glyphicon glyphicon-heart-empty"></span> favorite</a></span>
     </div>
   </div>
 
@@ -112,7 +113,6 @@
       <h3 class="title">메뉴판 | 이미지</h3>
     </div>
   </div>
-
   <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-5 shop-image">
@@ -123,9 +123,9 @@
       </carousel>
     </div>
     <div class="col-md-5">
-      <img class="menu-image" src="http://menupankorea.com/images/menu_040516_12.jpg">
+      <img class="menu-image" [src]="this.menu">
     </div>
-    <div class="col-md-0"></div>
+    <div class="col-md-2"></div>
   </div>
 
   <!-- 지도와 찾아오는 길 / 추가정보 -->
@@ -161,11 +161,11 @@
         </tr>
         <tr>
           <td class="tname">평균가격대</td>
-          <td>{{ averagePrice }}</td>
+          <td>{{ averagePrice | changePrice }}</td>
         </tr>
         <tr>
           <td class="tname">수용인원</td>
-          <td>{{ maxParty }}</td>
+          <td>{{ maxParty }}명</td>
         </tr>
         <tr>
           <td class="tname">길찾기</td>
@@ -177,8 +177,7 @@
     </div>
   </div>
 
-
-<!-- 평점 및 리뷰 -->
+<!-- 평점 및 리뷰 -->  
   <app-reply></app-reply>
 </div>
 

@@ -1,30 +1,38 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
+// import { LoginComponent } from './login/login.component';
+// import { DashboardComponent } from './dashboard/dashboard.component';
 import {
-  MainComponent,
   ShopComponent,
   NotFoundComponent,
   PaymentComponent,
   MypageComponent,
-  MainResultComponent
+  MainComponent,
+  // SteponeComponent,
+  MainResultComponent,
+  ManagepageComponent,
+  SteponeComponent
 } from './routing-forRouting';
-
+import { AuthGuard } from './guards/auth.guard';
+// import { AuthGuard } from './guards/auth.guard';
+// import { ParamsauthGuard} from './guards/paramsauth.guard';
 
 
 // 라우트 구성
 const routes: Routes = [
-  { path: '', component: MainComponent },
-  { path: 'shop', component: ShopComponent },
+  { path: 'main', component: MainComponent },
+  { path: 'step',
+    loadChildren : 'app/main/main.module#MainModule'
+  },
+  { path: 'shop/:resPk', component: ShopComponent, data: { pk : ':id'} },
   { path: 'payment', component: PaymentComponent },
-  { path: 'mypage', component: MypageComponent },
-  { path: 'mainresult', component: MainResultComponent },
+  { path: 'mypage', component: MypageComponent, canActivate: [AuthGuard] },
+  { path: 'managepage', component: ManagepageComponent },
+  { path: '', redirectTo: 'main', pathMatch: 'full'},
   { path: '**', component: NotFoundComponent },
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+
+export const appRouting: ModuleWithProviders = RouterModule.forRoot(routes);

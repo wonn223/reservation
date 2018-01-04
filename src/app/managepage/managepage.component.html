@@ -1,0 +1,100 @@
+<div class="page-header">
+  <h1> abc레스토랑
+    <small> 관리자페이지 </small>
+  </h1>
+</div>
+
+<div class="jumbotron">
+  <ul>
+    <li>주소 : ㅇㅇㅇㅇㅇㅇ <button>수정하기</button></li>
+    <li>연락처 : ㅇㅇㅇㅇㅇㅇ<button>수정하기</button></li>
+    <li>메뉴판이미지<button>변경하기</button> </li>
+    <li>이미지(업로드) : ㅇㅇㅇㅇㅇㅇ
+      <input type="file" accept="image/*" (change)="onFileChange(fileInput.files)" #fileInput>
+      <button>업로드</button>
+      <div class="row">
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img *ngIf="imageSrc" [src]="imageSrc" class="avatar">
+            <button>삭제하기</button>
+          </a>
+        </div>
+      </div>
+    </li>
+
+
+  </ul>
+</div>
+
+
+<tabset type="pills">
+  <tab heading="예약관리">
+    <table class="table table-striped">
+      <tr>
+        <td>no</td>
+        <td>예약일자</td>
+        <td>예약시간</td>
+        <td>예약자</td>
+        <td>인원</td>
+        <td>결제금액</td>
+        <td>상태</td>
+        <td>결제정보</td>
+        <td> </td>
+      </tr>
+      <tr *ngFor="let item of reservationInfomations; let i =index" >
+        <td> {{ i + 1 }}</td>
+        <td> {{ item.reservation.information.date }}</td>
+        <td> {{ item.reservation.information.time }} </td>
+        <td> {{ item.buyer_name}}</td>
+        <td> {{ item.reservation.party }}</td>
+        <td> {{ item.amount }}</td>
+        <td> {{ item.status }}</td>
+        <td> {{ item.imp_uid }}</td>
+        <td>
+          <button type="button" class="btn btn-primary" (click)="openModal(template)">취소하기</button>
+          <ng-template #template>
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">예약취소하기</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h3>취소사유를 입력해주세요</h3>
+              <input type="text" class="form-control" placeholder="Text input" [value]="cancelComment" (input)="onInput($event)">
+              <button type="button" class="btn btn-primary" (click)= "paymentCancle(item.imp_uid)">취소하기</button>
+            </div>
+          </ng-template>
+        </td>
+      </tr>
+    </table>
+  </tab>
+  <tab heading="오늘의 예약현황">
+      <div class="container">
+        <div class="row">
+          <div class="timeline-centered">
+      
+            <article class="timeline-entry">
+      
+              <div class="timeline-entry-inner">
+                <time class="timeline-time" datetime="2014-01-10T03:45">
+                  <span>07:45 AM</span>
+                  <span>2명</span>
+                </time>
+      
+                <div class="timeline-icon bg-success">
+                  <i class="entypo-feather"></i>
+                </div>
+      
+                <div class="timeline-label">
+                  <p>...........</p>
+                </div>
+              </div>
+      
+            </article>
+          </div>
+        </div>
+      </div>
+ 
+  </tab>
+</tabset>
