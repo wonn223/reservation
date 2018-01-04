@@ -96,7 +96,7 @@
     <div class="col-md-2"></div>    
   </div>
 
-  <tabset>
+  <tabset class="content">
     <tab heading='예약확인'>
       <table class="table" >
           <tr>
@@ -108,8 +108,7 @@
             <td class="info">주소</td>
             <td class="info">링크</td>
             <td class="info">상태</td>
-            <td class="info">취소요청</td>
-            <td class="info-hidden"></td>
+            <td class="info">취소하기</td>
           </tr>
           <tr *ngFor="let item of resList; let i =index">
             <td class="active">{{ i+1 }}</td>
@@ -118,7 +117,6 @@
             <td>{{ item.resDate }}</td>
             <td>{{ item.resTime }}</td>
             <td>{{ item.shopAddress }}</td>
-
             <td><a href="/shop/{{item.shopPk}}">바로가기</a></td>
             <td> {{ item.status }}</td>
             <td>
@@ -165,10 +163,4 @@
       </div>
     </tab>
   </tabset>
-
-
-  
-
-
-
 </div>

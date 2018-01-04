@@ -95,18 +95,20 @@ export class MypageComponent implements OnInit {
     const payload = {
       profile_image: files[0]
     }
+
+    console.log('payload',payload)
   
 
     this.loading = true;
   
     // // 폼데이터를 서버로 전송한다.
     this.http.patch(`${this.appUrl}/accounts/${this.mypk}/profile/`, payload, options)
-      .subscribe(res => console.log(res))
-    //   .subscribe(res => {
-    //     this.result = res;
-    //     this.loading = false;
-    //     this.avatar.setValue(null);
-    //   });
+      .subscribe(res => {
+        console.log('res', res)
+        this.result = res;
+        this.loading = false;
+        this.avatar.setValue(null);
+      });
   }
 
   get avatar() {
@@ -161,7 +163,6 @@ export class MypageComponent implements OnInit {
           console.log(this.resList);
       });
   }
-
   // 즐겨찾기 리스트 가져오기
   setFavorite() {
     const headers = {
@@ -174,19 +175,9 @@ export class MypageComponent implements OnInit {
     this.http.get(`${this.appUrl}/reservations/favorite-toggle/`, options)
       .subscribe((favorite) => {
         this.favoriteList = favorite[0].favorites;
-        // favoritelist에 index가 잡혀있음
-        // console.log(favorite.favorites)
-        // this.favoriteList = favorite.map((list: any) => Object.assign({},
-        //   {
-        //     // shopPk: favorite.favorites.pk
-        //     // shopName: string
-        //     // shopImage: string
-
-        //   }))
-
-        console.log(this.favoriteList);
       });
   }
+
   removeFavorite(itemPk) {
     console.log(itemPk);
     const payload = { };
