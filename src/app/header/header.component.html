@@ -1,39 +1,39 @@
 <div class="row header">
-    <div class="col-xs-4 col-md-4">
-        <nav class="memnubar-container">
-            <button type="button" class="menubar-toggle" id="nav-toggle"></button>
-            <label for="menubar-toggle" class="menubar-icon" [class.is-active]="isActivated" id="menubar" (click)="addClass()">
+  <div class="col-xs-4 col-md-4">
+    <nav class="memnubar-container">
+      <button type="button" class="menubar-toggle" id="nav-toggle"></button>
+      <label for="menubar-toggle" class="menubar-icon" [class.is-active]="isActivated" id="menubar" (click)="addClass()">
                 <span class="menubar"></span>
                 <span class="menubar"></span>
                 <span class="menubar"></span>
             </label>
-            <ul #nav class="toggle-menu" [class.is-active]="isActivated" (click)="removeClass(nav)">
-                <li routerLink="/mypage">마이 페이지</li>
-                <li>예약내역 확인</li>
-                <li>즐겨찾기</li>
-                <li [style.display]="isLoggined === true ? 'block' : 'none'" (click)="signout()">로그아웃</li>
-                <li [style.display]="isLoggined === false? 'block' : 'none'" (click)="openModal(loginComp)">로그인</li>
-            </ul> 
-        </nav>
-    </div>
-    <div class="col-xs-4 col-md-4">
-        <fieldset class="main-search">
-            <input type="text" id="mainsearch" placeholder="지역, 가게명 검색">
-            <input type="button" class="button-search" value="검색">
-        </fieldset>
-    </div>
-    <div class="col-xs-4 col-md-4 navs">
-        <nav class="nav-menus">
-            <a>
-                <button type="button" class="logout-button" *ngIf="this.isLoggined" (click)="signout()">로그아웃</button>
-            </a>
-            <a [style.width]="isLoggined === true ? '0' : 'auto'">
-                <button type="button" class="login-button" *ngIf="this.isLoggined===false"(click)="openModal(loginComp)">로그인</button>
-            </a>
-            <a>
-                <button type="button" class="login-button" (click)="openModal(signformComp)">회원가입</button>
-            </a>
-            <button class="login-icon" *ngIf="isLoggined">
+      <ul #nav class="toggle-menu" [class.is-active]="isActivated" (click)="removeClass(nav)">
+        <li routerLink="/mypage" (open)="onOpen($event)">마이 페이지</li>
+        <li>예약내역 확인</li>
+        <li>즐겨찾기</li>
+        <li [style.display]="isLoggined === true ? 'block' : 'none'" (click)="signout()">로그아웃</li>
+        <li [style.display]="isLoggined === false? 'block' : 'none'" (click)="openModal(loginComp)">로그인</li>
+      </ul>
+    </nav>
+  </div>
+  <div class="col-xs-4 col-md-4">
+    <fieldset class="main-search">
+      <input type="text" id="mainsearch" placeholder="지역, 가게명 검색">
+      <input type="button" class="button-search" value="검색">
+    </fieldset>
+  </div>
+  <div class="col-xs-4 col-md-4 navs">
+    <nav class="nav-menus">
+      <a>
+        <button type="button" class="logout-button" *ngIf="this.isLoggined" (click)="signout()">로그아웃</button>
+      </a>
+      <a [style.width]="isLoggined === true ? '0' : 'auto'">
+        <button type="button" class="login-button" *ngIf="this.isLoggined===false" (click)="openModal(loginComp)">로그인</button>
+      </a>
+      <a>
+        <button type="button" class="login-button" (click)="openModal(signformComp)">회원가입</button>
+      </a>
+      <button class="login-icon" *ngIf="isLoggined">
                 <figure class="user">
                     <span class="badge"></span>
                     <div class="thumb"></div>
@@ -43,18 +43,18 @@
                     <li>예약정보 확인</li>
                 </ul> -->
             </button>
-        </nav>
-    </div>
+    </nav>
+  </div>
 </div>
 
 <ng-template #loginComp>
- <app-login (open)="onOpen($event)"></app-login>
+  <app-login (open)="onOpen($event)"></app-login>
 </ng-template>
 
 <ng-template #signformComp>
- <app-sign-form></app-sign-form>
+  <app-sign-form></app-sign-form>
 </ng-template>
-       
+
 
 <!-- <ng-template #template>
       <div class="sign-form-wrapper">
@@ -111,7 +111,7 @@
       </form>
       <div class="bottom-wrapper">
           <!-- 새로 만들어서 넣기 -->
-        <!-- <a (click)="openModal2()">
+<!-- <a (click)="openModal2()">
           진지한 밥상이 처음이신가요?
           <span class="icon-arrow-right"></span>
         </a>

@@ -62,18 +62,23 @@ export class MypageComponent implements OnInit {
     
   }
   Withdrawal(){
+    
     this.auth.Withdrawal()
       .subscribe(
       () => {
         this.open.emit({ bool: false, token: this.auth.token });
         alert('다시 만날때 까지 맛있는거 많이 드시고 행복하세요');
-        // this.auth.signout();
         this.router.navigate(['main']);
+      },
+      
+      (error) => {
+        console.log(error.message);
       },
       () => {
         
-        console.log('completed');
+        console.log('회원탈퇴: completed');
       });
+    
     this.modalRef.hide()
   }
 

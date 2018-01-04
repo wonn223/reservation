@@ -71,10 +71,11 @@ export class AuthService {
         let headers = new HttpHeaders();
         headers = headers.set('Authorization', `Token ${this.getToken()}`);
         return this.http.delete(`${this.appUrl}/accounts/withdraw/`, { headers })
-            // .do(() => {
-            //     this.signout();
-            // })
-            // .shareReplay();
+            .do(() => {
+                this.removeToken();
+                this.removeUserPk();
+            })
+            .shareReplay();
     }
 
 
