@@ -107,7 +107,7 @@
             <td class="info">예약시간</td>
             <td class="info">주소</td>
             <td class="info">링크</td>
-            <td class="info">취소요청</td>
+            <td class="info">상태</td>
             <td class="info">취소요청</td>
             <td class="info-hidden"></td>
           </tr>
@@ -119,8 +119,8 @@
             <td>{{ item.resTime }}</td>
             <td>{{ item.shopAddress }}</td>
 
-            <td>바로가기</td>
-            <td> <button>취소요청</button></td>
+            <td><a href="/shop/{{item.shopPk}}">바로가기</a></td>
+            <td> {{ item.status }}</td>
             <td>
               <button type="button" class="btn btn-primary" (click)="openModal(template)">취소하기</button>
               <ng-template #template>

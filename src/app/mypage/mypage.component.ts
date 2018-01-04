@@ -17,6 +17,7 @@ interface ReservationLists {
   shopTel: string;
   shopPk: number;
   resPk: number;
+  status: string;
 }
 
 interface FavoriteLists {
@@ -154,7 +155,8 @@ export class MypageComponent implements OnInit {
             resTime: list.information.time,
             shopAddress: list.restaurant.address,
             shopPk: list.restaurant.pk,
-            resPk: list.pk
+            resPk: list.pk,
+            status: list.status
           }));
           console.log(this.resList);
       });

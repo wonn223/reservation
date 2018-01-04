@@ -4,7 +4,9 @@ li{
 div{
   color: black!important;
 }
-
+.container-fluid{
+  height: 100vh;
+}
 /* 프로필 이미지 업로드 미리보기 */
 .avatar {
   width: 30%;
