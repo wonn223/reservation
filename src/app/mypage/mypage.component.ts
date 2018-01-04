@@ -15,6 +15,8 @@ interface ReservationLists {
   resTime: string;
   shopAddress: string;
   shopTel: string;
+  shopPk: number;
+  resPk: number;
 }
 
 interface FavoriteLists {
@@ -46,9 +48,14 @@ export class MypageComponent implements OnInit {
 
   result; // file upload 수행 이후 서버로부터 수신한 데이터
   modalRef: BsModalRef;
-
+  cancelComment = '';
+  
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+
+  onInput(event) {
+    this.cancelComment = event.target.value;
   }
 
   // 발급된 토큰을 생성함
@@ -145,7 +152,9 @@ export class MypageComponent implements OnInit {
             party: list.party,
             resDate: list.information.date,
             resTime: list.information.time,
-            shopAddress: list.restaurant.address
+            shopAddress: list.restaurant.address,
+            shopPk: list.restaurant.pk,
+            resPk: list.pk
           }));
           console.log(this.resList);
       });
@@ -192,30 +201,43 @@ export class MypageComponent implements OnInit {
       .subscribe(() => this.setFavorite());
   }
 
+  //예약취소하기  - shopinfo로 상점의 리스트를 조회하고 그 중 예약정보 pk와 일치하는 예약정보오브젝트의 uid값을 가저온다
+  //그다음은 취소요청사유와 함께 취소정보를 생성한다.
+  //상태를 변경하기 위한 API를 호출한다.
+  paymentCancel(shopPk, resPk) {
+    console.log("shopPk", shopPk)
+    console.log("resPk", resPk)
+    let cancelObject: any
 
-  
+    //상점의 예약리스트 조회하여 취소대상을 필터
+    this.http.get(`${this.appUrl}/reservations/${shopPk}/restaurant/`)
+      .subscribe((resInfo: any) => {
+        cancelObject = resInfo.filter(function(i){
+          return i.reservation.pk == resPk
+        })
+        console.log(cancelObject[0].imp_uid)
+        this.paymentCancle(cancelObject[0].imp_uid)
+      })
+  }
+  paymentCancle(imp_uid) {
+    this.modalRef.hide()
+    const payload = {
+      reason: this.cancelComment
+    }
+    this.http.post(`${this.appUrl}/reservations/${imp_uid}/paymentcancel/`, payload)
+      .subscribe(test => {
+        const payload = {
+          reason: this.cancelComment
+        }
+        this.http.patch(`${this.appUrl}/reservations/${imp_uid}/payment/`, payload)
+          .subscribe(test => console.log("!!!!", test))
+      })
+  }
+
+
   mypageObj: any;
 
 
-  //회원정보 가져오기
-  // setMyInfo(){
-  //   const headers = {
-  //     // 'WWW-Authenticate' : 'Token',
-  //     'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
-  //   }
-  //   const options = {
-  //     headers: new HttpHeaders(headers)
-  //   }
-  //   //6에 로그인한 유저의 pk의값을 할당
-  //   this.http.get(`${this.appUrl}/accounts/6/profile/`, options)
-  //     .subscribe( (value:Profile) => {
-  //       this.userInfo = value.user;
-  //       console.log(this.userInfo);
-  //       this.profile_image = value.profile_image;
-  //       this.nickname = value.nickname;
-  //       console.log(this.profile_image)
-  //       })
-  // }
 
   setMyInfo(){
     // XMLHttpRequest 객체의 생성
