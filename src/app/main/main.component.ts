@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
 })
+
 export class MainComponent implements OnInit {
 
   isHover = false;
@@ -16,11 +18,12 @@ export class MainComponent implements OnInit {
   stepVal = [];
   state = 'inactive';
   pageScr;
+
   // 내장 객체 Window
   public _window: Window;
 
 
-  constructor(public router: Router) {
+  constructor(public router: Router, public auth: AuthService) {
   }
 
   check(fd, event) {
@@ -29,22 +32,8 @@ export class MainComponent implements OnInit {
     fd.checkActivated = !this.checkActivated;
   }
 
-  hover(food, event) {
-    this.eventStorage = event;
-    // 마우스 이벤트 발생 = event.target.id활용
-    // console.log(this.eventStorage);
-    console.log('[hovering]', this.foodCategory[food.id]);
-    // 레퍼런스 변수의 id값
-    if (food.classList[3] === this.foodCategory[food.id]) {
-      food.isHover = true;
-    }
-    console.log(this.isHover);
-
-  }
-
-
   ngOnInit() {
-
+    console.log(this.auth.getToken());
   }
 
 }

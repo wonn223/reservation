@@ -9,6 +9,8 @@ export class SearchedResDetailService {
   resPk: number;
   sub: any;
   oneheaderValue: string;
+  twoheaderValue: string;
+
   constructor(public route: ActivatedRoute) {
 
    }

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 // import { LoginComponent } from './login/login.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+// import { DashboardComponent } from './dashboard/dashboard.component';
 import {
   ShopComponent,
   NotFoundComponent,
@@ -16,6 +16,7 @@ import {
   SteponeComponent
 } from './routing-forRouting';
 import { AuthGuard } from './guards/auth.guard';
+// import { AuthGuard } from './guards/auth.guard';
 // import { ParamsauthGuard} from './guards/paramsauth.guard';
 
 
@@ -27,7 +28,7 @@ const routes: Routes = [
   },
   { path: 'shop/:resPk', component: ShopComponent, data: { pk : ':id'} },
   { path: 'payment', component: PaymentComponent },
-  { path: 'mypage', component: MypageComponent },
+  { path: 'mypage', component: MypageComponent, canActivate: [AuthGuard] },
   { path: 'managepage', component: ManagepageComponent },
   { path: '', redirectTo: 'main', pathMatch: 'full'},
   { path: '**', component: NotFoundComponent },

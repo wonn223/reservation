@@ -259,34 +259,6 @@ body{
   /* z-index: 1; */
 }
 
-.reservation-form {
-  width: 500px;
-}
-
-.reservation-form fieldset {
-  margin: 10px 0;
-}
-
-.reservation-form input {
-  width: 100%;
-}
-
-.reservation-location {
-  padding : 0 5px 0 5px;
-  background-color: white;
-}
-
-.reservation-map {
-  padding : 5px;
-  /* background-image: url(''); */
-  width: 400px;
-  height: 400px;
-}
-
-.map-info {
-  height: 400px;
-}
-
 /* from now on, login css */
 
 @font-face {
@@ -300,9 +272,6 @@ body{
          url(//fonts.gstatic.com/ea/hanna/v3/BM-HANNA.ttf) format('truetype');
   }
   
-
-
-
   .name {
     left : 4%;
     top : -40%; 
@@ -472,11 +441,12 @@ body{
     outline: none;
   }
 
+  .logout-button,
   .login-button {
       background: transparent;
       border : 0;
   }
-
+  
   /* 모달 안에 제목 보더 선으로 구분 */
   .modal-header {
     border: solid 1px #d3d3d3;
@@ -493,13 +463,6 @@ body{
     height: 100%;
     /* background-color: darkolivegreen; */
   }
-  
-.foodCategory {
-  position: relative;
-  float: left;
-  /* width: 150px; */
-  height: 100%;
-}
 
 .category1 {
     /* background: lightskyblue; */
@@ -655,7 +618,12 @@ body{
   .nav-menus {
     float: right;
   }
-  /* > a까지 구체적으로. */
+
+  /* 적용이 안됨. 이유? */
+  .nav-menus > .hide-width {
+    display: none;
+  }
+  
   .nav-menus > a {
     display: block;
     float: left; 
@@ -666,7 +634,6 @@ body{
     /* background-color: gray; */
     text-align: center;
   }
-  
   .login-icon {
     height : 60px;
     width: 60px;
@@ -689,7 +656,14 @@ body{
     border-radius: 50px;
   }
 
+  /* 로그아웃 아이콘 */
+  .login-state {
+    display: block;
+  }
+
 } 
+
+
 
 @media screen and (min-width: 601px) and ( max-width: 719px ) {
   .main-search {

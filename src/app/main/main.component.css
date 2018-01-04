@@ -1,5 +1,5 @@
+/* 메인 검색 페이지 공통 사용 */
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
-
 
 .container-fluid {
 	background: black;
@@ -28,6 +28,7 @@
 	text-align: center; 
 	margin-top: -1.1rem;
 	margin-bottom: 2rem;
+	height: 35px;
 }
     
 
@@ -294,40 +295,6 @@
 	-webkit-transition: all 1s;
 }
 
- /* .card.col-md-2:hover {
-	background: black;
-	opacity: 0.3;
-}  */
-
-/* 여기까지 */
-
-/* 배경? */
-/* .card.col-md-2.han { 
-	position: relative;
-	left : 0px;
-	top : 0px;
-	background:black;
-	z-index: 200;
-	animation-fill-mode: forwards;
-	-webkit-animation-fill-mode: forwards
-}  */
-
-/* .card.col-md-2.han > img {
-	background: black;
-	opacity: 0.5;
-} */
-
-/* 일식 사진 조정 */
-/* .card-img-top.ilsik {
-	background-position-x: 10px;
-} */
-
-
-/* 화면 중앙 텍스트  */
-/* .center-title {
-	1vh = 뷰포트 전체 높이(여기선 1000px이상)의 1%
-} */
-
 .banner h1 {
     font-size:100px;
 	color:white;
@@ -345,15 +312,15 @@
 .subtitle {
 	position: relative;
 	top: -80px;
+	color: white;
+	background:transparent;
+	display:inline-block;
+	margin-left:40%;
+    padding:0px 15px;
 }
 
 .subtitle h4 {
-	display:inline-block;
-	margin-left:40%;
-    background:transparent;
-    /* color:#ed0121; */
-    font-size:38px;
-    padding:0px 15px;
+	font-size:38px;
 }
 
 .title-text {
@@ -418,13 +385,13 @@
 	width: 200px;
   }
 
-
 .price-font {
     position: absolute;
     /* vertical-align: middle; */
     text-align: center;
     top: 75%;
-    right: 0;
+	right: 0;
+	color: white;
 	font-size: 6rem;
 	z-index: 2;
 }

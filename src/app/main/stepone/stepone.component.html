@@ -13,10 +13,9 @@
   <div class="row nav-header">
     <div class="col-md-2"></div>
     <div class="col-md-8 user-choice">
-      <h4 class="col-md-3 step active">{{ headerValue }}</h4>
-      <h4 class="col-md-3 step">{{ interpolation }}</h4>
-      <h4 class="col-md-3 step">{{ interpolation }}</h4>
-      <h4 class="col-md-3 step">{{ interpolation }}</h4>
+      <h4 class="col-md-3 step"></h4>
+      <h4 class="col-md-3 step"></h4>
+      <h4 class="col-md-3 step"></h4>
     </div>
     <div class="col-md-2"></div>
   </div>
@@ -25,14 +24,14 @@
     <div class="col-md-10 stepone-menu">
       <div class="col-md-6">
         <div [routerLink]="['/step', this.price[0]]"
-        #hansik class="card col-md-6 hansik" 
-        value="cheap" id="0" (click)="check(hansik)">
+        #cheap class="card col-md-6 hansik" 
+        value="cheap" id="0" (click)="check(cheap)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>Cheap</h4>
         </div>
         <div [routerLink]="['/step', this.price[1]]" 
-        #jungsik class="card col-md-6 jungsik" 
-        id="1" (click)="check(jungsik.id)">
+        #normal class="card col-md-6 jungsik" 
+        id="1" (click)="check(normal)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>Normal</h4>
         </div>
@@ -46,14 +45,14 @@
     <div class="col-md-10 second-menu">
       <div class="col-md-6">
         <div [routerLink]="['/step', this.price[2]]"
-        #ilsik class="card col-md-6 ilsik" 
-        id="2" (click)="check(hansik, $event)">
+        #expensive class="card col-md-6 ilsik" 
+        id="2" (click)="check(expensive)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4 class="textAlign">Expensive</h4>
         </div>
         <div [routerLink]="['/step', this.price[3]]" 
-        #yangsik class="card col-md-6 yangsik" 
-        id="3" (click)="check(jungsik, $event)">
+        #vexpensive class="card col-md-6 yangsik" 
+        id="3" (click)="check(vexpensive)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4 class="textAlign2">Very Expensive</h4>
         </div>

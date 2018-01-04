@@ -38,29 +38,25 @@ export class MypageComponent implements OnInit {
   tokenInfo: string;
   mypk: string;
   myNickname = '';
-  resultNickname: string
-
-  modalRef: BsModalRef;
- 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
-  }
-
-  //발급된 토큰을 생성함
-  makeTokenInfo(){
-    this.tokenInfo = this.auth.getToken();
-    this.mypk = this.auth.getUserPk();
-    console.log(this.mypk)
-  }
-  
+  resultNickname: string;
   // 이미지처리
   form: FormGroup;
   loading = false;
   imageSrc = '../../assets/man.png';
 
   result; // file upload 수행 이후 서버로부터 수신한 데이터
+  modalRef: BsModalRef;
 
- 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  // 발급된 토큰을 생성함
+  makeTokenInfo(){
+    this.tokenInfo = this.auth.getToken();
+    this.mypk = this.auth.getUserPk();
+    console.log(this.mypk)
+  }
 
   onFileChange(files: FileList) {
     if (files && files.length > 0) {

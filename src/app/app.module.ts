@@ -15,6 +15,7 @@ import { environment } from '../environments/environment';
 import { ShopListService } from './services/shop-service.service';
 import { FilterPipe, PricePipe  } from './filter.pipe' ;
 
+import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 
@@ -30,8 +31,10 @@ import { ReplyComponent } from './reply/reply.component';
 import { MainComponent } from './main/main.component';
 
 
+
 import { ManagepageComponent } from './managepage/managepage.component';
 import { LoginComponent } from './login/login.component';
+import { SignFormContainerComponent } from './signForm/sign-form-container.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 
@@ -41,6 +44,7 @@ import { LoginComponent } from './login/login.component';
     ContainerComponent,
     HeaderComponent,
     LoginComponent,
+    SignFormContainerComponent,
     // DashboardComponent,
     ShopComponent,
     ReplyComponent,
@@ -71,7 +75,7 @@ import { LoginComponent } from './login/login.component';
     appRouting,
   ],
   providers: [ ShopListService, BsDatepickerConfig, AuthService,
-    UserService ],
+    UserService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

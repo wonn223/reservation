@@ -45,7 +45,7 @@
       </div>
       <div class="comment-block">
         <form #com="ngForm">
-          <textarea ngModel #txt="ngModel" name="comment" id="comment" rows="4" minlength="1" maxlength="110" placeholder="Add a comment.." (click)="dd(txt, com)" (keyup.enter)="postComments(txt, txt.value, rate)" required></textarea>
+          <textarea #txt [(ngModel)]="txtvalue" value="txtvalue" name="comment" rows="4" minlength="1" maxlength="110" placeholder="Add a comment.." (keyup.enter)="postComments(txt, txt.value, rate, $event)" required></textarea>
           <!-- <p *ngIf="txt.invalid && txt.touched" placeholder="내용을 입력해주세요"></p> -->
           <button type="button" class="btn btn-primary comment-btn">
           POST
@@ -93,11 +93,10 @@
                 </label>
             </div>
              <div class="icon-wrapper">
-              <i class="glyphicon glyphicon-edit" [class.editMode]="isActivated" (click)="changeAct(remove)"></i>
+              <i class="glyphicon glyphicon-edit" [class.editMode]="isActivated" (click)="changeAct(td.author, $event)"></i>
               <i class="glyphicon glyphicon-ok" [class.editMode]="isActivated" (click)="patchComm(td.pk, patchInput)"></i>
-              <i class="glyphicon glyphicon-remove" [class.editMode]="isActivated" (click)="changeAct(remove)"></i>
+              <i class="glyphicon glyphicon-remove" [class.editMode]="isActivated" (click)="removeEditMode()"></i>
               <i #remove class="glyphicon glyphicon-remove-sign" [class.editMode]="isActivated"  (click)="removeComm(td.pk)"></i>
-              
              </div>
            </div>
         </section>
@@ -105,7 +104,7 @@
     </ul>
   </section>
   <div class="col-xs-12 col-12" style="text-align: center;">
-    <pagination #page (click)="checkPage(page)" [boundaryLinks]="true" [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [(ngModel)]="currentPage" class="pagination-sm"  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+    <pagination #page (click)="getCommentsPerPage(page)" [boundaryLinks]="true" [itemsPerPage]="itemsPerPage" [totalItems]="totalItems" [(ngModel)]="currentPage" class="pagination-sm"  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
   </div>
   <!-- <pre>{{ this.patchedRate.controls[1] | json}}</pre> -->
 </div>

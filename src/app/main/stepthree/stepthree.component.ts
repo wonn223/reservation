@@ -1,6 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { SearchedResDetailService } from '../../services/searched-res-detail.service';
+import { BsModalService } from 'ngx-bootstrap/modal/bs-modal.service';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -8,30 +11,38 @@ import { SearchedResDetailService } from '../../services/searched-res-detail.ser
   templateUrl: './stepthree.component.html',
   styleUrls: ['./stepthree.component.css']
 })
-export class StepthreeComponent implements OnInit, OnDestroy  {
+export class StepthreeComponent implements OnInit, OnChanges, OnDestroy  {
 
   type: string;
   private sub: any;
 
   isHover = false;
   checkActivated = false;
-  location = ['kangbuk', 'kangnam', 'kangseo', 'kangdong'];
+  location = ['강북구', '강남구', '강서구', '강동구'];
   foodCategory = ['hansik', 'jungsik', 'ilsik', 'yangsik', 'byeolsik'];
-  headerValue = '';
+  headerValue: string;
+  headerTwoValue: string;
   eventStorage = [];
-  stepVal = [];
+  stepVal: string;
   state = 'inactive';
   pageScr;
 
 
-  constructor(public route: ActivatedRoute, public searchedRes: SearchedResDetailService) {
+  constructor(public route: ActivatedRoute,
+              public auth: AuthService,
+              public searchedRes: SearchedResDetailService,
+              public router: Router
+            ) {
     this.headerValue = this.searchedRes.oneheaderValue;
+    this.headerTwoValue = this.searchedRes.twoheaderValue;
+    console.log(this.searchedRes.oneheaderValue);
   }
 
-  check(fd, event) {
-    // 이전에 다른 곳에서 체크 표시가 있을 경우
-    console.log(event);
-    fd.checkActivated = !this.checkActivated;
+  check(evt, comp) {
+    this.stepVal = evt.target.textContent.trim();
+    console.log('stepval', this.stepVal);
+    // 로딩 modal
+    this.auth.openModal(comp);
   }
 
   hover(food, event) {
@@ -51,6 +62,10 @@ export class StepthreeComponent implements OnInit, OnDestroy  {
     this.sub = this.route.params.subscribe ( params => {
       this.type = params['type'];
     });
+  }
+
+  ngOnChanges() {
+    console.log('뷰 변화');
   }
 
   ngOnDestroy() {

@@ -109,10 +109,11 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.shopName = shopInfo.name;
         this.shopDescription = shopInfo.description;
         this.shopAddress = shopInfo.address;
-        this.latitude = parseInt(shopInfo.geolocation.split(',')[0]);
-        this.longitude = parseInt(shopInfo.geolocation.split(',')[1]);
+        this.latitude = parseFloat(shopInfo.geolocation.split(',')[0]);
+        this.longitude = parseFloat(shopInfo.geolocation.split(',')[1]);
         this.shopTel = shopInfo.contact_number;
         this.operationTime = shopInfo.business_hours;
+        console.log(this.latitude)
         this.mapLink = `http://maps.google.com/maps?f=d&daddr=${this.latitude},${this.longitude}&sspn=0.2,0.1&nav=1`;
         this.averagePrice = shopInfo.average_price;
         this.maxParty = shopInfo.maximum_party;

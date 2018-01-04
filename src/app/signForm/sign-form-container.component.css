@@ -1,16 +1,22 @@
-.sign-form-wrapper,
+.button-wrapper,
 .notice-wrapper,
 .welcome-wrapper,
 .success-wrapper,
 .choice-favorite-wrapper,
 .login-porfile-set {
   margin: 0 auto;
-  width: 450px;
+  width: 80%;
   height: 450px;
   /* background: rgb(209, 195, 195); */
   padding-top: 25px;
   /* background: transparent; */
   /* border: 2px solid rgb(197, 197, 194); */
+}
+
+/* 회원가입 입력창 */
+.sign-form-wrapper {
+  width: 100%;
+  height: 300px;
 }
 
 .sign-header {
@@ -22,6 +28,10 @@
   font-weight: 200;
   margin: 0 auto;
   width: 400px;
+}
+
+.form-group.input-group {
+  width: 80%;  
 }
 
 .btn {
@@ -37,13 +47,15 @@
 .btn-join {
   position: relative;
   top: 20px;
-  margin-bottom: 10px;
+  display: inline-block;
+  width: 8rem;
 }
 
 .btn-facebook {
   position: relative;
   top: 20px;
-  margin-top: 10px;
+  display: inline-block;
+  width: auto;
 }
 
 .alert {
