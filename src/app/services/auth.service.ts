@@ -16,21 +16,28 @@ import { Token } from '../models/token';
 import { shareReplay } from 'rxjs/operator/shareReplay';
 import { TypeCheck } from '../models/typecheck';
 import { error } from 'util';
+import { BsModalService } from 'ngx-bootstrap/modal/bs-modal.service';
 
 
 @Injectable()
 export class AuthService {
     templateRef: TemplateRef<any>;
     headerModalRef: BsModalRef;
+    modalRef: BsModalRef;
     appUrl = environment.apiUrl;
     TOKEN_NAME = 'drf token';
+    FB_TOKEN_NAME = '';
+    fbPk: string;
+    fbId: string;
     token: string = this.getToken();
     myPk: string = this.getUserPk();
-    isLoggined = false;
+    isLoged = false;
     starAverage: number;
     credit: User;
 
-    constructor(private http: HttpClient, private ngzone: NgZone ) {
+    constructor(private http: HttpClient, private ngzone: NgZone,
+                private modal: BsModalService
+    ) {
         console.log('[appUrl] ', this.appUrl);
     }
 
@@ -59,6 +66,17 @@ export class AuthService {
             })
             .shareReplay();
     }
+// 회원탈퇴
+    Withdrawal(){
+        let headers = new HttpHeaders();
+        headers = headers.set('Authorization', `Token ${this.getToken()}`);
+        return this.http.delete(`${this.appUrl}/accounts/withdraw/`, { headers })
+            // .do(() => {
+            //     this.signout();
+            // })
+            // .shareReplay();
+    }
+
 
     Check() {
         // 리턴 키워드가 있어야 데코레이터 함수의 매개변수로 리턴값이 들어가기 때문.
@@ -101,12 +119,16 @@ export class AuthService {
     setToken(token: string): void {
         localStorage.setItem(this.TOKEN_NAME, token);
         console.log(this.TOKEN_NAME, token);
+        localStorage.setItem
     }
 
     removeToken(): void {
         localStorage.removeItem(this.TOKEN_NAME);
     }
 
+    openModal(modalcomp: TemplateRef<any>) {
+        this.modalRef = this.modal.show(modalcomp);
+    }
     /*
       token 유효 기간 체크
       The JwtHelper class has several useful methods that can be utilized in your components:

@@ -44,7 +44,6 @@ import { LoginComponent } from './login/login.component';
     ContainerComponent,
     HeaderComponent,
     LoginComponent,
-    SignFormContainerComponent,
     // DashboardComponent,
     ShopComponent,
     ReplyComponent,

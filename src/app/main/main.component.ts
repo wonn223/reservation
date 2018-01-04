@@ -32,20 +32,6 @@ export class MainComponent implements OnInit {
     fd.checkActivated = !this.checkActivated;
   }
 
-  hover(food, event) {
-    this.eventStorage = event;
-    // 마우스 이벤트 발생 = event.target.id활용
-    // console.log(this.eventStorage);
-    console.log('[hovering]', this.foodCategory[food.id]);
-    // 레퍼런스 변수의 id값
-    if (food.classList[3] === this.foodCategory[food.id]) {
-      food.isHover = true;
-    }
-    console.log(this.isHover);
-
-  }
-
-
   ngOnInit() {
     console.log(this.auth.getToken());
   }

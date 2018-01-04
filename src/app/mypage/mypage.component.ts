@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { HttpHandler } from '@angular/common/http/src/backend';
@@ -7,6 +7,10 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { Source } from '../models/eventEmitter';
+import { Router } from '@angular/router';
+
+
 
 interface ReservationLists {
   shopName: string;
@@ -47,8 +51,30 @@ export class MypageComponent implements OnInit {
   result; // file upload 수행 이후 서버로부터 수신한 데이터
   modalRef: BsModalRef;
 
+  @Output() open: EventEmitter<Source> = new EventEmitter();
+
+
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+  WithdrawalModal(templateWithdrawal: TemplateRef<any>){
+    this.modalRef = this.modalService.show(templateWithdrawal);
+    
+  }
+  Withdrawal(){
+    this.auth.Withdrawal()
+      .subscribe(
+      () => {
+        this.open.emit({ bool: false, token: this.auth.token });
+        alert('다시 만날때 까지 맛있는거 많이 드시고 행복하세요');
+        // this.auth.signout();
+        this.router.navigate(['main']);
+      },
+      () => {
+        
+        console.log('completed');
+      });
+    this.modalRef.hide()
   }
 
   // 발급된 토큰을 생성함
@@ -232,7 +258,7 @@ export class MypageComponent implements OnInit {
   }
 
 
-  constructor(public http: HttpClient, public auth: AuthService, private fb: FormBuilder, private modalService: BsModalService) {
+  constructor(private router: Router, public http: HttpClient, public auth: AuthService, private fb: FormBuilder, private modalService: BsModalService) {
     this.form = this.fb.group({
       avatar: ['', Validators.required]
     }); 

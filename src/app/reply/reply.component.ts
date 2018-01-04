@@ -45,7 +45,7 @@ export class ReplyComponent implements OnInit {
    authorPk: number;
 
   constructor(public http: HttpClient, public fb: FormBuilder, private auth: AuthService) {
-    this.getcomments();
+    this.getAllcomments();
     this.token = this.auth.getToken();
   }
 
@@ -53,20 +53,17 @@ export class ReplyComponent implements OnInit {
     console.log(com);
   }
 
-  getcomments() {
+  getAllcomments() {
     this.http.get(this.getUrl)
     .subscribe( ( comm: Reply )  =>  {
       this.comment = comm.results;
-      // this.authorPk = this.comment.map((item: Result) => item.author[0]);
-      // console.log('[authorPk]', this.authorPk);
-      // this.sliceTotalComments();
       this.countAll(comm);
       this.countRating();
       console.log(this.comment);
     });
   }
 
-  checkPage(pg: any) {
+  getCommentsPerPage(pg: any) {
     console.log(pg);
     console.log('[page number]', pg.page);
     this.http.get(`${this.getUrl}?page=${pg.page}`)
@@ -81,6 +78,8 @@ export class ReplyComponent implements OnInit {
     this.count2 = this.comment.filter(comm => comm.star_rate > 2 && comm.star_rate <= 3).length;
     this.count3 = this.comment.filter(comm => comm.star_rate > 3 && comm.star_rate <= 4).length;
     this.count4 = this.comment.filter(comm => comm.star_rate > 4 && comm.star_rate <= 5).length;
+    this.auth.starAverage = (this.count1 + this.count2 + this.count3 + this.count4)/4;
+    // console.log('star', this.auth.starAverage);
   }
 
   countAll(com: Reply) {
@@ -125,7 +124,7 @@ export class ReplyComponent implements OnInit {
       this.http.post(this.getUrl, payload, options)
       .subscribe ( (res: any) => {
         this.txtvalue = '';
-        this.getcomments();
+        this.getAllcomments();
         console.log('profile', this.profile);
         console.log('post 체크', res);
       }) : console.log('error. sth wrong');
@@ -148,24 +147,13 @@ export class ReplyComponent implements OnInit {
       };
       console.log(options);
 
-
-    // const headers = {
-    //   // 'WWW-Authenticate': 'Token',
-    //   'Authorization': 'Token bfec561d6317ab26bb0cb6ddb1fa662871be4f6b'
-    // };
-    // const options = {
-    //   headers : new HttpHeaders(headers)
-    // };
-    // console.log('header확인', options);
-
     this.http.delete(`${this.removeUrl}/${td}/`, options)
     .subscribe((res) => {
       console.dir(res);
-      this.getcomments();
+      this.getAllcomments();
       console.log('deleted!');
     });
   }
-  // restaurant 프로퍼티 pk값 저장
 
   // 클래스 바인딩 실행 함수
   changeAct(td:Author, event) {
@@ -206,7 +194,7 @@ export class ReplyComponent implements OnInit {
     this.http.patch(`${this.patchUrl}/${pk}/`, payload, options)
     .subscribe(( res ) => {
       console.log('patch result', res);
-      this.getcomments();
+      this.getAllcomments();
     });
   }
 

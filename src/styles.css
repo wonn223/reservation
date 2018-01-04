@@ -15,6 +15,7 @@
   margin: 0 auto;
 }
 
-body {
-  /* background: #F7F7F7; */
+/* ul태그 안 li 커서 변경 */
+ul > li {
+  cursor: pointer;
 }
