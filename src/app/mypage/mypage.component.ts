@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { HttpHandler } from '@angular/common/http/src/backend';
@@ -7,6 +7,10 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { Source } from '../models/eventEmitter';
+import { Router } from '@angular/router';
+
+
 
 interface ReservationLists {
   shopName: string;
@@ -15,6 +19,9 @@ interface ReservationLists {
   resTime: string;
   shopAddress: string;
   shopTel: string;
+  shopPk: number;
+  resPk: number;
+  status: string;
 }
 
 interface FavoriteLists {
@@ -44,11 +51,45 @@ export class MypageComponent implements OnInit {
   loading = false;
   imageSrc = '../../assets/man.png';
 
-  result; // file upload 수행 이후 서버로부터 수신한 데이터
+  // file upload 수행 이후 서버로부터 수신한 데이터
+  result; 
   modalRef: BsModalRef;
 
+  @Output() open: EventEmitter<Source> = new EventEmitter();
+
+  cancelComment = '';
+  
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+  
+  withdrawalModal(templateWithdrawal: TemplateRef<any>){
+    this.modalRef = this.modalService.show(templateWithdrawal);
+    
+  }
+  
+  withdrawal(){
+    this.auth.withdrawal()
+      .subscribe(
+      () => {
+        this.open.emit({ bool: false, token: this.auth.token });
+        alert('다시 만날때 까지 맛있는거 많이 드시고 행복하세요');
+        this.router.navigate(['main']);
+      },
+      
+      (error) => {
+        console.log(error.message);
+      },
+      () => {
+        
+        console.log('회원탈퇴: completed');
+      });
+    
+    this.modalRef.hide()
+  }
+
+  onInput(event) {
+    this.cancelComment = event.target.value;
   }
 
   // 발급된 토큰을 생성함
@@ -87,30 +128,32 @@ export class MypageComponent implements OnInit {
     const payload = {
       profile_image: files[0]
     }
+
+    console.log('payload',payload)
   
 
     this.loading = true;
   
-    // // 폼데이터를 서버로 전송한다.
+    // 폼데이터를 서버로 전송한다.
     this.http.patch(`${this.appUrl}/accounts/${this.mypk}/profile/`, payload, options)
-      .subscribe(res => console.log(res))
-    //   .subscribe(res => {
-    //     this.result = res;
-    //     this.loading = false;
-    //     this.avatar.setValue(null);
-    //   });
+      .subscribe(res => {
+        console.log('res', res)
+        this.result = res;
+        this.loading = false;
+        this.avatar.setValue(null);
+      });
   }
 
   get avatar() {
     return this.form.get('avatar');
   }
 
-  // 닉네임변경
+  // 닉네임 변경
   changeNickname(name){
     const headers = {
-      // 'WWW-Authenticate' : 'Token',
       'Authorization': `Token ${this.tokenInfo}`
     };
+    console.log(headers)
     const options = {
       headers: new HttpHeaders(headers)
     };
@@ -144,12 +187,14 @@ export class MypageComponent implements OnInit {
             party: list.party,
             resDate: list.information.date,
             resTime: list.information.time,
-            shopAddress: list.restaurant.address
+            shopAddress: list.restaurant.address,
+            shopPk: list.restaurant.pk,
+            resPk: list.pk,
+            status: list.status
           }));
           console.log(this.resList);
       });
   }
-
   // 즐겨찾기 리스트 가져오기
   setFavorite() {
     const headers = {
@@ -162,19 +207,9 @@ export class MypageComponent implements OnInit {
     this.http.get(`${this.appUrl}/reservations/favorite-toggle/`, options)
       .subscribe((favorite) => {
         this.favoriteList = favorite[0].favorites;
-        // favoritelist에 index가 잡혀있음
-        // console.log(favorite.favorites)
-        // this.favoriteList = favorite.map((list: any) => Object.assign({},
-        //   {
-        //     // shopPk: favorite.favorites.pk
-        //     // shopName: string
-        //     // shopImage: string
-
-        //   }))
-
-        console.log(this.favoriteList);
       });
   }
+
   removeFavorite(itemPk) {
     console.log(itemPk);
     const payload = { };
@@ -191,30 +226,43 @@ export class MypageComponent implements OnInit {
       .subscribe(() => this.setFavorite());
   }
 
+  //예약취소하기  - shopinfo로 상점의 리스트를 조회하고 그 중 예약정보 pk와 일치하는 예약정보오브젝트의 uid값을 가저온다
+  //그다음은 취소요청사유와 함께 취소정보를 생성한다.
+  //상태를 변경하기 위한 API를 호출한다.
+  paymentCancel(shopPk, resPk) {
+    console.log("shopPk", shopPk)
+    console.log("resPk", resPk)
+    let cancelObject: any
 
-  
+    //상점의 예약리스트 조회하여 취소대상을 필터
+    this.http.get(`${this.appUrl}/reservations/${shopPk}/restaurant/`)
+      .subscribe((resInfo: any) => {
+        cancelObject = resInfo.filter(function(i){
+          return i.reservation.pk == resPk
+        })
+        console.log(cancelObject[0].imp_uid)
+        this.paymentCancle(cancelObject[0].imp_uid)
+      })
+  }
+  paymentCancle(imp_uid) {
+    this.modalRef.hide()
+    const payload = {
+      reason: this.cancelComment
+    }
+    this.http.post(`${this.appUrl}/reservations/${imp_uid}/paymentcancel/`, payload)
+      .subscribe(test => {
+        const payload = {
+          reason: this.cancelComment
+        }
+        this.http.patch(`${this.appUrl}/reservations/${imp_uid}/payment/`, payload)
+          .subscribe(test => console.log("!!!!", test))
+      })
+  }
+
+
   mypageObj: any;
 
 
-  //회원정보 가져오기
-  // setMyInfo(){
-  //   const headers = {
-  //     // 'WWW-Authenticate' : 'Token',
-  //     'Authorization': 'Token be0c1c5b0929bb2937e9976e73524ab45d51609d'
-  //   }
-  //   const options = {
-  //     headers: new HttpHeaders(headers)
-  //   }
-  //   //6에 로그인한 유저의 pk의값을 할당
-  //   this.http.get(`${this.appUrl}/accounts/6/profile/`, options)
-  //     .subscribe( (value:Profile) => {
-  //       this.userInfo = value.user;
-  //       console.log(this.userInfo);
-  //       this.profile_image = value.profile_image;
-  //       this.nickname = value.nickname;
-  //       console.log(this.profile_image)
-  //       })
-  // }
 
   setMyInfo(){
     // XMLHttpRequest 객체의 생성
@@ -232,7 +280,7 @@ export class MypageComponent implements OnInit {
   }
 
 
-  constructor(public http: HttpClient, public auth: AuthService, private fb: FormBuilder, private modalService: BsModalService) {
+  constructor(private router: Router, public http: HttpClient, public auth: AuthService, private fb: FormBuilder, private modalService: BsModalService) {
     this.form = this.fb.group({
       avatar: ['', Validators.required]
     }); 

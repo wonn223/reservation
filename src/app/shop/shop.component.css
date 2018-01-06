@@ -1,4 +1,9 @@
 
+body{
+  margin: 0;
+  padding: 0;
+}
+
 em{
   text-align: center;
   color: red;
@@ -23,6 +28,8 @@ em{
 
 .container-fluid {
   color: black;
+  margin: 0;
+  padding: 0;
 }
 
 .title{

@@ -29,12 +29,12 @@ import { PaymentComponent } from './payment/payment.component';
 import { MypageComponent } from './mypage/mypage.component';
 import { ReplyComponent } from './reply/reply.component';
 import { MainComponent } from './main/main.component';
+import { SignFormContainerComponent } from './signForm/sign-form-container.component';
 
 
 
 import { ManagepageComponent } from './managepage/managepage.component';
 import { LoginComponent } from './login/login.component';
-import { SignFormContainerComponent } from './signForm/sign-form-container.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 
@@ -44,7 +44,6 @@ import { SignFormContainerComponent } from './signForm/sign-form-container.compo
     ContainerComponent,
     HeaderComponent,
     LoginComponent,
-    SignFormContainerComponent,
     // DashboardComponent,
     ShopComponent,
     ReplyComponent,
@@ -56,8 +55,7 @@ import { SignFormContainerComponent } from './signForm/sign-form-container.compo
     FooterComponent,
     // SteponeComponent
     MainComponent,
-    ManagepageComponent,
-    SignFormContainerComponent
+    ManagepageComponent
   ],
   imports: [
     BrowserModule, FormsModule, ButtonsModule.forRoot(),
