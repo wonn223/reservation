@@ -177,11 +177,16 @@ body{
   display: block;
   float: left; 
   margin: 10px 0;
-  width: 150px;
+  width: 130px;
   line-height: 60px; 
   color : white;
   /* background-color: gray; */
   text-align: center;
+}
+
+.nav-menus > a > span {
+  width: 4vw;
+  height: 2vh;
 }
 
 .login-icon {

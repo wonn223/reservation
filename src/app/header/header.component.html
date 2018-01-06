@@ -8,6 +8,7 @@
                 <span class="menubar"></span>
             </label>
       <ul #nav class="toggle-menu" [class.is-active]="isActivated" (click)="removeClass(nav)">
+        <li routerLink="/main">홈으로</li>
         <li routerLink="/mypage" (open)="onOpen($event)">마이 페이지</li>
         <li>예약내역 확인</li>
         <li>즐겨찾기</li>
@@ -23,16 +24,19 @@
     </fieldset>
       <ul class="row search-result" *ngIf="searchResult">
         <div class="col-md-12" *ngFor="let v of searchResult">
-            <li class="col-md-1"></li>
+            <li class="col-md-1"></li>}}
             <li class="col-md-5">{{v.name}}</li>
             <li class="col-md-1"></li>
             <li class="col-md-2">{{v.restaurant_type}}</li>
             <li class="col-md-2">{{v.star_rate}}</li>
-            <li class="col-md-1"></li>
+            <li class="col-md-1">{{v.pk}}</li>
         </div>
       </ul>
   </div>
-  <div class="col-xs-4 col-md-4 navs">
+  <div class="col-xs-1 col-md-1 navs">
+      <span class="glyphicon glyphicon-home" routerLink="/main"></span>
+  </div>
+  <div class="col-xs-3 col-md-3 navs">
     <nav class="nav-menus">
       <a>
         <button type="button" class="logout-button" *ngIf="this.isLoggined" (click)="signout()">로그아웃</button>
