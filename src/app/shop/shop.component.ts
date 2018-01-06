@@ -109,10 +109,11 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.shopName = shopInfo.name;
         this.shopDescription = shopInfo.description;
         this.shopAddress = shopInfo.address;
-        this.latitude = parseInt(shopInfo.geolocation.split(',')[0]);
-        this.longitude = parseInt(shopInfo.geolocation.split(',')[1]);
+        this.latitude = parseFloat(shopInfo.geolocation.split(',')[0]);
+        this.longitude = parseFloat(shopInfo.geolocation.split(',')[1]);
         this.shopTel = shopInfo.contact_number;
         this.operationTime = shopInfo.business_hours;
+        console.log(this.latitude)
         this.mapLink = `http://maps.google.com/maps?f=d&daddr=${this.latitude},${this.longitude}&sspn=0.2,0.1&nav=1`;
         this.averagePrice = shopInfo.average_price;
         this.maxParty = shopInfo.maximum_party;
@@ -181,7 +182,14 @@ export class ShopComponent implements OnInit, OnDestroy {
       date: this.bsValue.getDate()
     };
 
-    this.http.get<TimeList[]>(`http://api.booki.kr/restaurants/${this.resPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${selectedOption.month}-${selectedOption.date}`)
+    let paramMonth: string = selectedOption.month.toString()
+    let paramDate: string = selectedOption.date.toString()
+
+    if(paramMonth.length === 1) { paramMonth = '0' + selectedOption.month }
+    if(paramDate.length === 1) { paramDate = '0' + selectedOption.date }
+    console.log(paramMonth, paramDate)
+
+    this.http.get<TimeList[]>(`http://api.booki.kr/restaurants/${this.resPk}/check_opened_time/?party=${selectedOption.party}&amp;date=${selectedOption.year}-${paramMonth}-${paramDate}`)
       .subscribe(getTime => {
         this.times = getTime.map(list => Object.assign({}, {time: list.time, timePk: list.pk}));
         console.log(this.times);

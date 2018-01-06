@@ -127,6 +127,6 @@ export class PaymentComponent implements OnInit {
       this.http.post(`${this.appUrl}/reservations/${this.reservationPk}/payment/`, payload)
         .subscribe(res => console.log("success"))
 
-      setTimeout("location.href='http://localhost:4200/'",2000)
+      setTimeout("location.href='/'",2000)
     }
 }
