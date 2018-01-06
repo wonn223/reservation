@@ -65,7 +65,7 @@ export class MypageComponent implements OnInit {
   
   withdrawal(){
     
-    this.auth.Withdrawal()
+    this.auth.withdrawal()
       .subscribe(
       () => {
         this.open.emit({ bool: false, token: this.auth.token });
