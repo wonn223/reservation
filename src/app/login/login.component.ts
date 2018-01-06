@@ -70,7 +70,7 @@ ErrCode:number;
         this.router.navigate(['step']);
       },
       (err: HttpErrorResponse) => {
-        if (err.status == 401) {
+        if (err.status === 401) {
           this.isError = true;
           this.ErrCode = err.status;
           // 클라이언트 또는 네트워크 에러
