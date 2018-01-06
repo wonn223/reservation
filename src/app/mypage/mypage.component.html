@@ -10,20 +10,20 @@
       <!-- <img src="{{mypageObj.profile_image}}" alt="..." class="img-circle"> -->
       <div class="container">
         <div class="row">
-            <form [formGroup]="form" (ngSubmit)="onSubmit(fileInput.files)">
-              <div class="form-group">
-                <img *ngIf="imageSrc" [src]="imageSrc" class="avatar">
-                <div class="btns clearfix">
-                  <label class="btn btn-file btn-cancel pull-left">Pick an image
+          <form [formGroup]="form" (ngSubmit)="onSubmit(fileInput.files)">
+            <div class="form-group">
+              <img *ngIf="imageSrc" [src]="imageSrc" class="avatar">
+              <div class="btns clearfix">
+                <label class="btn btn-file btn-cancel pull-left">Pick an image
                     <input type="file" accept="image/*" (change)="onFileChange(fileInput.files)" #fileInput>
                   </label>
-                  <button type="submit" class="btn btn-save pull-right" [disabled]="form.invalid || loading">
+                <button type="submit" class="btn btn-save pull-right" [disabled]="form.invalid || loading">
                     Save
                     <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i>
                   </button>
-                </div>
               </div>
-            </form>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -34,51 +34,50 @@
             아이디(이메일)
           </td>
           <td>
-             {{mypageObj.user.email }}
+            {{mypageObj.user.email }}
           </td>
           <td class="btnTable"></td>
         </tr>
         <tr>
           <td class="table-nav">
-             이름
+            이름
           </td>
           <td>
-             {{mypageObj.user.name }}
+            {{mypageObj.user.name }}
           </td>
           <td class="btnTable"></td>
         </tr>
-          <tr>
-            <td class="table-nav">
-              닉네임
-            </td>
-            <td>
-              {{ mypageObj.nickname }}
-            </td>
-            <td class="btnTable">
-              <button class="btn btn-primary btn-sm" (click)="openModal(template)">변경하기</button>
-              <ng-template #template>
-                <div class="modal-header">
-                  <h4 class="modal-title pull-left">닉네임 변경</h4>
-                  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <tr>
+          <td class="table-nav">
+            닉네임
+          </td>
+          <td>
+            {{ mypageObj.nickname }}
+          </td>
+          <td class="btnTable">
+            <button class="btn btn-primary btn-sm" (click)="openModal(template)">변경하기</button>
+            <ng-template #template>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left">닉네임 변경</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                </div>
-                <div class="modal-body">
-                  <form class="form-inline">
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon">닉네임</div>
-                        <input type="text" class="form-control" id="exampleInputAmount" 
-                        placeholder="닉네임을 입력해주세요" #nickname>
-                      </div>
+              </div>
+              <div class="modal-body">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-addon">닉네임</div>
+                      <input type="text" class="form-control" id="exampleInputAmount" placeholder="닉네임을 입력해주세요" #nickname>
                     </div>
-                    <button type="submit" class="btn btn-primary" (click)="changeNickname(nickname.value)">변경하기</button>
-                  </form>
-                </div>
-              </ng-template>
-            
-            </td>
-          </tr>
+                  </div>
+                  <button type="submit" class="btn btn-primary" (click)="changeNickname(nickname.value)">변경하기</button>
+                </form>
+              </div>
+            </ng-template>
+
+          </td>
+        </tr>
         <tr>
           <td class="table-nav">
             선호도
@@ -88,12 +87,30 @@
           </td>
           <td class="btnTable">
             <button class="btn btn-primary btn-sm">수정하기</button>
-          <button class="btn btn-primary btn-sm">회원탈퇴</button>
-        </td>
+            <button class="btn btn-primary btn-sm" (click)="withdrawalModal(templateWithdrawal)">회원탈퇴</button>
+            <ng-template #templateWithdrawal>
+              <div class="notice-wrapper ">
+                <form>
+                  <div class="text-center ">
+                    <p class="email-img ">
+                      <img src="../../assets/email.png " width="150 " class="email-icon ">
+                    </p>
+                    <h2>{{mypageObj.user.name }}고객님 탈퇴각?</h2>
+                    <br>
+                    <h4>저희의 서비스가 만족스럽지 못하셨는지요?</h4>
+                    <h4>아쉬운 작별을 원하신다면 아래의 회원 탈퇴 버튼을 클릭해주세요</h4>
+                    <h4>회원 탈퇴시 기존의 정보는 모두 삭제 됨을 알려드립니다</h4>
+                    <br>
+                    <button type="submit " class="btn btn-primary " (click)="withdrawal()">회원 탈퇴</button>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
+          </td>
         </tr>
       </table>
     </div>
-    <div class="col-md-2"></div>    
+    <div class="col-md-2"></div>
   </div>
 
   <tabset class="content">
@@ -148,18 +165,14 @@
               <h3> {{ item.name }} </h3>
               <p>...</p>
               <p>
-                <a  routerLink="/shop/{{item.pk}}" class="btn btn-default" role="button">바로가기</a>
+                <a routerLink="/shop/{{item.pk}}" class="btn btn-default" role="button">바로가기</a>
                 <a (click)="removeFavorite(item.pk)" class="btn btn-default" role="button">좋아요취소</a>
               </p>
             </div>
           </div>
         </div>
-        </div>
-      <div
-        class="fb-like"
-        data-share="true"
-        data-width="450"
-        data-show-faces="true">
+      </div>
+      <div class="fb-like" data-share="true" data-width="450" data-show-faces="true">
       </div>
     </tab>
   </tabset>

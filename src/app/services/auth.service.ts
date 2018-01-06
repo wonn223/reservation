@@ -66,8 +66,20 @@ export class AuthService {
             })
             .shareReplay();
     }
+// 회원탈퇴
+    withdrawal(){
+        let headers = new HttpHeaders();
+        headers = headers.set('Authorization', `Token ${this.getToken()}`);
+        return this.http.delete(`${this.appUrl}/accounts/withdraw/`, { headers })
+            .do(() => {
+                this.removeToken();
+                this.removeUserPk();
+            })
+            .shareReplay();
+    }
 
-    Check() {
+
+    check() {
         // 리턴 키워드가 있어야 데코레이터 함수의 매개변수로 리턴값이 들어가기 때문.
         return function (target: any, propName: string, description: PropertyDescriptor) {
             console.log('[check func]', description);

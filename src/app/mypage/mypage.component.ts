@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { HttpHandler } from '@angular/common/http/src/backend';
@@ -7,6 +7,10 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { Source } from '../models/eventEmitter';
+import { Router } from '@angular/router';
+
+
 
 interface ReservationLists {
   shopName: string;
@@ -47,12 +51,41 @@ export class MypageComponent implements OnInit {
   loading = false;
   imageSrc = '../../assets/man.png';
 
-  result; // file upload 수행 이후 서버로부터 수신한 데이터
+  // file upload 수행 이후 서버로부터 수신한 데이터
+  result; 
   modalRef: BsModalRef;
+
+  @Output() open: EventEmitter<Source> = new EventEmitter();
+
   cancelComment = '';
   
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+  
+  withdrawalModal(templateWithdrawal: TemplateRef<any>){
+    this.modalRef = this.modalService.show(templateWithdrawal);
+    
+  }
+  
+  withdrawal(){
+    this.auth.withdrawal()
+      .subscribe(
+      () => {
+        this.open.emit({ bool: false, token: this.auth.token });
+        alert('다시 만날때 까지 맛있는거 많이 드시고 행복하세요');
+        this.router.navigate(['main']);
+      },
+      
+      (error) => {
+        console.log(error.message);
+      },
+      () => {
+        
+        console.log('회원탈퇴: completed');
+      });
+    
+    this.modalRef.hide()
   }
 
   onInput(event) {
@@ -101,7 +134,7 @@ export class MypageComponent implements OnInit {
 
     this.loading = true;
   
-    // // 폼데이터를 서버로 전송한다.
+    // 폼데이터를 서버로 전송한다.
     this.http.patch(`${this.appUrl}/accounts/${this.mypk}/profile/`, payload, options)
       .subscribe(res => {
         console.log('res', res)
@@ -115,10 +148,9 @@ export class MypageComponent implements OnInit {
     return this.form.get('avatar');
   }
 
-  // 닉네임변경
+  // 닉네임 변경
   changeNickname(name){
     const headers = {
-      // 'WWW-Authenticate' : 'Token',
       'Authorization': `Token ${this.tokenInfo}`
     };
     console.log(headers)
@@ -248,7 +280,7 @@ export class MypageComponent implements OnInit {
   }
 
 
-  constructor(public http: HttpClient, public auth: AuthService, private fb: FormBuilder, private modalService: BsModalService) {
+  constructor(private router: Router, public http: HttpClient, public auth: AuthService, private fb: FormBuilder, private modalService: BsModalService) {
     this.form = this.fb.group({
       avatar: ['', Validators.required]
     }); 
