@@ -57,11 +57,13 @@ export class MypageComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
-  WithdrawalModal(templateWithdrawal: TemplateRef<any>){
+  
+  withdrawalModal(templateWithdrawal: TemplateRef<any>){
     this.modalRef = this.modalService.show(templateWithdrawal);
     
   }
-  Withdrawal(){
+  
+  withdrawal(){
     
     this.auth.Withdrawal()
       .subscribe(
