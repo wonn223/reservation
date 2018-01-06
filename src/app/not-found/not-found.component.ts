@@ -9,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 
   <p>Sorry, I couldn't find the page you were looking for.</p>
 
+  <button routerLink='/step' style="width: auto; margin: 10px auto;">검색화면으로 돌아가기</button>
+
   <p>Try going <a href="#">back to where you came from</a>, <a href="../">up a directory</a>, or to the <a href="/">home page</a>.</p>
 </div>`,
   styles: [`
