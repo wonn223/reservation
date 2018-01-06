@@ -58,17 +58,12 @@ export class MainResultComponent implements OnInit, OnDestroy  {
   getRes() {
     this.http.get<SearchedVal>(`${this.appUrl}/?price=${this.price}&type=${this.type}&district=${this.location}`)
      .subscribe( (res: SearchedVal ) => {
-      if ( res.results.length === 0) {
-
-        this.searchingArchive.location = this.location;
-        this.searchingArchive.price = this.price;
-        this.searchingArchive.type = this.type;
-
-        this.auth.authArchive = this.searchingArchive;
+      if ( res.results.length === 0) 
 
         this.router.navigate(['notfound']);
         return console.log('검색결과가 없습니다');
       }
+      
       this.searchedval = res;
       this.restaurantList = res.results;
       this.thumbnail = this.restaurantList[0].thumbnail;
@@ -84,6 +79,8 @@ export class MainResultComponent implements OnInit, OnDestroy  {
   ngOnInit() {
     this.sub = this.route.params.subscribe ( params => {
       console.log(params);
+      this.auth.authArichive = params;
+      
       this.location = params['location'];
       this.price = params ['priceParams'];
       this.type = params ['type'];
