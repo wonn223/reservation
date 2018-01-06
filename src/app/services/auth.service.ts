@@ -17,6 +17,7 @@ import { shareReplay } from 'rxjs/operator/shareReplay';
 import { TypeCheck } from '../models/typecheck';
 import { error } from 'util';
 import { BsModalService } from 'ngx-bootstrap/modal/bs-modal.service';
+import { SearchingArchive } from '../models/searchedRes';
 
 
 @Injectable()
@@ -37,9 +38,7 @@ export class AuthService {
     starAverage: number;
     credit: User;
 
-    location: string;
-    price: string;
-    type: string;
+    authArchive: SearchingArchive;
 
     constructor(private http: HttpClient, private ngzone: NgZone,
                 private modal: BsModalService
