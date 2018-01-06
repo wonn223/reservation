@@ -184,9 +184,15 @@ body{
   text-align: center;
 }
 
-.nav-menus > a > span {
-  width: 4vw;
-  height: 2vh;
+.col-md-1.navs {
+  height: 100%;
+  text-align: right;
+}
+
+.col-md-1.navs > span {
+  width: 30%;
+  line-height: 80px;
+  cursor: pointer;
 }
 
 .login-icon {
