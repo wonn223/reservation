@@ -55,7 +55,8 @@ import { LoginComponent } from './login/login.component';
     FooterComponent,
     // SteponeComponent
     MainComponent,
-    ManagepageComponent
+    ManagepageComponent,
+    SignFormContainerComponent
   ],
   imports: [
     BrowserModule, FormsModule, ButtonsModule.forRoot(),
