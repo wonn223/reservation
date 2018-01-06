@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { Response } from '@angular/http';
+import { Router } from '@angular/router';
 // import { FormsModule } from '@angular/forms';
 import { SearchedVal, Restaurant } from '../../models/searchedRes';
 import { SearchedResDetailService } from '../../services/searched-res-detail.service';
@@ -10,6 +11,7 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Result, Reply } from '../../models/reply';
+import { error } from 'util';
 
 @Component({
   selector: 'app-main-result',
@@ -34,7 +36,8 @@ export class MainResultComponent implements OnInit, OnDestroy  {
   percentage = 0;
 
   constructor(public http: HttpClient, public resDetail: SearchedResDetailService,
-              public shop: ShopListService, public route: ActivatedRoute, public auth: AuthService ) {
+              public shop: ShopListService, public route: ActivatedRoute,
+              public auth: AuthService, public router: Router) {
                 this.getStarRating();
   }
 
@@ -52,15 +55,21 @@ export class MainResultComponent implements OnInit, OnDestroy  {
 
 
   getRes() {
-    console.log(this.price);
     this.http.get<SearchedVal>(`${this.appUrl}/?price=${this.price}&type=${this.type}&district=${this.location}`)
      .subscribe( (res: SearchedVal ) => {
-      //  res.json()이 에러나는 이유? 타입에러
-       this.searchedval = res;
-       this.restaurantList = res.results;
-       this.thumbnail = this.restaurantList[0].thumbnail;
+      if ( res.results.length === 0) {
+        this.router.navigate(['notfound']);
+        return console.log('검색결과가 없습니다');
+      }
+      this.searchedval = res;
+      this.restaurantList = res.results;
+      this.thumbnail = this.restaurantList[0].thumbnail;
       console.log('[result]', this.restaurantList);
-     });
+     },
+    (err: Response) => {
+      console.log(err.status);
+      err.statusText = 'error 메시지';
+    });
   }
 
   ngOnInit() {
