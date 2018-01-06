@@ -3,7 +3,7 @@ import { HttpClient} from '@angular/common/http';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 // import { FormsModule } from '@angular/forms';
-import { SearchedVal, Restaurant } from '../../models/searchedRes';
+import { SearchedVal, Restaurant, SearchingArchive } from '../../models/searchedRes';
 import { SearchedResDetailService } from '../../services/searched-res-detail.service';
 import { ShopListService } from '../../services/shop-service.service';
 import { AuthService } from '../../services/auth.service';
@@ -23,6 +23,7 @@ export class MainResultComponent implements OnInit, OnDestroy  {
   location: string;
   type: string;
   price: string;
+  searchingArchive: SearchingArchive;
   private sub: any;
 
   searchedval: SearchedVal;
@@ -58,12 +59,20 @@ export class MainResultComponent implements OnInit, OnDestroy  {
     this.http.get<SearchedVal>(`${this.appUrl}/?price=${this.price}&type=${this.type}&district=${this.location}`)
      .subscribe( (res: SearchedVal ) => {
       if ( res.results.length === 0) {
+
+        this.searchingArchive.location = this.location;
+        this.searchingArchive.price = this.price;
+        this.searchingArchive.type = this.type;
+
+        this.auth.authArchive = this.searchingArchive;
+
         this.router.navigate(['notfound']);
         return console.log('검색결과가 없습니다');
       }
       this.searchedval = res;
       this.restaurantList = res.results;
       this.thumbnail = this.restaurantList[0].thumbnail;
+
       console.log('[result]', this.restaurantList);
      },
     (err: Response) => {
@@ -79,7 +88,10 @@ export class MainResultComponent implements OnInit, OnDestroy  {
       this.price = params ['priceParams'];
       this.type = params ['type'];
     });
+
+
     this.getRes();
+
     setTimeout( () => {
       this.auth.modalRef.hide();
       console.log('닫음');

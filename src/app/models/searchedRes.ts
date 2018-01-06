@@ -19,3 +19,9 @@ export interface SearchResult {
     name: string;
     district: string;
 }
+
+export interface SearchingArchive {
+    location: string;
+    price: string;
+    type: string;
+}

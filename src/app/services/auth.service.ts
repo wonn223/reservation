@@ -24,6 +24,7 @@ export class AuthService {
     templateRef: TemplateRef<any>;
     headerModalRef: BsModalRef;
     modalRef: BsModalRef;
+
     appUrl = environment.apiUrl;
     TOKEN_NAME = 'drf token';
     FB_TOKEN_NAME = '';
@@ -31,14 +32,31 @@ export class AuthService {
     fbId: string;
     token: string = this.getToken();
     myPk: string = this.getUserPk();
+
     isLoged = false;
     starAverage: number;
     credit: User;
+
+    location: string;
+    price: string;
+    type: string;
 
     constructor(private http: HttpClient, private ngzone: NgZone,
                 private modal: BsModalService
     ) {
         console.log('[appUrl] ', this.appUrl);
+    }
+
+    signup(credential: User): Observable<User> {
+        this.credit = credential;
+        return this.http.post<User>(`${this.appUrl}/accounts/signin/`, credential)
+        .do( res => {
+            console.log('새 회원입니다');
+        },
+            err => {
+                return (err.status === 400) ? alert('가입한 회원입니다') : '';
+        })
+        .shareReplay();
     }
 
     signin(credential: User): Observable<Token> {
@@ -66,8 +84,8 @@ export class AuthService {
             })
             .shareReplay();
     }
-// 회원탈퇴
-    withdrawal(){
+    // 회원탈퇴
+    withdrawal() {
         let headers = new HttpHeaders();
         headers = headers.set('Authorization', `Token ${this.getToken()}`);
         return this.http.delete(`${this.appUrl}/accounts/withdraw/`, { headers })
@@ -120,7 +138,6 @@ export class AuthService {
     setToken(token: string): void {
         localStorage.setItem(this.TOKEN_NAME, token);
         console.log(this.TOKEN_NAME, token);
-        localStorage.setItem
     }
 
     removeToken(): void {
