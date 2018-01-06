@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
   user: User;
   map: Restaurant[];
 
-  search: Restaurant;
+  searchResult: Restaurant;
 
   modalRef: BsModalRef;
   modalRef2: BsModalRef;
@@ -56,17 +56,17 @@ export class HeaderComponent implements OnInit {
   message: string;
 
   headerSearchInput: FormControl = new FormControl('');
-  searchInputResult: Subscription;
+  InputSubscription: Subscription;
   getUrl = 'http://api.booki.kr/restaurants/';
 
   getUserSearchInput() {
-    this.searchInputResult = this.headerSearchInput.valueChanges
+    this.InputSubscription = this.headerSearchInput.valueChanges
     .do(console.log)
     .debounceTime(2000)
     .switchMap( (searchResult: string) => this.getRestaurantData(searchResult))
     .subscribe( (result) => {
-      this.search = result;
-      console.log(this.search);
+      this.searchResult = result;
+      console.log(this.searchResult);
     });
   }
 

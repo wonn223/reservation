@@ -18,9 +18,19 @@
   </div>
   <div class="col-xs-4 col-md-4">
     <fieldset class="main-search">
-      <input type="text" id="mainsearch" placeholder="지역, 가게명 검색">
+      <input type="text" id="mainsearch" [formControl]="headerSearchInput" placeholder="지역, 가게명 검색">
       <input type="button" class="button-search" value="검색">
     </fieldset>
+      <ul class="row search-result" *ngIf="searchResult">
+        <div class="col-md-12" *ngFor="let v of searchResult">
+            <li class="col-md-1"></li>
+            <li class="col-md-5">{{v.name}}</li>
+            <li class="col-md-1"></li>
+            <li class="col-md-2">{{v.restaurant_type}}</li>
+            <li class="col-md-2">{{v.star_rate}}</li>
+            <li class="col-md-1"></li>
+        </div>
+      </ul>
   </div>
   <div class="col-xs-4 col-md-4 navs">
     <nav class="nav-menus">
