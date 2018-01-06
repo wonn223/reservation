@@ -48,24 +48,17 @@ export class SignFormContainerComponent implements OnInit {
 // 모달 메소드
   constructor(private modalService: BsModalService, public http: HttpClient) { }
 
-  openModal(template: TemplateRef<any>) {
-    // console.log(this.modalRef);
-    // console.log(this.modalService);
-    // console.log(this.template);
-    // console.log(BsModalRef);
-
-    this.modalRef = this.modalService.show(template);
-  }
   openModal2(template: TemplateRef<any>) {
+    console.log('modalRef in openmoda2', this.modalRef);
     this.modalRef2 = this.modalService.show(template, { class: 'second' });
-    this.modalRef.hide();
-    this.modalRef = null;
   }
+
   openModal3(template: TemplateRef<any>) {
     this.modalRef3 = this.modalService.show(template, { class: 'third' });
     this.modalRef2.hide();
     this.modalRef2 = null;
   }
+  
   openModal4(template: TemplateRef<any>) {
     this.modalRef4 = this.modalService.show(template, { class: 'fourth' });
     this.modalRef3.hide();
