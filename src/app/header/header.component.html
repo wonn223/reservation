@@ -18,9 +18,19 @@
     </div>
     <div class="col-xs-4 col-md-4">
         <fieldset class="main-search">
-            <input type="text" id="mainsearch" placeholder="지역, 가게명 검색">
+            <input type="text" id="mainsearch" placeholder="지역, 가게명 검색" [formControl]="headerSearchInput">
             <input type="button" class="button-search" value="검색">
         </fieldset>
+        <ul class="row search-result" *ngIf="search">
+            <div *ngFor="let result of search">
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+                    <li>{{result.name}}</li>
+                </div>
+                <div class="col-md-3">{{result.restaurant_type}}</div>
+                <div class="col-md-3">{{result.star_rate}}</div>
+            </div>
+        </ul>
     </div>
     <div class="col-xs-4 col-md-4 navs">
         <nav class="nav-menus">
@@ -46,6 +56,7 @@
         </nav>
     </div>
 </div>
+
 
 <ng-template #loginComp>
  <app-login (open)="onOpen($event)"></app-login>

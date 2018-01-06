@@ -1,14 +1,24 @@
 import { Component, OnInit, TemplateRef, ChangeDetectorRef } from '@angular/core';
+
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { AuthService } from '../services/auth.service';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { Validators } from '@angular/forms';
+
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core/src/zone/ng_zone';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
 import { Token } from '../models/token';
+import { Restaurant, SearchedVal } from '../models/searchedRes';
 import { Source } from '../models/eventEmitter';
 import { error } from 'util';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/debounceTime';
 
 
 class User {
@@ -31,14 +41,51 @@ interface Login {
 })
 export class HeaderComponent implements OnInit {
   user: User;
+  map: Restaurant[];
+
+  search: Restaurant;
+
   modalRef: BsModalRef;
   modalRef2: BsModalRef;
   modalRef3: BsModalRef;
   loginComp: TemplateRef<any>;
-  isActivated = false;
   template: TemplateRef<any>;
+
+  isActivated = false;
   isLoggined = false;
   message: string;
+
+  headerSearchInput: FormControl = new FormControl('');
+  searchInputResult: Subscription;
+  getUrl = 'http://api.booki.kr/restaurants/';
+
+  getUserSearchInput() {
+    this.searchInputResult = this.headerSearchInput.valueChanges
+    .do(console.log)
+    .debounceTime(2000)
+    .switchMap( (searchResult: string) => this.getRestaurantData(searchResult))
+    .subscribe( (result) => {
+      this.search = result;
+      console.log(this.search);
+    });
+  }
+
+  getRestaurantData(searchResult): Observable<Restaurant> {
+    // ?q=dummy
+    console.log(searchResult);
+    return this.http.get(this.getUrl + '?q=' + searchResult)
+    // ()를 안 감싸면 객체 프로퍼티가 레이블로 인식된다.
+    .map( (result: SearchedVal) => ( this.map = result.results))
+    .do(console.log)
+    .catch( (err) => {
+      if (err === 404) {
+        console.log('자료가 없어욘');
+        return Observable.of<Object>(err);
+      } else {
+        throw err;
+      }
+    });
+  }
 
   onblur() {
     console.log('mouseout');
@@ -58,6 +105,7 @@ export class HeaderComponent implements OnInit {
     console.log('test', !this.isActivated);
     return this.isActivated = !this.isActivated;
   }
+
 
   openModal(loginComp: TemplateRef<any>) {
     this.auth.templateRef = loginComp;
@@ -95,10 +143,12 @@ export class HeaderComponent implements OnInit {
       });
   }
 
-  constructor(private modalService: BsModalService, public router: Router,
-              public auth: AuthService,
-              public cd: ChangeDetectorRef ) {
-    setTimeout(( ) => {
+  constructor(private modalService: BsModalService, private router: Router,
+              private auth: AuthService,
+              private cd: ChangeDetectorRef,
+              private http: HttpClient) {
+
+      setTimeout(( ) => {
       console.log('[컨스트럭터 isLoggined]', this.isLoggined === true);
       this.cd.detectChanges();
     }, 5000);
@@ -108,9 +158,13 @@ export class HeaderComponent implements OnInit {
     console.log('oninit');
     const that = this;
     this.initUser();
-    return (this.auth.token && this.auth.myPk) ? (function() {
-      console.log('새로고침 후 로그인 상태 체크');
-      that.isLoggined = true; })() : '';
+    (this.auth.token && this.auth.myPk) ? (function() {
+      console.log('새로고침 후 로그인 상태 풀리는지 체크');
+      that.isLoggined = true; })() : console.log('');
+
+    this.getUserSearchInput();
+
+    console.log('oninit terminated');
   }
 
   initUser() {

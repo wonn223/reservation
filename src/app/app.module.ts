@@ -8,8 +8,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination/';
 
 import { AgmCoreModule } from '@agm/core';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-
-
+ 
 import { appRouting } from './app-routing-module';
 import { environment } from '../environments/environment';
 import { ShopListService } from './services/shop-service.service';
@@ -18,6 +17,7 @@ import { FilterPipe, PricePipe  } from './filter.pipe' ;
 import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
+import { FacebookModule } from 'ngx-facebook';
 
 import { AppComponent } from './app.component';
 import { ContainerComponent } from './container.component';
@@ -73,6 +73,7 @@ import { SignFormContainerComponent } from './signForm/sign-form-container.compo
     BsDropdownModule.forRoot(),
     HttpClientModule,
     ReactiveFormsModule,
+    FacebookModule.forRoot(),
     appRouting,
   ],
   providers: [ ShopListService, BsDatepickerConfig, AuthService,

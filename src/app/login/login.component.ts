@@ -1,16 +1,19 @@
 import { Component, OnInit, TemplateRef, Output, NgZone, EventEmitter  } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
 import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+
 import { Source } from '../models/eventEmitter';
 import { User, AuthResponse, FbUser } from '../models/user';
+
+import { FacebookService } from 'ngx-facebook';
 import { AuthService } from '../services/auth.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Observable } from 'rxjs/Observable';
 import { Window } from 'selenium-webdriver';
-import { WindowRef } from '@agm/core/utils/browser-globals';
+
 
 // declare : 타입스크립트가 아닌 파일의 객체에 any타입 부여
 declare var window: any;
@@ -28,15 +31,16 @@ loginForm: FormGroup;
 message: string;
 modalRef: BsModalRef;
 templateRef: TemplateRef<any>;
-isError:Boolean = false;
-ErrCode:number;
-  
+isError: Boolean = false;
+ErrCode: number;
+
 @Output() open: EventEmitter<Source> = new EventEmitter();
 
   constructor(
     private auth: AuthService,
     private router: Router,
     public modalService: BsModalService,
+    public fbService: FacebookService
     ) {
       (function(d, s, id) {
         let js: HTMLScriptElement;
@@ -64,17 +68,16 @@ ErrCode:number;
     this.auth.signin(this.loginForm.value)
       .subscribe(
       () => {
-
         this.open.emit({bool: true, token: this.auth.token});
         this.modalRef.hide();
         this.router.navigate(['step']);
       },
       (err: HttpErrorResponse) => {
-        if (err.status == 401) {
-          this.isError == true;
-          this.ErrCode == err.status;
+        if (err.status === 401) {
+          // this.isError = true;
+          this.ErrCode = err.status;
           // 클라이언트 또는 네트워크 에러
-          this.message = '가입되지 않은 ID 이거나, 비밀번호를 잘못 입력 하셨습니다.'
+          this.message = '가입되지 않은 ID 이거나, 비밀번호를 잘못 입력 하셨습니다.';
           console.log(`Client-side error: ${this.message}`);
         } else {
           // 백엔드가 실패 상태 코드 응답
@@ -111,33 +114,40 @@ ErrCode:number;
           autoLogAppEvents : true,
           xfbml            : true,
           version          : 'v2.11'
-        }))
-    .then (
-      FB.getLoginStatus((response: AuthResponse) => {
-        // switch (response.status) :{
-        //   case 'connected':
-        //   console.log('dd');
-        //   default;
-        // }
-        console.log(response);
-          if (response.status === 'connected' && this.auth.fbPk === undefined) {
-            console.log('Logged in.');
-            this.open.emit({bool: true});
-            this.auth.fbPk = response.authResponse.accessToken;
-            this.auth.fbId = response.authResponse.userID;
-          } else {
-            if (response.status === 'unknown') {
-              console.log('unknown상태입니다');
-            } else {
-              return '';
-            }
-          }
         })
-    );
+      )
+    .then(this.getFBloginStatus);
+    // .then (
     // 로그 남기는 메소드
     FB.AppEvents.logPageView();
-    // .then();
   }
+
+  getFBloginStatus() {
+    console.log('check');
+    FB.getLoginStatus((response: AuthResponse) => {
+          if (response.status === 'connected') {
+            console.log('connected상태입니다');
+          } else {
+            switch (response.status) {
+              case 'unknown':
+              console.log('로그인이 필요합니다');
+              ( this.auth.fbId !== undefined ) ?
+              this.auth.fbId = response.authResponse.userID : console.log('false');
+              this.auth.fbPk = response.authResponse.accessToken;
+              console.log(this.auth.fbId);
+              console.log(this.auth.fbPk);
+              this.open.emit({bool: true});
+              break;
+              case 'not_authorized':
+              console.log('토큰이 존재합니다'); break;
+              default:
+              console.log('case에 해당하는 사항이 없습니다'); break;
+            }
+          }
+
+      console.log(response);
+  });
+}
 
   keepFbButton() {
     // 페북 버튼 사라짐 방지
@@ -162,6 +172,7 @@ ErrCode:number;
     // 버튼 클릭할 때 상태변화가 일어남
     this.FbInit();
     this.keepFbButton();
+    // this.getFBloginStatus();
   }
 
   get email() {

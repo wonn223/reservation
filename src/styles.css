@@ -1,9 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 @import url(https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.0/dist/bootstrap-float-label.min.css);
 @import "./normalize.css";
 
+
+body{
+  font-family: 'naumgothic'!important;
+}
 /* 모달 창 상위 클래스 너비 선언 */
 .modal.in .modal-dialog {
   width: 400px;

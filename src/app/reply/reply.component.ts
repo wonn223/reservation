@@ -78,7 +78,7 @@ export class ReplyComponent implements OnInit {
     this.count2 = this.comment.filter(comm => comm.star_rate > 2 && comm.star_rate <= 3).length;
     this.count3 = this.comment.filter(comm => comm.star_rate > 3 && comm.star_rate <= 4).length;
     this.count4 = this.comment.filter(comm => comm.star_rate > 4 && comm.star_rate <= 5).length;
-    this.auth.starAverage = (this.count1 + this.count2 + this.count3 + this.count4)/4;
+    this.auth.starAverage = (this.count1 + this.count2 + this.count3 + this.count4) / 4;
     // console.log('star', this.auth.starAverage);
   }
 

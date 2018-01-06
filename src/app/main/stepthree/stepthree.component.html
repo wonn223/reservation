@@ -25,13 +25,13 @@
       <div class="col-md-6">
         <div [routerLink]="[this.location[0]]"
         #hansik class="card col-md-6 hansik" 
-        id="0" (click)="check($event)">
+        id="0" (click)="check($event, loadingcomp)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>강북구</h4>
         </div>
         <div [routerLink]="[this.location[1]]" 
         #jungsik class="card col-md-6 jungsik" 
-        id="1" (click)="check($event)">
+        id="1" (click)="check($event, loadingcomp)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>강남구</h4>
         </div>
@@ -52,7 +52,7 @@
         </div>
         <div [routerLink]="[this.location[3]]" 
         #yangsik class="card col-md-6 yangsik" 
-        id="1" (click)="check($event)">
+        id="1" (click)="check($event, loadingcomp)">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>강동구</h4>
         </div>
