@@ -70,23 +70,21 @@ z-index:0;
 .glyphicon-cutlery {
     font-size: 30px;
 	color: black;
-    top: 40%;
-    left: 43%;
 }
 
 .card > h4 {
 	color: black;
     display: inline-block;
     /* text-align: center; */
-    position: relative;
+    position: absolute;
     top: 52%;
     left: 25%;
 }
 
-.card .textAlign {
-	left: 22%;
-}
-
-.card .textAlign2 {
-	left: 15%;
+.select-item {
+	width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    top: 16vh;
 }

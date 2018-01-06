@@ -26,14 +26,18 @@
         <div [routerLink]="['/step', this.price[0]]"
         #cheap class="card col-md-6 hansik" 
         value="cheap" id="0" (click)="check(cheap)">
+        <div class="select-item">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>Cheap</h4>
+        </div>
         </div>
         <div [routerLink]="['/step', this.price[1]]" 
         #normal class="card col-md-6 jungsik" 
         id="1" (click)="check(normal)">
+        <div class="select-item">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4>Normal</h4>
+        </div>
         </div>
       </div>
       <div class="col-md-6 price-font">Jinji</div>
@@ -47,14 +51,18 @@
         <div [routerLink]="['/step', this.price[2]]"
         #expensive class="card col-md-6 ilsik" 
         id="2" (click)="check(expensive)">
+        <div class="select-item">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4 class="textAlign">Expensive</h4>
+        </div>
         </div>
         <div [routerLink]="['/step', this.price[3]]" 
         #vexpensive class="card col-md-6 yangsik" 
         id="3" (click)="check(vexpensive)">
+        <div class="select-item">
           <i class="glyphicon glyphicon-cutlery"></i>
           <h4 class="textAlign2">Very Expensive</h4>
+        </div>
         </div>
       </div>
       <div class="col-md-6 price-font"></div>
