@@ -23,13 +23,13 @@
       <input type="button" class="button-search" value="검색">
     </fieldset>
       <ul class="row search-result" *ngIf="searchResult">
-        <div class="col-md-12" *ngFor="let v of searchResult">
+        <div class="col-md-12 border-line" *ngIf="searchResult.length === 0" style="text-align:center">낫 파운드입니다 '-'a</div>
+        <div class="col-md-12 border-line" *ngFor="let v of searchResult">
             <li class="col-md-1"></li>}}
-            <li class="col-md-5">{{v.name}}</li>
-            <li class="col-md-1"></li>
+            <li class="col-md-4">{{v.name}}</li>
             <li class="col-md-2">{{v.restaurant_type}}</li>
             <li class="col-md-2">{{v.star_rate}}</li>
-            <li class="col-md-1">{{v.pk}}</li>
+            <li class="col-md-2">{{v.pk}}</li>
         </div>
       </ul>
   </div>
@@ -45,7 +45,7 @@
         <button type="button" class="login-button" *ngIf="this.isLoggined===false" (click)="openModal(loginComp)">로그인</button>
       </a>
       <a>
-        <button type="button" class="login-button" (click)="openModal(signformComp)">회원가입</button>
+        <button type="button" class="login-button" [class.hide-width]="this.isLoggined===true" (click)="openModal(signformComp)">회원가입</button>
       </a>
       <button class="login-icon" *ngIf="isLoggined">
                 <figure class="user">

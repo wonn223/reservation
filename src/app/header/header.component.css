@@ -630,8 +630,8 @@ body{
     float: right;
   }
 
-  /* 적용이 안됨. 이유? */
-  .nav-menus > .hide-width {
+  /* display none이 안 됨 */
+  .login-button .hide-width {
     display: none;
   }
   
@@ -760,10 +760,16 @@ body{
   .search-result {
     position: absolute;
     width: 80%;
-    margin: 0 0 0 1.5vw;
-    background: khaki;
+    margin: 0 0 0 2vw;
+    background: lightgray;
     border-radius: 2%;
     z-index: 9999;
+  }
+  
+  .col-md-12.border-line {
+    border-bottom: 1px solid whitesmoke;
+    height: 30px;
+    line-height: 30px;
   }
 
 @media screen and (min-width: 320px) and ( max-width: 600px ) {

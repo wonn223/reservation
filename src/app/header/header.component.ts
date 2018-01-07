@@ -65,6 +65,7 @@ export class HeaderComponent implements OnInit {
     .debounceTime(2000)
     .switchMap( (searchResult: string) => this.getRestaurantData(searchResult))
     .subscribe( (result) => {
+      this.searchResult = null;
       this.searchResult = result;
       console.log(this.searchResult);
     });

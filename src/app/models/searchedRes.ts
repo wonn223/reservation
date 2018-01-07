@@ -13,6 +13,7 @@ export interface Restaurant {
     average_price: string;
     thumbnail: string;
     star_rate: string;
+    length: number;
 }
 
 export interface SearchResult {
