@@ -23,6 +23,7 @@
       <input type="button" class="button-search" value="검색">
     </fieldset>
       <ul class="row search-result" *ngIf="searchResult">
+      <!-- 강남만 ok -->
         <div class="col-md-12 border-line" *ngIf="searchResult.length === 0" style="text-align:center">낫 파운드입니다 '-'a</div>
         <div class="col-md-12 border-line" *ngFor="let v of searchResult">
             <li class="col-md-1"></li>}}
