@@ -1,17 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, TemplateRef, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { Response } from '@angular/http';
 import { Router } from '@angular/router';
-// import { FormsModule } from '@angular/forms';
 import { SearchedVal, Restaurant, SearchingArchive } from '../../models/searchedRes';
+
 import { SearchedResDetailService } from '../../services/searched-res-detail.service';
 import { ShopListService } from '../../services/shop-service.service';
 import { AuthService } from '../../services/auth.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+
 import { Result, Reply } from '../../models/reply';
 import { error } from 'util';
+
 
 @Component({
   selector: 'app-main-result',
@@ -31,16 +35,18 @@ export class MainResultComponent implements OnInit, OnDestroy  {
   thumbnail: string;
   appUrl = 'http://api.booki.kr/restaurants/';
   getUrl = 'http://api.booki.kr/restaurants/1/comments/';
+
   // getStarRaing에서 덧셈을 위한 0 할당
   star_rate = 0;
   countRateLength = 0;
   percentage = 0;
 
   constructor(public http: HttpClient, public resDetail: SearchedResDetailService,
-              public shop: ShopListService, public route: ActivatedRoute,
-              public auth: AuthService, public router: Router) {
+              public route: ActivatedRoute, public router: Router,
+              public auth: AuthService, public shop: ShopListService,
+              public modal: BsModalService) {
                 this.getStarRating();
-  }
+             }
 
   // star icon width와 평균 별점 연동
   getStarRating() {
@@ -58,17 +64,14 @@ export class MainResultComponent implements OnInit, OnDestroy  {
   getRes() {
     this.http.get<SearchedVal>(`${this.appUrl}/?price=${this.price}&type=${this.type}&district=${this.location}`)
      .subscribe( (res: SearchedVal ) => {
-      if ( res.results.length === 0) {
-
-        this.searchingArchive.location = this.location;
-        this.searchingArchive.price = this.price;
-        this.searchingArchive.type = this.type;
-
-        this.auth.authArchive = this.searchingArchive;
+       console.log(res);
+      if (res.results.length === 0) {
 
         this.router.navigate(['notfound']);
+
         return console.log('검색결과가 없습니다');
       }
+
       this.searchedval = res;
       this.restaurantList = res.results;
       this.thumbnail = this.restaurantList[0].thumbnail;
@@ -82,20 +85,25 @@ export class MainResultComponent implements OnInit, OnDestroy  {
   }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe ( params => {
+    this.sub = this.route.params.subscribe ( (params: SearchingArchive[] ) => {
       console.log(params);
+      this.auth.authArchive = params;
+
+      console.log(this.auth.authArchive);
+
       this.location = params['location'];
       this.price = params ['priceParams'];
       this.type = params ['type'];
-    });
 
+    });
 
     this.getRes();
 
-    setTimeout( () => {
+    setTimeout(() => {
       this.auth.modalRef.hide();
       console.log('닫음');
     } , 3000);
+
   }
 
   ngOnDestroy() {

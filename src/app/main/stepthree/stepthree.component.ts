@@ -2,8 +2,8 @@ import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { SearchedResDetailService } from '../../services/searched-res-detail.service';
-import { BsModalService } from 'ngx-bootstrap/modal/bs-modal.service';
 import { AuthService } from '../../services/auth.service';
+import { TemplateRef } from '@angular/core/src/linker/template_ref';
 
 
 @Component({
@@ -26,6 +26,7 @@ export class StepthreeComponent implements OnInit, OnChanges, OnDestroy  {
   stepVal: string;
   state = 'inactive';
   pageScr;
+  loadingComp: TemplateRef<any>;
 
 
   constructor(public route: ActivatedRoute,
@@ -41,21 +42,7 @@ export class StepthreeComponent implements OnInit, OnChanges, OnDestroy  {
   check(evt, comp) {
     this.stepVal = evt.target.textContent.trim();
     console.log('stepval', this.stepVal);
-    // 로딩 modal
-    this.auth.openModal(comp);
-  }
-
-  hover(food, event) {
-    this.eventStorage = event;
-    // 마우스 이벤트 발생 = event.target.id활용
-    // console.log(this.eventStorage);
-    console.log('[hovering]', this.foodCategory[food.id]);
-    // 레퍼런스 변수의 id값
-    if (food.classList[3] === this.foodCategory[food.id]) {
-      food.isHover = true;
-    }
-    console.log(this.isHover);
-
+    this.loadingComp = comp;
   }
 
   ngOnInit() {
@@ -70,6 +57,7 @@ export class StepthreeComponent implements OnInit, OnChanges, OnDestroy  {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.auth.openModal(this.loadingComp);
   }
 
 }

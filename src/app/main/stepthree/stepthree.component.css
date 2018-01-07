@@ -1,6 +1,5 @@
 @import url('../main.component.css');
 
-
 /* 첫 화면 */
 .main-first-page {
 	background-image:url('https://assets.bonappetit.com/photos/577e931f753d41914efc2360/16:9/w_1440/the-dabney-dc-restaurant-kitchen-ASHLEY%20ZINK%20J36A8258-298.jpg');
@@ -106,3 +105,24 @@ z-index:0;
     left: -3%;
 }
 
+/* 모달 전체 창 */
+.loading-form-wrapper {
+	width: 100%;
+    margin: 0 auto;
+	top: 25vh;
+	text-align: center;
+}
+
+/* 모달 로고 */
+.logo {
+    width: 75px;
+    height: 75px;
+    background: url('../../../assets/waiter.png') no-repeat;
+	background-size: cover;
+	margin: 0 auto;
+    left: 0;
+}
+
+.title-wrapper > h2 {
+	text-align: center;
+}

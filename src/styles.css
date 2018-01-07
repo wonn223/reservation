@@ -16,6 +16,7 @@ body{
 .modal-content {
   width: 100%;
   margin: 0 auto;
+  top: 10vh;
 }
 
 /* ul태그 안 li 커서 변경 */
