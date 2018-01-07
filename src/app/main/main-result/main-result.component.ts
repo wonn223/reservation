@@ -71,7 +71,6 @@ export class MainResultComponent implements OnInit, OnDestroy  {
 
         return console.log('검색결과가 없습니다');
       }
-
       this.searchedval = res;
       this.restaurantList = res.results;
       this.thumbnail = this.restaurantList[0].thumbnail;
@@ -87,10 +86,15 @@ export class MainResultComponent implements OnInit, OnDestroy  {
   ngOnInit() {
     this.sub = this.route.params.subscribe ( (params: SearchingArchive[] ) => {
       console.log(params);
+<<<<<<< HEAD
       this.auth.authArchive = params;
 
       console.log(this.auth.authArchive);
 
+=======
+      this.auth.authArichive = params;
+      
+>>>>>>> e8ac11d1c68c5753d65400e7bf5283c9da49b8d2
       this.location = params['location'];
       this.price = params ['priceParams'];
       this.type = params ['type'];
