@@ -89,7 +89,7 @@
             <button class="btn btn-primary btn-sm">수정하기</button>
             <button class="btn btn-primary btn-sm" (click)="WithdrawalModal(templateWithdrawal)">회원탈퇴</button>
             <ng-template #templateWithdrawal>
-              <div class="notice-wrapper ">
+              <div class="notice-wrapper " (open)="onOpen($event)">
                 <form>
                   <div class="text-center ">
                     <p class="email-img ">

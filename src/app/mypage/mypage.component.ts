@@ -47,13 +47,18 @@ export class MypageComponent implements OnInit {
   form: FormGroup;
   loading = false;
   imageSrc = '../../assets/man.png';
+  isLoggined = false;
+
 
   result; // file upload 수행 이후 서버로부터 수신한 데이터
   modalRef: BsModalRef;
 
   @Output() open: EventEmitter<Source> = new EventEmitter();
 
-
+  onOpen(evt: Source) {
+    console.log('source from eventEmitter', evt);
+    return (evt.bool || evt.token) ? this.isLoggined = evt.bool : '';
+  }
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
