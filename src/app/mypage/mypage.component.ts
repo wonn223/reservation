@@ -59,15 +59,13 @@ export class MypageComponent implements OnInit {
 
   @Output() open: EventEmitter<Source> = new EventEmitter();
 
-<<<<<<< HEAD
   onOpen(evt: Source) {
     console.log('source from eventEmitter', evt);
     return (evt.bool || evt.token) ? this.isLoggined = evt.bool : '';
   }
-=======
+
   cancelComment = '';
   
->>>>>>> 92892f79bff41578253f89ec92b69a8233b53976
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
