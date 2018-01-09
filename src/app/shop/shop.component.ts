@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { HttpHandler } from '@angular/common/http/src/backend';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../services/auth.service'
+import { AuthService } from '../services/auth.service';
 
 // interface ResList {
 //   id: number;
@@ -113,14 +113,14 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.longitude = parseFloat(shopInfo.geolocation.split(',')[1]);
         this.shopTel = shopInfo.contact_number;
         this.operationTime = shopInfo.business_hours;
-        console.log(this.latitude)
+        console.log(this.latitude);
         this.mapLink = `http://maps.google.com/maps?f=d&daddr=${this.latitude},${this.longitude}&sspn=0.2,0.1&nav=1`;
         this.averagePrice = shopInfo.average_price;
         this.maxParty = shopInfo.maximum_party;
         this.starRate = shopInfo.star_rate;
-        this.images = shopInfo.images.map((image:any)=>image.image)
+        this.images = shopInfo.images.map((image: any) => image.image)
         this.menu = shopInfo.menu;
-        console.log("test",shopInfo)
+        // console.log(this.images);
         if(shopInfo.average_price == "c"){this.reservationPrice = 10000} 
         else if(shopInfo.average_price == "n"){this.reservationPrice = 15000}
         else if (shopInfo.average_price == "e"){this.reservationPrice = 20000}
@@ -182,8 +182,8 @@ export class ShopComponent implements OnInit, OnDestroy {
       date: this.bsValue.getDate()
     };
 
-    let paramMonth: string = selectedOption.month.toString()
-    let paramDate: string = selectedOption.date.toString()
+    let paramMonth: string = selectedOption.month.toString();
+    let paramDate: string = selectedOption.date.toString();
 
     if(paramMonth.length === 1) { paramMonth = '0' + selectedOption.month }
     if(paramDate.length === 1) { paramDate = '0' + selectedOption.date }

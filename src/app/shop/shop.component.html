@@ -123,7 +123,11 @@
       </carousel>
     </div>
     <div class="col-md-5">
-      <img class="menu-image" [src]="this.menu">
+      <carousel class="image-carousel">
+        <slide *ngFor="let i of images" class="slide">
+          <img class="menu-image" [src]="i">
+        </slide>
+      </carousel>
     </div>
     <div class="col-md-2"></div>
   </div>
@@ -136,7 +140,6 @@
   </div>
   <div class="row map-container">
     <div class="col-md-5 col-md-offset-2 mapBox">
-      
       <agm-map class="shop-map" [latitude]="this.latitude" [longitude]="this.longitude" [minZoom]="14" [maxZoom]="16">
         <agm-marker [latitude]="this.latitude" [longitude]="this.longitude"></agm-marker>
       </agm-map>
