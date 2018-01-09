@@ -87,7 +87,7 @@
           </td>
           <td class="btnTable">
             <button class="btn btn-primary btn-sm">수정하기</button>
-            <button class="btn btn-primary btn-sm" (click)="WithdrawalModal(templateWithdrawal)">회원탈퇴</button>
+            <button class="btn btn-primary btn-sm" (click)="withdrawalModal(templateWithdrawal)">회원탈퇴</button>
             <ng-template #templateWithdrawal>
               <div class="notice-wrapper " (open)="onOpen($event)">
                 <form>
@@ -101,7 +101,7 @@
                     <h4>아쉬운 작별을 원하신다면 아래의 회원 탈퇴 버튼을 클릭해주세요</h4>
                     <h4>회원 탈퇴시 기존의 정보는 모두 삭제 됨을 알려드립니다</h4>
                     <br>
-                    <button type="submit " class="btn btn-primary " (click)="Withdrawal()">회원 탈퇴</button>
+                    <button type="submit " class="btn btn-primary " (click)="withdrawal()">회원 탈퇴</button>
                   </div>
                 </form>
               </div>
@@ -113,29 +113,46 @@
     <div class="col-md-2"></div>
   </div>
 
-  <tabset>
+  <tabset class="content">
     <tab heading='예약확인'>
-      <table class="table">
-        <tr>
-          <td class="info">No</td>
-          <td class="info">레스토랑 이름</td>
-          <td class="info">예약인원</td>
-          <td class="info">예약일자</td>
-          <td class="info">예약시간</td>
-          <td class="info">주소</td>
-          <td class="info">링크</td>
-          <td class="info">취소요청</td>
-        </tr>
-        <tr *ngFor="let item of resList; let i =index">
-          <td class="active">{{ i+1 }}</td>
-          <td>{{ item.shopName}}</td>
-          <td>{{ item.party }}</td>
-          <td>{{ item.resDate }}</td>
-          <td>{{ item.resTime }}</td>
-          <td>{{ item.shopAddress }}</td>
-          <td>바로가기</td>
-          <td> <button>취소요청</button></td>
-        </tr>
+      <table class="table" >
+          <tr>
+            <td class="info">No</td>
+            <td class="info">레스토랑 이름</td>
+            <td class="info">예약인원</td>
+            <td class="info">예약일자</td>
+            <td class="info">예약시간</td>
+            <td class="info">주소</td>
+            <td class="info">링크</td>
+            <td class="info">상태</td>
+            <td class="info">취소하기</td>
+          </tr>
+          <tr *ngFor="let item of resList; let i =index">
+            <td class="active">{{ i+1 }}</td>
+            <td>{{ item.shopName}}</td>
+            <td>{{ item.party }}</td>
+            <td>{{ item.resDate }}</td>
+            <td>{{ item.resTime }}</td>
+            <td>{{ item.shopAddress }}</td>
+            <td><a href="/shop/{{item.shopPk}}">바로가기</a></td>
+            <td> {{ item.status }}</td>
+            <td>
+              <button type="button" class="btn btn-primary" (click)="openModal(template)">취소하기</button>
+              <ng-template #template>
+                <div class="modal-header">
+                  <h4 class="modal-title pull-left">예약취소하기</h4>
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h3>취소사유를 입력해주세요</h3>
+                  <input type="text" class="form-control" placeholder="Text input" [value]="cancelComment" (input)="onInput($event)">
+                  <button type="button" class="btn btn-primary" (click)="paymentCancel(item.shopPk, item.resPk)">취소하기</button>
+                </div>
+              </ng-template>
+            </td>
+          </tr>
       </table>
     </tab>
     <tab>
@@ -159,10 +176,4 @@
       </div>
     </tab>
   </tabset>
-
-
-
-
-
-
 </div>
