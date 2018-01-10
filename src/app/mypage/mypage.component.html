@@ -88,6 +88,7 @@
           <td class="btnTable">
             <button class="btn btn-primary btn-sm">수정하기</button>
             <button class="btn btn-primary btn-sm" (click)="withdrawalModal(templateWithdrawal)">회원탈퇴</button>
+            <button class="btn btn-primary btn-sm" (click)="changePw(templateChangePw)">비밀번호 변경</button>
             <ng-template #templateWithdrawal>
               <div class="notice-wrapper " (open)="onOpen($event)">
                 <form>
@@ -106,6 +107,57 @@
                 </form>
               </div>
             </ng-template>
+            <ng-template #templateChangePw>
+              <div class="changePw-wrapper">
+                <form [formGroup]="changePwForm" (ngSubmit)="onChange()" novalidate>
+                  <h2 class="sign-header">비밀번호 변경</h2>
+                  <div formGroupName="passwordGroup">
+                    <span class="has-float-label">
+                    <div class="form-group input-group">
+                     <input id="old_password" type="password" name="old_password" class="form-control" formControlName="old_password" placeholder="password">
+                     <label for="old_password" class="sign-form-label">기존 비밀번호</label>
+                    <em *ngIf="old_password.errors?.pattern && old_password.touched " class="alert ">
+                    Password는 영문 또는 숫자로 4자리 이상 10이하로 입력하세요!
+                    </em>
+                    <em *ngIf="old_password.errors?.required && old_password.touched " class="alert ">
+                    Password를 입력하세요!
+                    </em>
+                  </div>
+                  </span>
+                    <span class="has-float-label">
+                    <div class="form-group input-group">
+                     <input id="new_password" type="password" name="new_password" class="form-control" formControlName="new_password" placeholder="password">
+                     <label for="new_password" class="sign-form-label">새로운 비밀번호</label>
+                    <em *ngIf="new_password.errors?.pattern && new_password.touched " class="alert ">
+                    Password는 영문 또는 숫자로 4자리 이상 10이하로 입력하세요!
+                    </em>
+                    <em *ngIf="new_password.errors?.required && new_password.touched " class="alert ">
+                    Password를 입력하세요!
+                    </em>
+                  </div>
+                  </span>
+                    <span class="has-float-label">
+                 <div class="form-group input-group">
+                 <input id="confirmPassword" type="password" name="new_password_confirm" class="form-control" placeholder="confirm password" formControlName="new_password_confirm">
+                 <label for="confirmPassword" class="sign-form-label">
+                   새로운 비밀번호 확인
+                 </label>
+                 <em *ngIf="passwordGroup.errors?.match && new_password_confirm.touched && !new_password_confirm.errors?.required" class="alert">
+                 password가 일치하지 않습니다!
+                </em>
+                <em *ngIf="new_password_confirm.errors?.required && new_password_confirm.touched" class="alert">
+                 password를 입력하세요!
+                </em>
+            </div>
+             </span>
+                  </div>
+                  <div class="button-wrapper">
+                    <button type="submit " class="btn btn-primary btn-join" [disabled]="changePwForm.invalid">비밀번호 변경</button>
+                  </div>
+                </form>
+              </div>
+            </ng-template>
+
           </td>
         </tr>
       </table>
@@ -115,44 +167,44 @@
 
   <tabset class="content">
     <tab heading='예약확인'>
-      <table class="table" >
-          <tr>
-            <td class="info">No</td>
-            <td class="info">레스토랑 이름</td>
-            <td class="info">예약인원</td>
-            <td class="info">예약일자</td>
-            <td class="info">예약시간</td>
-            <td class="info">주소</td>
-            <td class="info">링크</td>
-            <td class="info">상태</td>
-            <td class="info">취소하기</td>
-          </tr>
-          <tr *ngFor="let item of resList; let i =index">
-            <td class="active">{{ i+1 }}</td>
-            <td>{{ item.shopName}}</td>
-            <td>{{ item.party }}</td>
-            <td>{{ item.resDate }}</td>
-            <td>{{ item.resTime }}</td>
-            <td>{{ item.shopAddress }}</td>
-            <td><a href="/shop/{{item.shopPk}}">바로가기</a></td>
-            <td> {{ item.status }}</td>
-            <td>
-              <button type="button" class="btn btn-primary" (click)="openModal(template)">취소하기</button>
-              <ng-template #template>
-                <div class="modal-header">
-                  <h4 class="modal-title pull-left">예약취소하기</h4>
-                  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <table class="table">
+        <tr>
+          <td class="info">No</td>
+          <td class="info">레스토랑 이름</td>
+          <td class="info">예약인원</td>
+          <td class="info">예약일자</td>
+          <td class="info">예약시간</td>
+          <td class="info">주소</td>
+          <td class="info">링크</td>
+          <td class="info">상태</td>
+          <td class="info">취소하기</td>
+        </tr>
+        <tr *ngFor="let item of resList; let i =index">
+          <td class="active">{{ i+1 }}</td>
+          <td>{{ item.shopName}}</td>
+          <td>{{ item.party }}</td>
+          <td>{{ item.resDate }}</td>
+          <td>{{ item.resTime }}</td>
+          <td>{{ item.shopAddress }}</td>
+          <td><a href="/shop/{{item.shopPk}}">바로가기</a></td>
+          <td> {{ item.status }}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="openModal(template)">취소하기</button>
+            <ng-template #template>
+              <div class="modal-header">
+                <h4 class="modal-title pull-left">예약취소하기</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                </div>
-                <div class="modal-body">
-                  <h3>취소사유를 입력해주세요</h3>
-                  <input type="text" class="form-control" placeholder="Text input" [value]="cancelComment" (input)="onInput($event)">
-                  <button type="button" class="btn btn-primary" (click)="paymentCancel(item.shopPk, item.resPk)">취소하기</button>
-                </div>
-              </ng-template>
-            </td>
-          </tr>
+              </div>
+              <div class="modal-body">
+                <h3>취소사유를 입력해주세요</h3>
+                <input type="text" class="form-control" placeholder="Text input" [value]="cancelComment" (input)="onInput($event)">
+                <button type="button" class="btn btn-primary" (click)="paymentCancel(item.shopPk, item.resPk)">취소하기</button>
+              </div>
+            </ng-template>
+          </td>
+        </tr>
       </table>
     </tab>
     <tab>
