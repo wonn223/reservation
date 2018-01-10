@@ -9,6 +9,8 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Source } from '../models/eventEmitter';
 import { Router } from '@angular/router';
+import { PasswordValidator } from './passwordValidator';
+
 
 
 
@@ -50,6 +52,9 @@ export class MypageComponent implements OnInit {
   form: FormGroup;
   loading = false;
   imageSrc = '../../assets/man.png';
+  isLoggined = false;
+  changePwForm: FormGroup;
+
 
   // file upload 수행 이후 서버로부터 수신한 데이터
   result; 
@@ -57,11 +62,45 @@ export class MypageComponent implements OnInit {
 
   @Output() open: EventEmitter<Source> = new EventEmitter();
 
+  onOpen(evt: Source) {
+    console.log('source from eventEmitter', evt);
+    return (evt.bool || evt.token) ? this.isLoggined = evt.bool : '';
+  }
+
   cancelComment = '';
   
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
+  changePw(templateChangePw: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(templateChangePw);
+  }
+  onChange() {
+    const headers = {
+      // 'WWW-Authenticate' : 'Token',
+      'Authorization': `Token ${this.tokenInfo}`
+    };
+    const options = {
+      headers: new HttpHeaders(headers)
+    };
+    console.log('Send user to server: ', this.changePwForm.value);
+    const changePw = this.changePwForm.value;
+    console.log(changePw);
+    const payload = {
+      old_password: changePw.passwordGroup.old_password,
+      new_password: changePw.passwordGroup.new_password,
+      new_password_confirm: changePw.passwordGroup.new_password_confirm,
+    };
+    console.log(payload);
+    this.http.patch(`${this.appUrl}/accounts/${this.mypk}/change-password/`, payload, options)
+
+      .subscribe((res) => console.log(res));
+
+    this.changePwForm.reset();
+    this.modalRef.hide()
+    
+  }
+
   
   withdrawalModal(templateWithdrawal: TemplateRef<any>){
     this.modalRef = this.modalService.show(templateWithdrawal);
@@ -291,6 +330,30 @@ export class MypageComponent implements OnInit {
     this.setFavorite()
     this.setMyInfo()
     
+    this.changePwForm = new FormGroup({
+      
+      passwordGroup: new FormGroup({
+        old_password: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9]{4,10}')]),
+        new_password: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9]{4,10}')]),
+        new_password_confirm: new FormControl('', Validators.required)
+      }, PasswordValidator.match)
+    });
+    console.log(this.changePwForm);
+  }
+
+  get passwordGroup() {
+    return this.changePwForm.get('passwordGroup');
+  }
+
+  get old_password() {
+    return this.changePwForm.get('passwordGroup.old_password');
+  }
+
+  get new_password() {
+    return this.changePwForm.get('passwordGroup.new_password');
+  }
+  get new_password_confirm() {
+    return this.changePwForm.get('passwordGroup.new_password_confirm');
   }
 
 }
