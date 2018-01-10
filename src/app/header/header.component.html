@@ -22,20 +22,20 @@
       <input type="text" id="mainsearch" [formControl]="headerSearchInput" placeholder="지역, 가게명 검색">
       <input type="button" class="button-search" value="검색">
     </fieldset>
-      <ul class="row search-result" *ngIf="searchResult">
+    <ul class="row search-result" *ngIf="searchResult">
       <!-- 강남만 ok -->
-        <div class="col-md-12 border-line" *ngIf="searchResult.length === 0" style="text-align:center">낫 파운드입니다 '-'a</div>
-        <div class="col-md-12 border-line" *ngFor="let v of searchResult">
-            <li class="col-md-1"></li>}}
-            <li class="col-md-4">{{v.name}}</li>
-            <li class="col-md-2">{{v.restaurant_type}}</li>
-            <li class="col-md-2">{{v.star_rate}}</li>
-            <li class="col-md-2">{{v.pk}}</li>
-        </div>
-      </ul>
+      <div class="col-md-12 border-line" *ngIf="searchResult.length === 0" style="text-align:center">낫 파운드입니다 '-'a</div>
+      <div class="col-md-12 border-line" *ngFor="let v of searchResult">
+        <li class="col-md-1"></li>}}
+        <li class="col-md-4">{{v.name}}</li>
+        <li class="col-md-2">{{v.restaurant_type}}</li>
+        <li class="col-md-2">{{v.star_rate}}</li>
+        <li class="col-md-2">{{v.pk}}</li>
+      </div>
+    </ul>
   </div>
   <div class="col-xs-1 col-md-1 navs">
-      <span class="glyphicon glyphicon-home" routerLink="/main"></span>
+    <span class="glyphicon glyphicon-home" routerLink="/main"></span>
   </div>
   <div class="col-xs-3 col-md-3 navs">
     <nav class="nav-menus">

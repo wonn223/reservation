@@ -161,7 +161,8 @@ export class HeaderComponent implements OnInit {
     this.initUser();
     (this.auth.token && this.auth.myPk) ? (function() {
       console.log('새로고침 후 로그인 상태 풀리는지 체크');
-      that.isLoggined = true; })() : console.log('');
+      that.isLoggined = true;
+    })() : that.isLoggined = false;
 
     this.getUserSearchInput();
 
