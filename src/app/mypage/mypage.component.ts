@@ -60,13 +60,6 @@ export class MypageComponent implements OnInit {
   result; 
   modalRef: BsModalRef;
 
-  @Output() open: EventEmitter<Source> = new EventEmitter();
-
-  onOpen(evt: Source) {
-    console.log('source from eventEmitter', evt);
-    return (evt.bool || evt.token) ? this.isLoggined = evt.bool : '';
-  }
-
   cancelComment = '';
   
   openModal(template: TemplateRef<any>) {
@@ -93,21 +86,17 @@ export class MypageComponent implements OnInit {
     };
     console.log(payload);
     this.http.patch(`${this.appUrl}/accounts/${this.mypk}/change-password/`, payload, options)
-
       .subscribe((res) => console.log(res));
-
     this.changePwForm.reset();
     this.modalRef.hide()
-    
   }
 
-  
+
   withdrawalModal(templateWithdrawal: TemplateRef<any>){
     this.modalRef = this.modalService.show(templateWithdrawal);
-    
   }
-  
-  withdrawal(){
+
+  withdrawal() {
     this.auth.withdrawal()
       .subscribe(
       () => {
@@ -115,16 +104,16 @@ export class MypageComponent implements OnInit {
         alert('다시 만날때 까지 맛있는거 많이 드시고 행복하세요');
         this.router.navigate(['main']);
       },
-      
+
       (error) => {
         console.log(error.message);
       },
       () => {
-        
+
         console.log('회원탈퇴: completed');
       });
-    
-    this.modalRef.hide()
+
+    this.modalRef.hide();
   }
 
   onInput(event) {
@@ -135,7 +124,7 @@ export class MypageComponent implements OnInit {
   makeTokenInfo(){
     this.tokenInfo = this.auth.getToken();
     this.mypk = this.auth.getUserPk();
-    console.log(this.mypk)
+    console.log(this.mypk);
   }
 
   onFileChange(files: FileList) {
@@ -161,22 +150,22 @@ export class MypageComponent implements OnInit {
     };
 
     const formData = new FormData();
-   
+
     formData.append('avatar', files[0]);
 
     const payload = {
       profile_image: files[0]
-    }
+    };
 
     console.log('payload',payload)
-  
+
 
     this.loading = true;
-  
+
     // 폼데이터를 서버로 전송한다.
     this.http.patch(`${this.appUrl}/accounts/${this.mypk}/profile/`, payload, options)
       .subscribe(res => {
-        console.log('res', res)
+        console.log('res', res);
         this.result = res;
         this.loading = false;
         this.avatar.setValue(null);
@@ -188,7 +177,7 @@ export class MypageComponent implements OnInit {
   }
 
   // 닉네임 변경
-  changeNickname(name){
+  changeNickname(name) {
     const headers = {
       'Authorization': `Token ${this.tokenInfo}`
     };
