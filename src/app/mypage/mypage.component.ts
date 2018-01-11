@@ -100,9 +100,10 @@ export class MypageComponent implements OnInit {
     this.auth.withdrawal()
       .subscribe(
       () => {
-        this.open.emit({ bool: false, token: this.auth.token });
         alert('다시 만날때 까지 맛있는거 많이 드시고 행복하세요');
+        console.log(this.isLoggined);
         this.router.navigate(['main']);
+        window.location.reload();
       },
 
       (error) => {
