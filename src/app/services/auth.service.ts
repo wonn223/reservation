@@ -27,18 +27,20 @@ export class AuthService {
     modalRef: BsModalRef;
 
     appUrl = environment.apiUrl;
+
     TOKEN_NAME = 'drf token';
     FB_TOKEN_NAME = '';
     fbPk: string;
     fbId: string;
     token: string = this.getToken();
     myPk: string = this.getUserPk();
+    pk_typecatsed: string;
 
     isLoged = false;
     starAverage: number;
     credit: User;
 
-    authArchive: SearchingArchive;
+    authArchive: SearchingArchive[];
 
     constructor(private http: HttpClient, private ngzone: NgZone,
                 private modal: BsModalService
@@ -64,9 +66,13 @@ export class AuthService {
             .do(res => {
                     this.setToken(res.token);
                     this.token = res.token;
-                    console.log(res);
-                    this.setUserPk(res.user.pk);
-                    this.myPk = res.user.pk;
+                    this.pk_typecatsed = JSON.parse(res.user.pk, (): String => {
+                        return res.user.pk.toString();
+                    });
+                    this.setUserPk(this.pk_typecatsed);
+                    // this.myPk = res.user.pk;
+                    this.myPk = this.pk_typecatsed;
+                    console.log(this.myPk);
 
             })
             .shareReplay();
@@ -104,15 +110,10 @@ export class AuthService {
         };
     }
 
-    // @Check()
     setUserPk(pk: string): void {
         localStorage.setItem('Pk', pk);
         console.log('Pk', pk);
     }
-
-    // changeType (pk: TypeCheck ): pk is TypeCheck {
-    //      return pk === undefined ;
-    // }
 
     getUserPk(): string {
         return localStorage.getItem('Pk');
