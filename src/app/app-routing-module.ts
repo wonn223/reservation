@@ -5,15 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 // import { LoginComponent } from './login/login.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 import {
-  ShopComponent,
   NotFoundComponent,
-  PaymentComponent,
   MypageComponent,
   MainComponent,
   // SteponeComponent,
   MainResultComponent,
   ManagepageComponent,
-  SteponeComponent
+  SteponeComponent,
+  ShopComponent
 } from './routing-forRouting';
 import { AuthGuard } from './guards/auth.guard';
 // import { AuthGuard } from './guards/auth.guard';
@@ -26,12 +25,11 @@ const routes: Routes = [
   { path: 'step',
     loadChildren : 'app/main/main.module#MainModule'
   },
-  { path: 'shop/:resPk', component: ShopComponent, data: { pk : ':id'} },
-  { path: 'payment', component: PaymentComponent },
+  { path: 'shop/:resPk', component: ShopComponent, loadChildren : 'app/shop/shop.module#ShopModule' },
   { path: 'mypage', component: MypageComponent, canActivate: [AuthGuard] },
   { path: 'managepage', component: ManagepageComponent },
   { path: '', redirectTo: 'main', pathMatch: 'full'},
-  { path: '**', component: NotFoundComponent },
+  { path: '**', component: NotFoundComponent,  },
 ];
 
 

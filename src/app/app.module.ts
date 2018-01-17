@@ -8,11 +8,12 @@ import { PaginationModule } from 'ngx-bootstrap/pagination/';
 
 import { AgmCoreModule } from '@agm/core';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
- 
+
 import { appRouting } from './app-routing-module';
 import { environment } from '../environments/environment';
 import { ShopListService } from './services/shop-service.service';
-import { FilterPipe, PricePipe  } from './filter.pipe' ;
+
+import { FilterPipe, PricePipe  } from './filter.pipe';
 
 import { AuthGuard } from './guards/auth.guard';
 import { AuthService } from './services/auth.service';
@@ -23,18 +24,15 @@ import { AppComponent } from './app.component';
 import { ContainerComponent } from './container.component';
 import { HeaderComponent } from '../app/header/header.component';
 import { FooterComponent } from './footer.component';
-import { ShopComponent } from './shop/shop.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { PaymentComponent } from './payment/payment.component';
 import { MypageComponent } from './mypage/mypage.component';
-import { ReplyComponent } from './reply/reply.component';
 import { MainComponent } from './main/main.component';
 import { SignFormContainerComponent } from './signForm/sign-form-container.component';
-
-
+import { ShopComponent } from './shop/shop.component';
 
 import { ManagepageComponent } from './managepage/managepage.component';
 import { LoginComponent } from './login/login.component';
+import { ReplyComponent } from './reply/reply.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 
@@ -44,32 +42,29 @@ import { LoginComponent } from './login/login.component';
     ContainerComponent,
     HeaderComponent,
     LoginComponent,
-    // DashboardComponent,
     ShopComponent,
     ReplyComponent,
-    PaymentComponent,
-    FilterPipe,
-    PricePipe,
     MypageComponent,
     NotFoundComponent,
     FooterComponent,
-    // SteponeComponent
     MainComponent,
     ManagepageComponent,
-    SignFormContainerComponent
+    SignFormContainerComponent,
+    PricePipe,
+    FilterPipe
   ],
   imports: [
     BrowserModule, FormsModule, ButtonsModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: environment.googleMapApiKey }),
     BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
     CarouselModule.forRoot(),
     CollapseModule.forRoot(),
     ModalModule.forRoot(),
     TabsModule.forRoot(),
-    RatingModule.forRoot(),
-    PaginationModule.forRoot(),
     BsDropdownModule.forRoot(),
+    RatingModule.forRoot(),
     HttpClientModule,
     ReactiveFormsModule,
     FacebookModule.forRoot(),

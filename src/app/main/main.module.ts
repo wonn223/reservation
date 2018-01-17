@@ -13,9 +13,9 @@ import { MainRoutingModule } from '../main-routing.module';
 
   exports : [
   ],
-  declarations: [
-  ],
+  declarations: [],
 
   providers : [ SearchedResDetailService ]
 })
+
 export class MainModule { }
